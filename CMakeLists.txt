@@ -12,7 +12,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 include(diagnostic)
 include(install_lib)
-include(graphviz)
+# include(graphviz)
 set(DEBUG ON)
 set(CHSM_BUILD_TESTS OFF)
 
