@@ -17,8 +17,6 @@ PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/crf_interfaces>
 )
 
-message(STATUS "CHSM_SIGNAL_CLASSES_H: ------------> ${CHSM_SIGNAL_CLASSES_H}")
-
 target_link_libraries(crf_interfaces PUBLIC
     crf
 )
