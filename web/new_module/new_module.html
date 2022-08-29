@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="../main.css">
-        <link rel="stylesheet" type="text/css" href="../drawing.css">
-        <link rel="stylesheet" type="text/css" href="./new_module.css">
-        <link rel="stylesheet" id="new_module_theme_sheet" type="text/css" href="../themes/default.css">
-        <link rel="stylesheet" type="text/html" href="../main.html">
-        <script type="text/javascript" src="/eel.js"></script>
-        <script type='module' src="./new_module.js"></script>
-        <title>New Module</title>
-    </head>
-    <body>
-        <form>
-            <fieldset>
-                <legend id="new_module_legend" >New module</legend>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../drawing.css">
+    <link rel="stylesheet" type="text/css" href="./new_module.css">
+    <link rel="stylesheet" id="new_module_theme_sheet" type="text/css" href="../themes/default.css">
+    <link rel="stylesheet" type="text/html" href="../main.html">
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type='module' src="./new_module.js"></script>
+    <title>New Module</title>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend id="new_module_legend">New module</legend>
             <fieldset id="modul_gen_fs">
                 <legend>Module</legend>
                 <ul class='props'>
-                        <table>
-                            <tr>
-                                <td><label for="module_name">Module name</label></td>
-                                <td><input id="module_name" type="text"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="module_version">Module version</label></td>
-                                <td><input id="module_version" type="text" value="0.0.0."></td>
-                            </tr>
-                            <tr>
-                                <td><label for="module_description">Module description</label></td>
-                                <td><textarea id="module_description"></textarea></td>
-                            </tr>
-                            <tr id="modul_loc_tr">
-                                <td><label for="module_location">Module location</label></td>
-                                <td><input id="module_location" type="url"></td>
-                                <td><div id='btn-new-module-loc-browse' class='button' alt='Borwse for module location.'>Browse</div></td>
-                            </tr>
-                        </table>
+                    <table>
+                        <tr>
+                            <td><label for="module_name">Module name</label></td>
+                            <td><input id="module_name" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="module_version">Module version</label></td>
+                            <td><input id="module_version" type="text" value="0.0.0."></td>
+                        </tr>
+                        <tr>
+                            <td><label for="module_description">Module description</label></td>
+                            <td><textarea id="module_description"></textarea></td>
+                        </tr>
+                        <tr id="modul_loc_tr">
+                            <td><label for="module_location">Module location</label></td>
+                            <td><input id="module_location" type="url"></td>
+                            <td>
+                                <div id='btn-new-module-loc-browse' class='button' alt='Borwse for module location.'>
+                                    Browse</div>
+                            </td>
+                        </tr>
+                    </table>
 
             </fieldset>
             <br>
             <fieldset id="batch_gen_fs">
                 <legend>Batch file generation</legend>
-                
+
                 <ul class='props'>
                     <div>
                         <li>
@@ -57,12 +62,15 @@
                                 <tr>
                                     <td><label for="batch_location">Batch file location</label></td>
                                     <td><input id="batch_location" type="url"></td>
-                                    <td><div id='btn-batch-loc-browse' class='button' alt='Borwse for batch file location.'>Browse</div></td>
+                                    <td>
+                                        <div id='btn-batch-loc-browse' class='button'
+                                            alt='Borwse for batch file location.'>Browse</div>
+                                    </td>
                                 </tr>
                             </table>
                         </li>
                     </div>
-                    
+
             </fieldset>
             <br>
             <fieldset id="cmake_gen_fs">
@@ -90,11 +98,15 @@
                                 <tr>
                                     <td><label for="cmake_location">CMake location</label></td>
                                     <td><input id="cmake_location" type="url"></td>
-                                    <td><div id='btn-cmake-loc-browse' class='button' alt='Borwse for cmake location.'>Browse</div></li></td>
-                                </tr>
+                                    <td>
+                                        <div id='btn-cmake-loc-browse' class='button' alt='Borwse for cmake location.'>
+                                            Browse</div>
+                        </li>
+                        </td>
+                        </tr>
                         </table>
-                    </li>
-                </div>
+                        </li>
+                    </div>
 
             </fieldset>
             <br>
@@ -103,38 +115,38 @@
                 <div id='btn-cancel' class='button' alt='Cancel from setup module.'>Cancel</div>
             </div>
         </fieldset>
-        </form>
-        <script>
-                // fetch("../main.html")
-                // .then(response => response.text())
-                // .then(html => {
-                //     let parser = new DOMParser();
-                //     let doc = parser.parseFromString(html, 'text/html');
-                //     let element = doc.getElementById('theme-selector');
-                //     console.log(element.value);
-                // })
+    </form>
+    <script>
+        // fetch("../main.html")
+        // .then(response => response.text())
+        // .then(html => {
+        //     let parser = new DOMParser();
+        //     let doc = parser.parseFromString(html, 'text/html');
+        //     let element = doc.getElementById('theme-selector');
+        //     console.log(element.value);
+        // })
 
-                function init_theme_selector()
-                {
-                    const theme_sheet = document.getElementById("new_module_theme_sheet");
-                    var cookies = document.cookie
-                        .split(';')
-                        .map(cookie => cookie.split('='))
-                        .reduce((accumulator, [key, value]) =>
-                            ({ ...accumulator, [key.trim()]: decodeURIComponent(value)}), {} );
-                    console.log(cookies.theme);
-                const currentTheme = cookies.theme;
-    
-                function activateTheme(themeName) {
-                    theme_sheet.setAttribute("href", `../themes/${themeName}.css`);
-                }
-    
-                activateTheme(currentTheme);
+        function init_theme_selector() {
+            const theme_sheet = document.getElementById("new_module_theme_sheet");
+            var cookies = document.cookie
+                .split(';')
+                .map(cookie => cookie.split('='))
+                .reduce((accumulator, [key, value]) =>
+                    ({ ...accumulator, [key.trim()]: decodeURIComponent(value) }), {});
+            console.log(cookies.theme);
+            const currentTheme = cookies.theme;
+
+            function activateTheme(themeName) {
+                theme_sheet.setAttribute("href", `../themes/${themeName}.css`);
             }
-    
-            init_theme_selector();
-        </script>
 
-        <div></div>
-    </body>
+            activateTheme(currentTheme);
+        }
+
+        init_theme_selector();
+    </script>
+
+    <div></div>
+</body>
+
 </html>

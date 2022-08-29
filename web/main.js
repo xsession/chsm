@@ -141,31 +141,6 @@ class App {
 		eel.startup()
 	}
 
-	toggleDarkMode() {
-		let bodyTag = document.getElementsByTagName('body');
-		let toggleTag = document.getElementById('colorToggle');
-		
-		if (bodyTag.classList.contains('lightMode')) {
-			bodyTag.classList.replace('lightMode', 'darkMode');
-			toggleTag.innerHTML = 'Light Mode';
-		} else {
-			bodyTag.classList.replace('darkMode', 'lightMode');
-			toggleTag.innerHTML = 'Dark Mode';
-		}
-	}
-
-	handleDarkMode() {
-		let bodyTag = document.getElementsByTagName('body')[0];
-		let toggleTag = document.getElementById('colorToggle');
-		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			bodyTag.classList.add('darkMode');
-			toggleTag.innerHTML = 'Light Mode';
-		} else {
-			bodyTag.classList.add('lightMode');
-			toggleTag.innerHTML = 'Dark Mode';
-		}
-	}
-
 	load_model(data, fname, fpath)
 	{
 		this.gui.clear();
@@ -462,6 +437,18 @@ class App {
 					this.state = this.transition_drawing_state;
 				}
 				break;
+
+			case 'TR_CTRL_SHIFT_CLICK':
+			{
+				// const p = this.gui.get_absolute_pos(data.event);
+				// this.model.transition_restart_from_pos(data.id, p);
+				this.start_transition();
+				data.
+				this.gui.paths[data.id].add_handle_class('transition_handle_highlight_draw');
+				this.tr_draw_data.trans_id = data.id;
+				this.state = this.reselect_tr_start_state;
+			}
+			break;
 
 			case 'CLICK':
 				this.dim_object();
@@ -870,6 +857,35 @@ class App {
 				break;
 		}
 	}
+
+	reselect_tr_start_state(event, data)
+	{
+		switch(event)
+		{
+			case 'KEYDOWN':
+				switch(data.code)
+				{
+					case 'Escape':
+						this.gui.set_cursor('auto');
+						this.state = this.idle_state;
+						break;
+				}
+				break;
+
+			case 'STATE_BORDER_CLICK':
+				data.event.stopPropagation();
+				const pos = this.gui.get_state_rel_pos(data.event, data.id);
+				const tr_id = this.model.set_transition_start(data.id, pos);
+				if (tr_id !== '')
+				{
+					this.tr_draw_data.trans_id = tr_id;
+					this.render_transiton(tr_id);
+					this.state = this.transition_drawing_state;
+					this.gui.paths[tr_id].add_handle_class('transition_handle_highlight_draw');
+				}
+				break;
+		}
+	}
 	
 	delete_st_or_tr_state(event, data)
 	{
@@ -1244,6 +1260,10 @@ class App {
 										if (evt.shiftKey)
 										{
 											this.dispatch('TR_SHIFT_CLICK', {event: evt, id: trans_id});
+											if(evt.ctrlKey)
+											{
+												this.dispatch('TR_CTRL_SHIFT_CLICK', {event: evt, id: trans_id});
+											}
 										}
 										else
 										{
@@ -1260,31 +1280,9 @@ class App {
 
 
 window.addEventListener('DOMContentLoaded', event => {window.app = new App(state_machine)});
-// window.app = new App(state_machine);
-
-
-// let interval = null;
-// if(window.app.auto_save_cb.checked)
-// {
-// 	if((interval == null) && (window.app.is_opened_statemachine == "opened"))
-// 	{
-// 		console.log("Enter setInterval start state");
-// 		interval = setInterval(function(){
-// 			eel.save_state_machine(window.app.main.innerHTML, window.app.model.get_data_string(), window.app.filepath);
-// 		},5000);
-// 		console.log(interval);
-// 	}
-// }else
-// {
-// 	if(interval != null)
-// 	{
-// 		clearInterval(interval);
-// 	}
-// }
 
 eel.expose(load_json); // Expose this function to Python
 function load_json(data, filename, filepath) {
-	//console.log(data)
 	window.app.load_model(data, filename, filepath);
 }
 
