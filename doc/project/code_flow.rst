@@ -6,17 +6,13 @@ Code Flow and Branches
 Introduction
 ************
 
-The zephyr Git repository has three types of branches:
+The chsm Git repository has two types of branches:
 
-main
+master
   Which contains the latest state of development
 
-topic-\*
+feature-\*
   Topic branches that are used for shared development of a new feature
-
-vx.y-branch
-  Branches which track maintenance releases based on a major
-  release
 
 Development in topic branches before features go to mainline allows teams to
 work independently on a subsystem or a feature, improves efficiency and

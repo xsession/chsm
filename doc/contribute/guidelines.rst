@@ -86,7 +86,7 @@ Linux Foundation.
 Developer Certification of Origin (DCO)
 ***************************************
 
-To make a good faith effort to ensure licensing criteria are met, the Zephyr
+To make a good faith effort to ensure licensing criteria are met, the CHSM
 project requires the Developer Certificate of Origin (DCO) process to be
 followed.
 
@@ -145,7 +145,7 @@ For your commits, replace:
   author the commit (CI will fail if there is no match)
 
 You can automatically add the Signed-off-by: line to your commit body using
-``git commit -s``. Use other commits in the zephyr git history as examples.
+``git commit -s``. Use other commits in the chsm git history as examples.
 
 Additional requirements:
 
@@ -177,147 +177,25 @@ around working with contributions submitted by other developers.
 Prerequisites
 *************
 
-.. _Zephyr Project website: https://zephyrproject.org
-
-As a contributor, you'll want to be familiar with the Zephyr project, how to
-configure, install, and use it as explained in the `Zephyr Project website`_
-and how to set up your development environment as introduced in the Zephyr
-:ref:`getting_started`.
-
-You should be familiar with common developer tools such as Git and CMake, and
-platforms such as GitHub.
-
-If you haven't already done so, you'll need to create a (free) GitHub account
-on https://github.com and have Git tools available on your development system.
-
-.. note::
-   The Zephyr development workflow supports all 3 major operating systems
-   (Linux, macOS, and Windows) but some of the tools used in the sections below
-   are only available on Linux and macOS. On Windows, instead of running these
-   tools yourself, you will need to rely on the Continuous Integration (CI)
-   service using Github Actions, which runs automatically on GitHub when you submit
-   your Pull Request (PR).  You can see any failure results in the workflow
-   details link near the end of the PR conversation list. See
-   `Continuous Integration`_ for more information
-
-.. _source_tree_v2:
 
 Source Tree Structure
 *********************
 
-To clone the main Zephyr Project repository use the instructions in
-:ref:`get_the_code`.
-
-This section describes the main repository's source tree. In addition to the
-Zephyr kernel itself, you'll also find the sources for technical documentation,
-sample code, supported board configurations, and a collection of subsystem
-tests.  All of these are available for developers to contribute to and enhance.
-
-Understanding the Zephyr source tree can help locate the code
-associated with a particular Zephyr feature.
-
-At the top of the tree, several files are of importance:
-
-:file:`CMakeLists.txt`
-    The top-level file for the CMake build system, containing a lot of the
-    logic required to build Zephyr.
-
-:file:`Kconfig`
-    The top-level Kconfig file, which refers to the file :file:`Kconfig.zephyr`
-    also found in the top-level directory.
-
-    See :ref:`the Kconfig section of the manual <kconfig>` for detailed Kconfig
-    documentation.
-
-:file:`west.yml`
-    The :ref:`west` manifest, listing the external repositories managed by
-    the west command-line tool.
-
-The Zephyr source tree also contains the following top-level
-directories, each of which may have one or more additional levels of
-subdirectories not described here.
-
-:file:`arch`
-    Architecture-specific kernel and system-on-chip (SoC) code.
-    Each supported architecture (for example, x86 and ARM)
-    has its own subdirectory,
-    which contains additional subdirectories for the following areas:
-
-    * architecture-specific kernel source files
-    * architecture-specific kernel include files for private APIs
-
-:file:`soc`
-    SoC related code and configuration files.
-
-:file:`boards`
-    Board related code and configuration files.
-
-:file:`doc`
-    Zephyr technical documentation source files and tools used to
-    generate the https://docs.zephyrproject.org web content.
-
-:file:`drivers`
-    Device driver code.
-
-:file:`dts`
-    :ref:`devicetree <dt-guide>` source files used to describe non-discoverable
-    board-specific hardware details.
-
-:file:`include`
-    Include files for all public APIs, except those defined under :file:`lib`.
-
-:file:`kernel`
-    Architecture-independent kernel code.
-
-:file:`lib`
-    Library code, including the minimal standard C library.
-
-:file:`misc`
-    Miscellaneous code that doesn't belong to any of the other top-level
-    directories.
-
-:file:`samples`
-    Sample applications that demonstrate the use of Zephyr features.
-
-:file:`scripts`
-    Various programs and other files used to build and test Zephyr
-    applications.
-
-:file:`cmake`
-    Additional build scripts needed to build Zephyr.
-
-:file:`subsys`
-    Subsystems of Zephyr, including:
-
-    * USB device stack code
-    * Networking code, including the Bluetooth stack and networking stacks
-    * File system code
-    * Bluetooth host and controller
-
-:file:`tests`
-    Test code and benchmarks for Zephyr features.
-
-:file:`share`
-    Additional architecture independent data. It currently contains Zephyr's CMake
-    package.
-
 Pull Requests and Issues
 ************************
 
-.. _Zephyr Project Issues: https://github.com/zephyrproject-rtos/zephyr/issues
+.. _CHSM Project Issues: https://github.com/zephyrproject-rtos/zephyr/issues
 
 .. _open pull requests: https://github.com/zephyrproject-rtos/zephyr/pulls
 
-.. _Zephyr devel mailing list: https://lists.zephyrproject.org/g/devel
+.. _CHSM Discord Server: https://discord.gg/JbyWNRGn
 
-.. _Zephyr Discord Server: https://chat.zephyrproject.org
-
-Before starting on a patch, first check in our issues `Zephyr Project Issues`_
+Before starting on a patch, first check in our issues `chsm Project Issues`_
 system to see what's been reported on the issue you'd like to address.  Have a
-conversation on the `Zephyr devel mailing list`_ (or the the `Zephyr Discord
+conversation on the `chsm devel mailing list`_ (or the the `chsm Discord
 Server`_) to see what others think of your issue (and proposed solution).  You
 may find others that have encountered the issue you're finding, or that have
-similar ideas for changes or additions.  Send a message to the `Zephyr devel
+similar ideas for changes or additions.  Send a message to the `chsm devel
 mailing list`_ to introduce and discuss your idea with the development
 community.
 
@@ -326,7 +204,7 @@ submitting your own. When you submit an issue (bug or feature request), the
 triage team will review and comment on the submission, typically within a few
 business days.
 
-You can find all `open pull requests`_ on GitHub and open `Zephyr Project
+You can find all `open pull requests`_ on GitHub and open `chsm Project
 Issues`_ in Github issues.
 
  .. _Continuous Integration:
@@ -375,7 +253,7 @@ twister
 To verify that your changes did not break any tests or samples, please run the
 ``twister`` script locally before submitting your pull request to GitHub. To
 run the same tests the CI system runs, follow these steps from within your
-local Zephyr source working directory:
+local chsm source working directory:
 
 .. code-block:: console
 

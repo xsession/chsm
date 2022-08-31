@@ -27,10 +27,5 @@ expertise and can be used by every one.
 
 For this, `git bisect`_ is the recommended tool.
 
-Recommendations on the process:
-
-* Run ``west update`` on each bisection step.
-* Once the bisection is over and a culprit identified, verify manually the result.
-
 .. _git bisect:
    https://git-scm.com/docs/git-bisect

@@ -1,33 +1,20 @@
-# ------------------------------------------------------------------------------
-# Makefile for documentation build
-# SPDX-License-Identifier: Apache-2.0
+# Minimal makefile for Sphinx documentation
+#
 
-BUILDDIR ?= _build
-DOC_TAG ?= development
-SPHINXOPTS ?= -j auto
-LATEXMKOPTS ?= -halt-on-error -no-shell-escape
-DT_TURBO_MODE ?= 0
+# You can set these variables from the command line, and also
+# from the environment for the first two.
+SPHINXOPTS    ?=
+SPHINXBUILD   ?= sphinx-build
+SOURCEDIR     = .
+BUILDDIR      = _build
 
-# ------------------------------------------------------------------------------
-# Documentation targets
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: configure clean html html-fast latex pdf doxygen
+.PHONY: help Makefile
 
-html-fast:
-	${MAKE} html DT_TURBO_MODE=1
-
-html latex pdf doxygen: configure
-	cmake --build ${BUILDDIR} --target $@
-
-configure:
-	cmake \
-		-GNinja \
-		-B${BUILDDIR} \
-		-S. \
-		-DDOC_TAG=${DOC_TAG} \
-		-DSPHINXOPTS="${SPHINXOPTS}" \
-		-DLATEXMKOPTS="${LATEXMKOPTS}" \
-		-DDT_TURBO_MODE=${DT_TURBO_MODE}
-
-clean:
-	cmake --build ${BUILDDIR} --target clean
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

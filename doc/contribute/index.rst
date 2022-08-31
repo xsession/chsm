@@ -1,6 +1,6 @@
-.. _contribute_to_zephyr:
+.. _contribute_to_chsm:
 
-Contributing to Zephyr
+Contributing to CHSM
 ######################
 
 .. toctree::
@@ -9,5 +9,3 @@ Contributing to Zephyr
    guidelines.rst
    coding_guidelines/index.rst
    documentation/index.rst
-   external.rst
-   bin_blobs.rst
