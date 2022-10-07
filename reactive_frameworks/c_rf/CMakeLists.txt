@@ -1,0 +1,20 @@
+
+add_module_lib(
+        NAME 
+                crf
+        PACKAGE
+                chsm
+        SOURCE
+                src/cbits.c
+                src/chsm.c
+                src/cpool.c
+                src/cqueue.c
+                src/crf.c
+                src/cvalue.c 
+        INCLUDE 
+                inc
+        DEFINES 
+                NDEBUG
+        STANDARD
+                11
+)
