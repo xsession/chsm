@@ -5,9 +5,9 @@ VERSION 1.0.0
 LANGUAGES C CXX ASM)
 
 ########################  Set where to search .cmake files  ############################ 
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/utils")
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_utils/utils")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_utils/modules")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_utils")
 
 ########################  External .cmake files includes  ############################ 
 include(GNUInstallDirs)
@@ -32,7 +32,7 @@ message(STATUS "
 ")
 
 add_subdirectory(modules)
-add_subdirectory(crf)
+add_subdirectory(reactive_frameworks/c_rf)
 
 add_module_interface_lib(
     NAME 

@@ -1,5 +1,5 @@
 
-add_module_lib(
+add_module_interface_lib(
         NAME 
                 canopen
         PACKAGE
@@ -20,7 +20,6 @@ add_module_lib(
                 chsm::chsm_interfaces
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H="${CHSM_SIGNAL_CLASSES_H}"
         STANDARD
                 11
 )

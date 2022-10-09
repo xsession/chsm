@@ -1,5 +1,5 @@
 
-add_module_lib(
+add_module_interface_lib(
         NAME 
                 i2c_master
         PACKAGE
@@ -14,7 +14,6 @@ add_module_lib(
                 chsm::crf
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H="${CHSM_SIGNAL_CLASSES_H}"
         STANDARD
                 11
 )

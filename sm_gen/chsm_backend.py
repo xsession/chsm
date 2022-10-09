@@ -313,7 +313,6 @@ if __name__ == '__main__':
     args = docopt(__doc__)
     print(args)
 
-
     if args['FILE']:
         p = Path(args['FILE'])
         if p.exists():
