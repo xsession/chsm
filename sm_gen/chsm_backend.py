@@ -23,7 +23,7 @@ import subprocess
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
-from hsm import StateMachine
+from cgen import StateMachine
 
 import argparse
 
@@ -272,7 +272,7 @@ def save_state_machine(drawing: str, json_data: str, filepath: str):
 
 @eel.expose
 def open_window():
-    subprocess.Popen(["py","./cgen/chsm_backend.py"], shell=True)
+    subprocess.Popen(["py","./sm_gen/cgen/chsm_backend.py"], shell=True)
 
 @eel.expose
 def open_file():
