@@ -7,7 +7,7 @@ Usage:
 Options:
     -s, --server-only     Do not open the application with Chrome app mode just wait for clients at http://127.0.0.1:8000/main.html
     -c, --code-gen        Generate code and quit. Don't start the GUI.
-    -ol, --output-lang    Set witch language will you generate the output. (c, python, javascript, java)
+    -o, --output-lang    Set witch language will you generate the output. (c, python, javascript, java)
 """
 import re
 from time import time
