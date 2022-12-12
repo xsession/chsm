@@ -1,0 +1,3 @@
+[submodule "chsm"]
+	path = chsm
+	url = https://github.com/xsession/chsm.git
