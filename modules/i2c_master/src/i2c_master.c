@@ -1,10 +1,14 @@
-/*Generated with CHSM v0.0.0 at 2020.12.29 08.44.03*/
+/*Generated with CHSM v0.0.0 at 2022.12.08 14.10.23*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
 #include "i2c_master_functions.h"
 
 
+static chsm_result_ten s_scan_busy(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
+static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
+static chsm_result_ten s_scan_idle(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
+static chsm_result_ten s_bus_scan(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
 static chsm_result_ten s_i2c_master(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
 static chsm_result_ten s_wr_read(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
 static chsm_result_ten s_wr_write(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
@@ -37,8 +41,14 @@ static chsm_result_ten s_idle(chsm_tst *self, const cevent_tst  *e_pst, chsm_cal
             i2c_master_start_tx(self, e_pst);
             return chsm_transition(self, s_wr_write);
 
+        case SIG_I2C_BUS_SCAN:
+            chsm_exit_children(self, e_pst, ctx_pst);
+            scan_init(self, e_pst);
+            chsm_recall(self, e_pst);
+            return chsm_transition(self, s_scan_idle);
+
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, s_i2c_master, NULL, guards_only_b);
@@ -78,7 +88,7 @@ static chsm_result_ten s_busy(chsm_tst *self, const cevent_tst  *e_pst, chsm_cal
             return chsm_transition(self, s_idle);
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, s_i2c_master, i2c_master_stop, guards_only_b);
@@ -98,7 +108,7 @@ static chsm_result_ten s_write(chsm_tst *self, const cevent_tst  *e_pst, chsm_ca
             return chsm_transition(self, s_idle);
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, s_busy, NULL, guards_only_b);
@@ -118,7 +128,7 @@ static chsm_result_ten s_read(chsm_tst *self, const cevent_tst  *e_pst, chsm_cal
             return chsm_transition(self, s_idle);
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, s_busy, NULL, guards_only_b);
@@ -131,8 +141,9 @@ static chsm_result_ten s_write_read(chsm_tst *self, const cevent_tst  *e_pst, ch
     {
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
+
 
     return chsm_handle_in_parent(self, ctx_pst, s_busy, NULL, guards_only_b);
 }
@@ -148,7 +159,7 @@ static chsm_result_ten s_wr_write(chsm_tst *self, const cevent_tst  *e_pst, chsm
             return chsm_transition(self, s_wr_read);
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, s_write_read, NULL, guards_only_b);
@@ -168,7 +179,7 @@ static chsm_result_ten s_wr_read(chsm_tst *self, const cevent_tst  *e_pst, chsm_
             return chsm_transition(self, s_idle);
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, s_write_read, NULL, guards_only_b);
@@ -179,12 +190,96 @@ static chsm_result_ten s_i2c_master(chsm_tst *self, const cevent_tst  *e_pst, ch
     bool guards_only_b=true;
     switch(e_pst->sig)
     {
+        case SIG_SYS_TICK_1ms:
+            i2c_1ms_callback(self, e_pst);
+            break;
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_handle_in_parent(self, ctx_pst, i2c_master_top, NULL, guards_only_b);
+}
+
+static chsm_result_ten s_bus_scan(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
+{
+    bool guards_only_b=true;
+    switch(e_pst->sig)
+    {
+
+        default:
+            guards_only_b = false;
+    }
+
+    return chsm_handle_in_parent(self, ctx_pst, s_i2c_master, NULL, guards_only_b);
+}
+
+static chsm_result_ten s_scan_idle(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
+{
+    bool guards_only_b=true;
+    switch(e_pst->sig)
+    {
+        case SIG_I2C_W_TRANSACTION:
+            chsm_exit_children(self, e_pst, ctx_pst);
+            store_transaction_info(self, e_pst);
+            i2c_scan_start_step(self, e_pst);
+            return chsm_transition(self, s_scan_write);
+
+        case SIG_I2C_ADDRS_RELEASE:
+            chsm_exit_children(self, e_pst, ctx_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        default:
+            guards_only_b = false;
+    }
+
+    if(device_addr_max_cnt(self, e_pst))
+    {
+        chsm_exit_children(self, e_pst, ctx_pst);
+        chsm_recall(self, e_pst);
+        return chsm_transition(self, s_scan_idle);
+    }
+
+    return chsm_handle_in_parent(self, ctx_pst, s_bus_scan, NULL, guards_only_b);
+}
+
+static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
+{
+    bool guards_only_b=true;
+    switch(e_pst->sig)
+    {
+        case SIG_I2C_WRITE_SUCCESS:
+            chsm_exit_children(self, e_pst, ctx_pst);
+            i2c_master_inc_success_dev_addr(self, e_pst);
+            chsm_recall(self, e_pst);
+            return chsm_transition(self, s_scan_idle);
+
+        default:
+            guards_only_b = false;
+    }
+
+
+    return chsm_handle_in_parent(self, ctx_pst, s_scan_busy, NULL, guards_only_b);
+}
+
+static chsm_result_ten s_scan_busy(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
+{
+    bool guards_only_b=true;
+    switch(e_pst->sig)
+    {
+        case SIG_I2C_WRITE_FAIL:
+            chsm_exit_children(self, e_pst, ctx_pst);
+            i2c_master_inc_dev_addr(self, e_pst);
+            chsm_recall(self, e_pst);
+            return chsm_transition(self, s_scan_idle);
+
+        default:
+            guards_only_b = false;
+    }
+
+    return chsm_handle_in_parent(self, ctx_pst, s_bus_scan, NULL, guards_only_b);
 }
 
 chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
@@ -200,7 +295,7 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst, chsm_ca
             return chsm_transition(self, s_idle);
 
         default:
-        guards_only_b=false;
+            guards_only_b = false;
     }
 
     return chsm_ignored(self);

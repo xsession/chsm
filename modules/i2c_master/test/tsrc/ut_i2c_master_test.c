@@ -519,6 +519,11 @@ TEST(i2c_master, write_2b_read_2b)
 	TEST_ASSERT_EQUAL(SIG_I2C_RESULT_SUCCESS, e_pst->sig);
 }
 
+TEST(i2c_master, enter_to_scan_idle)
+{
+
+}
+
 TEST_GROUP_RUNNER(i2c_master)
 {
 	RUN_TEST_CASE(i2c_master, init);
