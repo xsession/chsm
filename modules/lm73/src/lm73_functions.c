@@ -199,7 +199,7 @@ void lm73_set_resolution(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CTRLSTATUS;
-    self->tx_buff_au8[0] =      0x60;
+    self->tx_buff_au8[0] =      0x68;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
@@ -216,16 +216,8 @@ void lm73_update_temp(chsm_tst *_self, const cevent_tst *e_pst)
     if (NULL == temp_pst) return;
 
     // Compile the value of the Temperature Data Register into a variable
-    uint32_t tdr_reg_u32 = (self->rx_buff_au8[0] << 8) | self->rx_buff_au8[1];
-
-    // Convert the TDR reg format to Celsius:
-    //  1: remove the sign bit
-    //  2: shift down 7 bits
-    //  3: restore the sign
-   int16_t temp_c_i32 = tdr_reg_u32 >> 7;
-   temp_c_i32 |= (tdr_reg_u32 & 0x8000) ? 0xfe00 : 0;
-    // int32_t temp_c_i32 = (tdr_reg_u32 * 250) >> 5;
-    //printf("%x --> %d\n", tdr_reg_u16, temp_c_i16);
+    double tdr_reg_u32 = ((((self->rx_buff_au8[0] << 8) | self->rx_buff_au8[1]) >> 2) * 0.03125) - 3;
+    int32_t temp_c_i32 = tdr_reg_u32*1000;
 
     temp_pst->super.sig = SIG_LM73_TEMP;
     temp_pst->temp_C_i32 = temp_c_i32;
