@@ -58,6 +58,8 @@ void ltc2471_send(chsm_tst *self, const cevent_tst *e_pst)
 		default:
 			CRF_POST(e_pst, &i2c_master_st);
 	}
+
+    (void)self;
 }
 
 static void tick_ms(uint32_t tick_cnt_u32)
@@ -186,4 +188,8 @@ TEST_GROUP_RUNNER(ltc2471)
 
 	RUN_TEST_CASE(ltc2471, read_one);
 	RUN_TEST_CASE(ltc2471, read_two);
+	//RUN_TEST_CASE(ltc2471, init);
+	//RUN_TEST_CASE(ltc2471, init);
+	//RUN_TEST_CASE(ltc2471, init);
+
 }

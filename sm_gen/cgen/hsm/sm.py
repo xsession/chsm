@@ -3,7 +3,8 @@ import re
 import logging
 from datetime import datetime
 from .ast import Func, If, Switch, Case, Call, Break, Return, Blank, Expr, Ast, FuncDeclaration, Include, Ifndef, Define, Endif, Comment, Decl, Assignment, Enum
-from typing import List, Dict
+import pprint
+from copy import deepcopy
 
 # TODO: make sure, that there is only one exit function and it has no parameters
 
@@ -31,7 +32,14 @@ class StateMachine:
 
         self.states = self.get_states(data)                 # Extract states from the data
         self.add_transitions_to_states(self.states, data)   # Extract transition info from the data and add it to the states
+        self.add_parent_signals(self.states)
         self.process_transitions(self.states)               # Calculate transition exit and entry paths and the exact end state
+
+        with open("states.txt", 'w') as f:
+            pprint.pprint(self.states, f, indent=4)
+        
+        self.delete_non_leaf_states(self.states)
+
         self.notes = data['notes']
 
         top_func = self._get_user_symbols(h_file)
@@ -140,30 +148,77 @@ class StateMachine:
 
         return ast
 
-    def get_transition_funcs(self, start, end):
-        path = self.get_transition_path(start, end)
+    def get_transition_funcs(self, start, end, lca):
+        path = self.get_transition_path(start, end, lca)
         return self.path_to_funcs(path), path[-1][0]
 
     def process_transitions(self, states):
         for s_id, s in states.items():
+            if s['children']:
+                continue
             for sig_id, sig in s['signals'].items():
                 if sig_id == 'init':
                     continue
                 for g in sig['guards'].values():
                     if g['target']:
-                        tfuncs, target = self.get_transition_funcs(s_id, g['target'])
+                        tfuncs, target = self.get_transition_funcs(s_id, g['target'], g['lca'])
                         #g['transition_funcs'] = tfuncs
                         g['funcs'].extend(tfuncs)
                         g['target_title'] = states[target]['title']
         
         #The only place where transition functions are needed for an init signal is the __top__
         g = states['__top__']['signals']['init']['guards'][(None, None)]
-        tfuncs, target = self.get_transition_funcs('__top__', g['target'])
+        tfuncs, target = self.get_transition_funcs('__top__', g['target'], g['lca'])
         g['funcs'].extend(tfuncs)
         g['target_title'] = states[target]['title']
 
+    def delete_non_leaf_states(self, states):
+        for s_id in [*states.keys()]:
+            s = states[s_id]
+            if s['children'] and s['parent']:
+                print(s['title'])
+                del states[s_id]
+            elif s['parent']:
+                s['parent'] = '__top__'
 
-    def str_to_signal(self, line, target=None, target_title=None, initial=False):
+    def add_parent_signals(self, states):
+        for s_id, s in states.items():
+            if not s['children'] and s['type'] == 'normal':
+                self.add_parent_signals_to_state(s_id, states)
+
+    def add_parent_signals_to_state(self, state_id, states):
+        """
+            Take a state, go through its parent states and add signal handlers
+            that are not already in the original state.
+            If the signal already has some handlers in the original state, then
+            go through the guards one by one and copy those that are not in the
+            original state.
+        """
+        signals = states[state_id]['signals']
+
+        parent_id = states[state_id]['parent']
+        while parent_id:
+            p_signals = states[parent_id]['signals']
+            for sig_id, sig in p_signals.items():
+                if sig_id in ('entry', 'exit', 'init'):
+                    continue
+
+                if not sig_id in signals:
+                    signals[sig_id] = deepcopy(sig)
+
+                else:
+                    guards = signals[sig_id]['guards']
+                    for guard_id, p_guard in sig['guards'].items():
+                        if not guard_id in guards:
+                            guards[guard_id] = deepcopy(p_guard)
+
+            parent_id = states[parent_id]['parent']
+    
+
+
+
+
+    def str_to_signal(self, line, target=None, target_title=None, initial=False, lca=None):
         signal = None
         guard = None
         func = None
@@ -204,7 +259,8 @@ class StateMachine:
             'guard': (guard, gparams),
             'funcs': [(func, fparams)],
             'target': target,
-            'target_title': target_title
+            'target_title': target_title,
+            'lca': lca
         }
 
         s = {
@@ -294,13 +350,21 @@ class StateMachine:
         for tr in data['transitions'].values():
             start, target, label = self.resolve_transition(tr, data)
 
+            if target:
+                if self.is_in(start, target):
+                    lca = target
+                else:
+                    lca = self.get_LCA(start, target)
+            else:
+                lca = None
+
             if states[start]['type'] == 'initial':
                 start = states[start]['parent']
                 states[start]['initial'] = target
 
                 signal = self.str_to_signal(label, target=target, target_title=states[target]['title'], initial=True)
             else:
-                signal = self.str_to_signal(label, target, target_title=states[target]['title'], initial=False)
+                signal = self.str_to_signal(label, target, target_title=states[target]['title'], initial=False, lca=lca)
 
             self.add_signal_to_state(states[start], signal)
 
@@ -318,9 +382,6 @@ class StateMachine:
             i = If(self.make_call(func, param))
             add(i)
             add = i.add_true
-
-        if guard['target']:
-            add(Call(self.templates['exit_children'], self.templates['func_args']))
         
         for func, param in guard['funcs']:
             if func:
@@ -356,7 +417,6 @@ class StateMachine:
 
     def build_func_from_state(self, state_id, state, insert_init=False, spec=''):
         f = Func(name=state['title'], ftype=self.templates['func_return_type'], params=self.templates['func_params'], spec=spec)
-        f.add(Decl('bool', self.templates['guards_only_variable'], 'true'))
         s = Switch(self.templates['switch_variable'])
         f.add(s)
 
@@ -370,42 +430,19 @@ class StateMachine:
             if c:
                 s.add_case(c)
 
-        s.add_default(Assignment(self.templates['guards_only_variable'], 'false'))
-
         for guard in state['signals'][None]['guards'].values():
-            f.add(Blank())
             nodes = self.guard_to_ast(guard)
+            if nodes:
+                f.add(Blank())
             for n in nodes:
                 f.add(n)
+        
+        result = self.templates['ignored_result']
 
         f.add(Blank())
-
-        exit_func = 'NULL'
-        efw = None
-        try:
-            exit_func, exit_param = state['signals']['exit']['guards'][(None, None)]['funcs'][0]
-            print(f"{state['title']} exit: {exit_func}({exit_param})")
-
-            if exit_param:
-                exit_func_wrapper = f"{state['title']}_exit_func_wrapper"
-                efw = Func(name=exit_func_wrapper, ftype='void', params=self.templates['user_func_params_t'], spec='static')
-                efw.add(self.make_call(exit_func, exit_param, True))
-                exit_func = exit_func_wrapper
-
-        except KeyError:
-            pass
-
-        if exit_func == None:
-            exit_func = 'NULL'
-
-        if state['parent']:
-            result = self.templates['parent_result'].format(parent=state['parent_title'], exit_func=exit_func)
-        else:
-            result = self.templates['ignored_result']
-
         f.add(Return(result))
 
-        return f, efw
+        return f
 
     def build_ast(self, states):
         ast = Ast()
@@ -413,16 +450,13 @@ class StateMachine:
         for s_id, s in states.items():
             if s['type'] != 'normal':
                 continue
-            state_func, exit_func_wrapper = self.build_func_from_state(s_id, s, spec='static') 
-
-            if exit_func_wrapper:
-                ast.nodes.append(exit_func_wrapper)
+            state_func = self.build_func_from_state(s_id, s, spec='static') 
 
             ast.nodes.append(state_func)
             ast.nodes.insert(0, state_func.declaration())
 
 
-        top_func, _ = self.build_func_from_state(self.top_func, states['__top__'], True)
+        top_func = self.build_func_from_state(self.top_func, states['__top__'], True)
         ast.nodes.append(top_func)
 
         ast.nodes.insert(0, Blank())
@@ -475,8 +509,8 @@ class StateMachine:
     def get_LCA(self, start_state_id, target_state_id):
         """Find Lowest Common Ancestor"""
         
-        if self.is_in(start_state_id, target_state_id):
-            return target_state_id
+        #if self.is_in(start_state_id, target_state_id):
+        #    return target_state_id
         
         super_id = start_state_id
         while True:
@@ -495,11 +529,10 @@ class StateMachine:
              
         return path
     
-    def get_transition_path(self, start_state_id, target_state_id):
+    def get_transition_path(self, start_state_id, target_state_id, lca):
         if target_state_id == '__top__':
             return self.get_exit_path(start_state_id, '__top__')
         else:
-            lca = self.get_LCA(start_state_id, target_state_id)
             exit_path = self.get_exit_path(start_state_id, lca)
             init_path = self.get_init_path(lca, target_state_id)
             return exit_path + init_path
