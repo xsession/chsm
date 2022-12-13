@@ -85,6 +85,7 @@ struct lm73_tst
     /* PRIVATE */
     uint32_t            counter_u32;
     uint16_t            error_counter_u32;
+    uint16_t            wait_cnt_u16;
 
     i2c_transaction_tst t_st;
     uint8_t             tx_buff_au8[4];
@@ -100,8 +101,9 @@ bool lm73_error_count(chsm_tst *self, const cevent_tst *e_pst, uint16_t error_cn
 #define LM73_READ_PERIOD_VALUE      100
 #define LM73_MAX_ERROR_COUNT_VALUE  5
 #define LM73_RETRY_TIMEOUT          500
-#define LM73_UNPLUGGED_TIMEOUT      5000
+#define LM73_UNPLUGGED_TIMEOUT      2000
 #define LM73_ID_REG_VALUE           0x190
+#define LM73_WAIT_CNT               12
 
 #define LM73_READ_PERIOD        (((lm73_tst *)self)->config_st.period_ms_u16)
 #define LM73_MAX_ERROR_COUNT    (((lm73_tst *)self)->config_st.max_error_cnt_u16)

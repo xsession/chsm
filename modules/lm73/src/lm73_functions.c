@@ -127,7 +127,6 @@ void lm73_start_read(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.super.sig =      SIG_I2C_R_TRANSACTION;
     self->t_st.write_cnt_u16 =  0;
     self->t_st.read_cnt_u16 =   2;
-//    self->tx_buff_au8[0] =      LM73_REG_TEMPERATURE;
     self->rx_buff_au8[0] =      0;
     self->rx_buff_au8[1] =      0;
 
@@ -144,7 +143,7 @@ void lm73_set_full_powerdown(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CONFIG;
-    self->tx_buff_au8[0] =      0x80;
+    self->tx_buff_au8[1] =      0x80;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
@@ -158,9 +157,36 @@ void lm73_set_full_powerup(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CONFIG;
-    self->tx_buff_au8[0] =      0x00;
+    self->tx_buff_au8[1] =      0x00;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
+}
+
+bool lm73_wait_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+
+    if(self->wait_cnt_u16 >= LM73_WAIT_CNT)
+    {
+        return true;
+    }
+    else
+    {
+       return false;
+    }
+}
+
+bool lm73_inc_wait_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+    self->wait_cnt_u16++;
+    return false;
+}
+
+void lm73_init_wait(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+    self->wait_cnt_u16 = 0;
 }
 
 void lm73_get_resolution(chsm_tst *_self, const cevent_tst *e_pst)
@@ -173,7 +199,7 @@ void lm73_get_resolution(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  1;
     self->t_st.read_cnt_u16 =   1;
     self->tx_buff_au8[0] =      LM73_REG_CTRLSTATUS;
-    self->rx_buff_au8[0] =      0;
+    self->rx_buff_au8[1] =      0;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
@@ -199,7 +225,7 @@ void lm73_set_resolution(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CTRLSTATUS;
-    self->tx_buff_au8[0] =      0x68;
+    self->tx_buff_au8[1] =      0x60;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
