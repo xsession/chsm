@@ -46,6 +46,13 @@ void lm73_inc_error_counter(chsm_tst *_self, const cevent_tst *e_pst)
     self->error_counter_u32++;
 }
 
+void lm73_reset_error_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+
+    self->error_counter_u32 = 0;
+}
+
 /*Try to read the ID register from the LM73 by sending a write-read transaction to the I2C master.*/
 void lm73_read_id(chsm_tst *_self, const cevent_tst *e_pst)
 {
@@ -127,7 +134,6 @@ void lm73_start_read(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.super.sig =      SIG_I2C_R_TRANSACTION;
     self->t_st.write_cnt_u16 =  0;
     self->t_st.read_cnt_u16 =   2;
-//    self->tx_buff_au8[0] =      LM73_REG_TEMPERATURE;
     self->rx_buff_au8[0] =      0;
     self->rx_buff_au8[1] =      0;
 
@@ -144,7 +150,7 @@ void lm73_set_full_powerdown(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CONFIG;
-    self->tx_buff_au8[0] =      0x80;
+    self->tx_buff_au8[1] =      LM73_POWER_OFF;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
@@ -158,9 +164,37 @@ void lm73_set_full_powerup(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CONFIG;
-    self->tx_buff_au8[0] =      0x00;
+    self->tx_buff_au8[1] =      LM73_POWER_ON;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
+}
+
+bool lm73_wait_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+
+    if(self->wait_cnt_u16++ >= LM73_WAIT_CNT)
+    {
+        self->wait_cnt_u16 = 0;
+        return true;
+    }
+    else
+    {
+       return false;
+    }
+}
+
+bool lm73_inc_wait_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+    self->wait_cnt_u16++;
+    return false;
+}
+
+void lm73_init_wait(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_tst*   self = (lm73_tst *)_self;
+//    self->wait_cnt_u16 = 0;
 }
 
 void lm73_get_resolution(chsm_tst *_self, const cevent_tst *e_pst)
@@ -173,7 +207,7 @@ void lm73_get_resolution(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  1;
     self->t_st.read_cnt_u16 =   1;
     self->tx_buff_au8[0] =      LM73_REG_CTRLSTATUS;
-    self->rx_buff_au8[0] =      0;
+    self->rx_buff_au8[1] =      0;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
@@ -199,7 +233,7 @@ void lm73_set_resolution(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.write_cnt_u16 =  2;
     self->t_st.read_cnt_u16 =   0;
     self->tx_buff_au8[0] =      LM73_REG_CTRLSTATUS;
-    self->tx_buff_au8[0] =      0x68;
+    self->tx_buff_au8[1] =      LM73_RESOLUTION_14BIT;
 
     self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
@@ -245,8 +279,6 @@ bool lm73_id_match(chsm_tst *_self, const cevent_tst *e_pst)
     uint16_t idr_reg_u16 = self->rx_buff_au8[0];
     idr_reg_u16 <<= 8;
     idr_reg_u16 |= self->rx_buff_au8[1];
-
-    //printf("%x\n", idr_reg_u16);
 
     return LM73_ID_REG_VALUE == idr_reg_u16;
 }
