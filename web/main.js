@@ -88,7 +88,6 @@ class App {
 		this.codegen_btn.addEventListener('click', e => this.dispatch('CODE_GEN', e));
 		
 		this.auto_save_cb = document.getElementById("cb-auto_save");
-		// this.auto_save_cb.addEventListener('change', e => this.dispatch('AUTO_SAVE', e));
 
 		this.dark_mode_select = document.querySelector('#theme-selector');
 		this.dark_mode_select.addEventListener('change', e => {
@@ -106,6 +105,39 @@ class App {
 			this.dispatch('MOUSEUP', event);
 		});
 
+		this.gui.svg.addEventListener('mousedown', event => {
+			if (event.ctrlKey)
+			{
+				this.dispatch('DRAWING_CTRL_MDOWN', event);
+			}
+			else
+			{
+				this.dispatch('DRAWING_MDOWN', event);
+			}
+		});
+
+		// this.body.addEventListener('touchmove', event => {
+		// 	this.mouse_pos = this.gui.get_absolute_pos(event);
+		// 	this.dispatch('MOUSEMOVE', event);
+		// });
+
+		// this.body.addEventListener('touchend', event => {
+		// 	console.log("touch_end")
+		// 	this.dispatch('MOUSEUP', event);
+		// });
+
+		// this.gui.svg.addEventListener('touchstart', event => {
+		// 	console.log("touch_start")
+		// 	if (event.ctrlKey)
+		// 	{
+		// 		this.dispatch('DRAWING_CTRL_MDOWN', event);
+		// 	}
+		// 	else
+		// 	{
+		// 		this.dispatch('DRAWING_MDOWN', event);
+		// 	}
+		// });
+
 		this.gui.svg.addEventListener('click', event => {
 			this.dispatch('CLICK', event);
 		});
@@ -122,17 +154,6 @@ class App {
 			else
 			{
 				this.dispatch('DRAWING_WHEEL', event);
-			}
-		});
-
-		this.gui.svg.addEventListener('mousedown', event => {
-			if (event.ctrlKey)
-			{
-				this.dispatch('DRAWING_CTRL_MDOWN', event);
-			}
-			else
-			{
-				this.dispatch('DRAWING_MDOWN', event);
 			}
 		});
 

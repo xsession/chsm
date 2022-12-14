@@ -7,10 +7,8 @@ Usage:
 Options:
     -s, --server-only     Do not open the application with Chrome app mode just wait for clients at http://127.0.0.1:8000/main.html
     -c, --code-gen        Generate code and quit. Don't start the GUI.
-    -o, --output-lang    Set witch language will you generate the output. (c, python, javascript, java)
 """
 import re
-from time import time
 import eel
 import json
 from pathlib import Path
@@ -18,14 +16,11 @@ from docopt import docopt
 import logging
 from pprint import pprint
 import collections
-import subprocess
 
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
-from cgen import StateMachine
-
-import argparse
+from hsm import StateMachine
 
 class HtmlException(Exception):
     pass
@@ -103,7 +98,7 @@ def open_html(html_path):
 class Project:
     def __init__(self, h_file_path=None):
         self.backend_path =     (Path(__file__).parent).absolute().resolve()
-        self.template_dir =     (self.backend_path / 'cgen' / 'templates').absolute().resolve()
+        self.template_dir =     (self.backend_path / 'templates').absolute().resolve()
 
         self.h_file_path =      Path(h_file_path) if h_file_path else self._open_header_dialog()
 
@@ -238,22 +233,13 @@ class Project:
         sm = StateMachine(self.model, self.h_file_path, self.func_h_path.name, self.c_templates, self.file_config)
 
         with open(self.c_file_path, 'w') as cfile:
-            logging.info(f'Generating code into file: {self.c_file_path}')
+            logging.info(f'Generating code int file: {self.c_file_path}')
             cfile.write(str(sm.ast))
 
         with open(self.func_h_path, 'w') as hfile:
-            logging.info(f'Generating code into file: {self.func_h_path}')
+            logging.info(f'Generating code int file: {self.func_h_path}')
             hfile.write(str(sm.h_ast))
 
-    def print_repository_info(self, repo):
-        print('Repository description: {}'.format(repo.description))
-        print('Repository active branch is {}'.format(repo.active_branch))
-
-        for remote in repo.remotes:
-            print('Remote named "{}" with URL "{}"'.format(remote, remote.url))
-
-        print('Last commit for repository is {}.'.format(str(repo.head.commit.hexsha)))
-        print('pickpack version name : {}'.format(repo.active_branch).format(str(repo.head.commit.hexsha)))
 project = None
 
 @eel.expose
@@ -270,9 +256,6 @@ def save_state_machine(drawing: str, json_data: str, filepath: str):
         logging.info(f'User selected path: {filepath}')
         save_html(Path(filepath), drawing, json_data)
 
-@eel.expose
-def open_window():
-    subprocess.Popen(["py","./sm_gen/chsm_backend.py"], shell=True)
 
 @eel.expose
 def open_file():
@@ -301,10 +284,6 @@ def genereate_code():
     project.generate_code()
 
 @eel.expose
-def exit_program():
-    quit()
-
-@eel.expose
 def startup():
     if project:
         eel.load_json(json.dumps(project.model), Path(args['FILE']).name, args['FILE'])
@@ -314,8 +293,8 @@ if __name__ == '__main__':
     args = docopt(__doc__)
     print(args)
 
-    if args['--output-lang']:
-        pass
+    #project = Project('/home/pi/projects/chsm/crf/test/tinc/chsm_test_machine.h')
+    #project.generate_code()
 
     if args['FILE']:
         p = Path(args['FILE'])
@@ -330,6 +309,5 @@ if __name__ == '__main__':
     if args['--server-only']:
         eel.start('main.html', mode=None, port=0)
     else:
-        # eel.start('main.html', port=0)
-        eel.start('main.html', port=0, mode='None')
+        eel.start('main.html', port=0)
 
