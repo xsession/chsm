@@ -250,7 +250,7 @@ void lm73_update_temp(chsm_tst *_self, const cevent_tst *e_pst)
     if (NULL == temp_pst) return;
 
     // Compile the value of the Temperature Data Register into a variable
-    double tdr_reg_u32 = ((((self->rx_buff_au8[0] << 8) | self->rx_buff_au8[1]) >> 2) * 0.03125) - 3;
+    double tdr_reg_u32 = ((((self->rx_buff_au8[0] << 8) | self->rx_buff_au8[1]) >> 2) * 0.03125);
     int32_t temp_c_i32 = tdr_reg_u32*1000;
 
     temp_pst->super.sig = SIG_LM73_TEMP;
