@@ -14,7 +14,7 @@ include(graphviz)
 include(path_list)
 
 set(CMAKE_DEBUG_MSG OFF)
-set(CHSM_BUILD_TESTS ON)
+set(CHSM_BUILD_TESTS OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
