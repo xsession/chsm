@@ -1,3 +1,6 @@
 [submodule "cmake_utils"]
 	path = cmake_utils
 	url = https://github.com/xsession/cmake_utils.git
+[submodule "examples/c/menu_stucture"]
+	path = examples/c/menu_stucture
+	url = https://github.com/xsession/menu_structure.git
