@@ -519,6 +519,14 @@ TEST(i2c_master, write_2b_read_2b)
 	TEST_ASSERT_EQUAL(SIG_I2C_RESULT_SUCCESS, e_pst->sig);
 }
 
+TEST(i2c_master, start_bus_scan)
+{
+}
+
+TEST(i2c_master, check_bus_scan_result)
+{
+}
+
 TEST_GROUP_RUNNER(i2c_master)
 {
 	RUN_TEST_CASE(i2c_master, init);
@@ -531,8 +539,9 @@ TEST_GROUP_RUNNER(i2c_master)
 	RUN_TEST_CASE(i2c_master, read_2b);
 	RUN_TEST_CASE(i2c_master, read_1b_addr_nack);
 	RUN_TEST_CASE(i2c_master, write_2b_read_2b);
-	//RUN_TEST_CASE(i2c_master, init);
-	//RUN_TEST_CASE(i2c_master, init);
+
+	RUN_TEST_CASE(i2c_master, start_bus_scan);
+	RUN_TEST_CASE(i2c_master, check_bus_scan_result);
 	//RUN_TEST_CASE(i2c_master, init);
 	//RUN_TEST_CASE(i2c_master, init);
 	//RUN_TEST_CASE(i2c_master, init);

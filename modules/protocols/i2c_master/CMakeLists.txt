@@ -1,0 +1,20 @@
+
+add_module_lib(
+        NAME 
+                i2c_master
+        PACKAGE
+                chsm
+        SOURCE
+                src/i2c_master.c
+                src/i2c_master_functions.c
+        INCLUDE 
+                inc
+        LINK 
+                chsm::chsm_interfaces
+                chsm::crf
+        DEFINES 
+                NDEBUG
+                SIGNAL_CLASSES_H="${CHSM_SIGNAL_CLASSES_H}"
+        STANDARD
+                11
+)

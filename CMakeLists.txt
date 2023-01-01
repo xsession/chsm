@@ -8,7 +8,12 @@ DESCRIPTION "CHSM - Hierarchical State Machine (HSM) Framework for C
 
 ########################  External .cmake files includes  ############################ 
 
-include(cmake_utils)
+include(cmake_utils/cmake_utils.cmake)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+find_package(PkgConfig REQUIRED)
+
 
 ########################  Global settings  ############################ 
 set(DEBUG ON)
@@ -25,24 +30,6 @@ message(STATUS "
 
 add_subdirectory(modules)
 add_subdirectory(reactive_frameworks/c_rf)
-
-add_module_interface_lib(
-    NAME 
-        ${PROJECT_NAME}
-    LINK
-        chsm::chsm_interfaces
-        chsm::test_utils
-        chsm::crf 
-        chsm::i2c_master 
-        chsm::spi_master
-        chsm::canopen 
-        chsm::dac8565 
-        chsm::fram 
-        chsm::lm73 
-        chsm::ltc2471    
-    STANDARD
-        11
-)
     
 if(CHSM_BUILD_TESTS)
     include(FindUnity)
@@ -51,42 +38,35 @@ if(CHSM_BUILD_TESTS)
 endif()
 # Install ------------------------------------------------------------------------
 
-write_basic_package_version_file(${PROJECT_NAME}ConfigVersion.cmake
-    VERSION       ${PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion 
+
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/chsm-config-version.cmake
+    COMPATIBILITY AnyNewerVersion
+)
+  
+get_property(EXPORTED_TARGETS GLOBAL PROPERTY chsm_EXPORTED_TARGETS)
+
+foreach(TARGET ${EXPORTED_TARGETS})
+  get_target_property(INCLUDE_DIR ${TARGET} INTERFACE_INCLUDE_DIRECTORIES)
+  message("${TARGET} include directories: ${INCLUDE_DIR}")
+endforeach()
+
+    
+install(TARGETS ${EXPORTED_TARGETS}
+            NAMESPACE chsm::
+            DESTINATION lib)
+
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/chsm-config-version.cmake
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/chsm
 )
 
-## Target installation
-install(TARGETS   ${PROJECT_NAME} 
-    EXPORT        ${PROJECT_NAME}Targets
-    ARCHIVE       DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY       DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-    COMPONENT     library
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/chsm.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/chsm.pc
 )
 
-# Installing headers
 install(
-    DIRECTORY "${${PROJECT_NAME}_PUBLIC_HEADERS}"
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/chsm.pc
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 )
-
-## Target's cmake files: targets export
-install(EXPORT  ${PROJECT_NAME}Targets
-    NAMESPACE   ${PROJECT_NAME}::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
-
-## Target's cmake files: config and version config for find_package()
-install(FILES   ${PROJECT_NAME}Config.cmake
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
-
-set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
-export(PACKAGE ${PROJECT_NAME})
-
-# ------------------ Test and diagnostic ----------------------------------------------------
-
-diagnostic(${PROJECT_NAME})
-
