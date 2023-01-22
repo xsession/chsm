@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc ..\..\lib\libunity.a CMakeFiles/unity.dir/src/unity.c.obj CMakeFiles/unity.dir/extras/fixture/src/unity_fixture.c.obj CMakeFiles/unity.dir/extras/memory/src/unity_memory.c.obj
-C:\MinGW\bin\ranlib.exe ..\..\lib\libunity.a

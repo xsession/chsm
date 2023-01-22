@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc ..\..\..\lib\libspi_drv_mock.a CMakeFiles/spi_drv_mock.dir/tsrc/ut_spi_driver_mock.c.obj
-C:\MinGW\bin\ranlib.exe ..\..\..\lib\libspi_drv_mock.a

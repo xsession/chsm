@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc ..\..\lib\libcrf.a CMakeFiles/crf.dir/src/cbits.c.obj CMakeFiles/crf.dir/src/chsm.c.obj CMakeFiles/crf.dir/src/cpool.c.obj CMakeFiles/crf.dir/src/cqueue.c.obj CMakeFiles/crf.dir/src/crf.c.obj CMakeFiles/crf.dir/src/cvalue.c.obj
-C:\MinGW\bin\ranlib.exe ..\..\lib\libcrf.a

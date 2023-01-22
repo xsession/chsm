@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc ..\..\..\lib\libatomic_func.a CMakeFiles/atomic_func.dir/tsrc/atomic_functions.c.obj
-C:\MinGW\bin\ranlib.exe ..\..\..\lib\libatomic_func.a

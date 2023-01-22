@@ -1,3 +1,0 @@
-C:\cmake\bin\cmake.exe -E rm -f CMakeFiles\crf_test.dir/objects.a
-C:\MinGW\bin\ar.exe qc CMakeFiles\crf_test.dir/objects.a @CMakeFiles\crf_test.dir\objects1
-C:\MinGW\bin\gcc.exe -Wl,-Map=C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/bin/crf_test.map -Wl,--whole-archive CMakeFiles\crf_test.dir/objects.a -Wl,--no-whole-archive -o ..\..\..\bin\crf_test.exe -Wl,--out-implib,..\..\..\lib\libcrf_test.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\crf_test.dir\linkLibs.rsp
