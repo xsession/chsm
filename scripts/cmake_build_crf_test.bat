@@ -1,6 +1,7 @@
 @echo off
 
-cd ../build-mingw
+cd ../build-mingw-test
 
-cmake --build . -t crf_test 
-ctest -VV -R crf_test
+cmake --build . -t crf_test -v
+cd bin
+crf_test.exe

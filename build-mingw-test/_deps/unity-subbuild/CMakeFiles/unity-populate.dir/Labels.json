@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/CMakeFiles/unity-populate"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/CMakeFiles/unity-populate.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/CMakeFiles/unity-populate-complete.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-build.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-configure.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-download.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-install.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-patch.rule"
+		},
+		{
+			"file" : "C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/unity-populate-prefix/src/unity-populate-stamp/unity-populate-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"unity-populate"
+		],
+		"name" : "unity-populate"
+	}
+}

@@ -5,7 +5,7 @@
 #include "i2c_driver_if.h"
 #include "crf.h"
 #include "sys_if.h"
-#include SIGNAL_CLASSES_H
+#include "signal_classes.h"
 
 typedef enum ltc2471_signals_ten
 {

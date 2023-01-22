@@ -10,11 +10,10 @@ add_module_lib(
         INCLUDE 
                 inc
         LINK 
-                chsm::chsm_interfaces
+                crf_interfaces
                 chsm::crf
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H="${CHSM_SIGNAL_CLASSES_H}"
         STANDARD
                 11
 )

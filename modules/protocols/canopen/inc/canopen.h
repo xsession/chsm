@@ -2,7 +2,7 @@
 #define CANOPEN_H
 
 #include "crf.h"
-#include SIGNAL_CLASSES_H
+#include "signal_classes.h"
 #include "sdo.h"
 #include "od.h"
 #include "sys_if.h"

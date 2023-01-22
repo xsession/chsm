@@ -11,9 +11,9 @@
  * State machine 1
  */
 
-static chsm_result_ten s(chsm_tst *self, const cevent_tst  *e_pst);
+static chsm_result_ten s(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
 
-chsm_result_ten __top__1(chsm_tst *self, const cevent_tst  *e_pst)
+chsm_result_ten __top__1(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
 {
     switch(e_pst->sig)
     {
@@ -26,7 +26,7 @@ chsm_result_ten __top__1(chsm_tst *self, const cevent_tst  *e_pst)
     return chsm_ignored(self);
 }
 
-static chsm_result_ten s(chsm_tst *self, const cevent_tst  *e_pst)
+static chsm_result_ten s(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst)
 {
     switch(e_pst->sig)
     {
@@ -38,5 +38,5 @@ static chsm_result_ten s(chsm_tst *self, const cevent_tst  *e_pst)
             break;
     }
 
-    return chsm_ignored(self);
+    return chsm_handle_in_parent(self, ctx_pst, __top__1, NULL, false);
 }

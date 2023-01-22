@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc ..\..\..\lib\libi2c_drv_mock.a CMakeFiles/i2c_drv_mock.dir/tsrc/ut_i2c_driver_mock.c.obj
+C:\MinGW\bin\ranlib.exe ..\..\..\lib\libi2c_drv_mock.a

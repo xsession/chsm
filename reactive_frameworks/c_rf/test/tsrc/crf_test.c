@@ -23,6 +23,10 @@
 
 TEST_GROUP(crf);
 
+static const cevent_tst event_none = {.sig=C_SIG_NONE, .gc_info=0};
+
+static const cevent_tst event_send_data = {.sig=TEST_SIG_SEND_DATA, .gc_info=0};
+
 #define BUFF1_SIZE 	64
 #define BUFF2_SIZE 	512
 
@@ -50,8 +54,6 @@ crf_tst				crf;
 void send_data(bus_driver_tst *self, const cevent_tst *e_pst)
 {
 	self->tmp_u16 = 0xcafe;
-	
-	(void)e_pst;
 }
 
 /* bus_driver::emit_event
@@ -64,13 +66,10 @@ void emit_event(bus_driver_tst *self, const cevent_tst *e_pst)
 	e = CRF_NEW(TEST_SIG_READ);
 
 	self->sm.send((chsm_tst *)self, (const cevent_tst *)e);
-
-	(void)e_pst;
 }
 
 void bus_send(chsm_tst *self, const cevent_tst *e_pst)
 {
-	(void)self;
 	crf.post(&crf, (cevent_tst *)e_pst, (cqueue_tst *)(&dev_driver));
 }
 

@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2022.12.14 05.59.47*/
+/*Generated with CHSM v0.0.0 at 2023.01.22 09.47.59*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
@@ -272,7 +272,7 @@ static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst)
     return chsm_ignored(self);
 }
 
-chsm_result_ten (None, None)(chsm_tst *self, const cevent_tst  *e_pst)
+chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
 {
     switch(e_pst->sig)
     {

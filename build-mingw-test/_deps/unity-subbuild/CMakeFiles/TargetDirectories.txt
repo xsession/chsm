@@ -1,0 +1,3 @@
+C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/CMakeFiles/unity-populate.dir
+C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/CMakeFiles/edit_cache.dir
+C:/GIT/WORK/Gabor/paper_dispenser/fw/c/externals/chsm/build-mingw-test/_deps/unity-subbuild/CMakeFiles/rebuild_cache.dir

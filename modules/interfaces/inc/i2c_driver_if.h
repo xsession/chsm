@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "crf.h"
-#include SIGNAL_CLASSES_H
+#include "signal_classes.h"
 
 typedef enum i2c_driver_signals_ten
 {

@@ -1,7 +1,7 @@
 #ifndef CHSM_TEST_FUNCTIONS2_H
 #define CHSM_TEST_FUNCTIONS2_H
 
-/*Generated with CHSM v0.0.0 at 2022.11.20 06.11.20*/
+/*Generated with CHSM v0.0.0 at 2021.05.12 21.17.52*/
 
 #include "chsm_test_machine.h"
 #include "chsm.h"
@@ -66,7 +66,11 @@ bool s1_guard(chsm_tst *self, const cevent_tst *e_pst);
 
 typedef enum chsm_test_machine_state_id_ten
 {
+    S = 0,
+    S1 = 1,
     S11 = 2,
+    S2 = 3,
+    S21 = 4,
     S211 = 5,
     S3 = 6,
     S4 = 7,

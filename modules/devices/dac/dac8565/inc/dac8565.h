@@ -3,7 +3,7 @@
 
 #include "spi_master.h"
 #include "crf.h"
-#include SIGNAL_CLASSES_H
+#include "signal_classes.h"
 
 /*
 DAC8565

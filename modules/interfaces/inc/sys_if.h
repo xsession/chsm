@@ -2,7 +2,7 @@
 #define SYS_IF_H
 
 #include "crf.h"
-#include SIGNAL_CLASSES_H
+#include "signal_classes.h"
 
 /*
  * SYSTEM SIGNALS

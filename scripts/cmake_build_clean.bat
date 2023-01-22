@@ -1,5 +1,5 @@
 @echo off
 
-cd ../build-mingw
+cd ../build-mingw-test
 
 cmake --build . -t clean

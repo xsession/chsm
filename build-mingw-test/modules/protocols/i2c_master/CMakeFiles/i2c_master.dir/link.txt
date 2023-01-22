@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc ..\..\..\lib\libi2c_master.a CMakeFiles/i2c_master.dir/src/i2c_master.c.obj CMakeFiles/i2c_master.dir/src/i2c_master_functions.c.obj
+C:\MinGW\bin\ranlib.exe ..\..\..\lib\libi2c_master.a

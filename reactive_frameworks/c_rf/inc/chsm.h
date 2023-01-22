@@ -31,6 +31,7 @@ typedef enum
 } chsm_result_ten;
 
 typedef struct chsm_st chsm_tst;
+typedef struct chsm_call_ctx_st chsm_call_ctx_tst;
 
 /*
  * This is the type for functions the generated state machine will call.
@@ -52,7 +53,7 @@ typedef void (*chsm_user_func_tpft)(chsm_tst *self, const cevent_tst *e_pst);
  *		ctx_pst: Pointer to a call context that stores some information about the states involved
  *			in the event processing.
  */
-typedef chsm_result_ten (*chsm_state_tpft)(chsm_tst *self, const cevent_tst *e_pst);
+typedef chsm_result_ten (*chsm_state_tpft)(chsm_tst *self, const cevent_tst *e_pst, chsm_call_ctx_tst *ctx_pst);
 
 /*
  * Call context structure
@@ -111,7 +112,27 @@ void chsm_dispatch(chsm_tst *self, const cevent_tst *e_pst);
 void chsm_defer(chsm_tst *self, const cevent_tst *e_pst);
 void chsm_recall(chsm_tst *self, const cevent_tst *e_pst);
 
+void chsm_exit_children(chsm_tst *self, const cevent_tst  *e_pst, chsm_call_ctx_tst *ctx_pst);
+
 extern const cevent_tst chsm_init_event_st;
+
+static inline chsm_result_ten chsm_handle_in_parent(chsm_tst *self, chsm_call_ctx_tst *ctx_pst,
+	chsm_state_tpft parent, void *exit_func, bool guards_only_b)
+{
+	self->state_handler_pft = parent;
+	if (exit_func)
+	{
+		*(ctx_pst->exit_ppft) = (chsm_user_func_tpft)exit_func;
+		ctx_pst->exit_ppft++;
+	}
+
+	if (guards_only_b)
+	{
+		return C_RES_GUARDS;
+	}
+
+    return C_RES_PARENT;
+}
 
 static inline chsm_result_ten chsm_transition(chsm_tst *self, chsm_state_tpft target)
 {
@@ -122,15 +143,12 @@ static inline chsm_result_ten chsm_transition(chsm_tst *self, chsm_state_tpft ta
 
 static inline chsm_result_ten chsm_ignored(chsm_tst *self)
 {
-    (void)self;
     return C_RES_IGNORED;
 }
 
 static inline chsm_result_ten chsm_handled(chsm_tst *self)
 {
-    (void)self;
     return C_RES_HANDLED;
-	
 }
 
 #endif /* INC_CHSM_H_ */
