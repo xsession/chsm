@@ -12,6 +12,7 @@ add_module_test(
         unity
         crf
         i2c_drv_mock
+        spi_drv_mock
     DEFINES
         # NDEBUG 
     STANDARD

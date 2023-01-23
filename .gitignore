@@ -4,4 +4,4 @@
 !/**/build/.keep
 
 #dependencies
-**/unity/**
+**/unity/**build-mingw-test/

@@ -1,11 +1,11 @@
 
-add_module_interface_lib(
+add_module_lib(
         NAME
                 crf_interfaces
         PACKAGE 
                 chsm
-        SOURCES
-                tsrc/sys_if.c
+        SOURCE
+                src/sys_if.c
         INCLUDE 
                 inc
         LINK 
@@ -16,3 +16,11 @@ add_module_interface_lib(
         STANDARD
                 11
 )
+
+add_dependencies(crf_interfaces app_signal_classes)
+
+if(TARGET app_signal_classes )
+        message("-----> app_signal_classes is alive!!!")
+else()
+        message("-----> app_signal_classes is dead!!!")
+endif()
