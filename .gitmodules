@@ -4,3 +4,5 @@
 [submodule "examples/c/menu_stucture"]
 	path = examples/c/menu_stucture
 	url = https://github.com/xsession/menu_structure.git
+[submodule "unity"]
+	url = https://github.com/ThrowTheSwitch/Unity.git
