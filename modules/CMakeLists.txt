@@ -3,7 +3,7 @@ add_subdirectory(interfaces)
 
 # add_subdirectory(protocols/canopen)
 add_subdirectory(protocols/i2c_master)
-# add_subdirectory(protocols/spi_master)
+add_subdirectory(protocols/spi_master)
 
 # add_subdirectory(devices/adc/ltc2471)
 
