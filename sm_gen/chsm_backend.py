@@ -25,8 +25,6 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 from cgen import StateMachine
 
-import argparse
-
 class HtmlException(Exception):
     pass
 
@@ -37,7 +35,7 @@ class ChsmException(Exception):
 
 def save_html(html_fname: Path, drawing: str, json_data: str):
         backend_path =     (Path(__file__).parent).absolute().resolve()
-        template_dir =     (backend_path / 'templates').absolute().resolve()
+        template_dir =     (backend_path / 'cgen' / 'templates').absolute().resolve()
         template_html =    template_dir / 'template.html'
         drawing_js =       template_dir / 'wheel.js'
         web_dir =          (backend_path / '../web').absolute().resolve()

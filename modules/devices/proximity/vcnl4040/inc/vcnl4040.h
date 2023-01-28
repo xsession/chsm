@@ -5,10 +5,12 @@
 #include "crf.h"
 #include "signals.h"
 #include "sys_if.h"
+#include "vcnl4040_regs.h"
+
 
 /*
 VCNL4040 module
-==========
+==========blank
 
 0.0.1.
 
