@@ -115,6 +115,6 @@ struct i2c_master_tst
     uint32_t            counter_u32;
 };
 
-chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst *e_pst, chsm_call_ctx_tst *ctx_pst);
+chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst);
 
 #endif

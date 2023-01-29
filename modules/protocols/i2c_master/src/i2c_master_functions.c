@@ -43,7 +43,7 @@ void i2c_master_send_fail_response(chsm_tst *_self, const cevent_tst *e_pst)
 {
     i2c_master_tst *self = (i2c_master_tst *)_self;
 
-    if (self->config_st.driver_pst->status_un.bit_st.bus_busy_u16)
+    if (self->config_st.driver_pst->status_un.bit_st.busy_u16)
     {
         CRF_EMIT(&bus_busy_response_st);
         self->cached_tr_st.target_q_pst->put(self->cached_tr_st.target_q_pst, &addr_nack_response_st);

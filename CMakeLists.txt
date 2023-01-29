@@ -45,6 +45,7 @@ if(CHSM_BUILD_TESTS)
     # include(FindUnity)
     message(STATUS "----------> Enabled the tests! <-------------------")
     enable_testing()
+    add_subdirectory(unity)
 endif()
 
 
