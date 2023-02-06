@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "crf.h"
 #include "cqueue.h"
-#include "signal_classes.h"
+#include SIGNAL_CLASSES_H
 #include "cevent.h"
 
 /*

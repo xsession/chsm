@@ -12,6 +12,7 @@ Options:
 import re
 from time import time
 import eel
+import os
 import json
 from pathlib import Path
 from docopt import docopt
@@ -24,6 +25,8 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 from cgen import StateMachine
+
+import cgen.generators
 
 class HtmlException(Exception):
     pass
@@ -270,7 +273,10 @@ def save_state_machine(drawing: str, json_data: str, filepath: str):
 
 @eel.expose
 def open_window():
-    subprocess.Popen(["py","./sm_gen/chsm_backend.py"], shell=True)
+    python_path = os.environ['PYTHON_PATH']
+    print("Python environment variable:")
+    print(python_path)
+    subprocess.Popen([ python_path + "/python.exe","./sm_gen/chsm_backend.py"], shell=True)
 
 @eel.expose
 def open_file():

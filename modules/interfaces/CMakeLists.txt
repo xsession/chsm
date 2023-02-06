@@ -17,10 +17,22 @@ add_module_lib(
                 11
 )
 
-add_dependencies(crf_interfaces app_signal_classes)
 
-if(TARGET app_signal_classes )
-        message("-----> app_signal_classes is alive!!!")
-else()
-        message("-----> app_signal_classes is dead!!!")
-endif()
+add_module_lib(
+        NAME
+                app_signal_classes
+        PACKAGE
+                chsm
+        SOURCE
+                src/app_signal_classes.c
+        INCLUDE
+        LINK
+                chsm::crf
+        DEFINES
+        STANDARD
+                11
+)
+
+
+
+message("----------------> COMPILE_OPTIONS: ${COMPILE_OPTIONS}")

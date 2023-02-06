@@ -18,12 +18,12 @@ add_module_test(
 ) 
 
 
-# define the target and include directories
+# # define the target and include directories
 set(TARGET "app_signal_classes")
-set(INCLUDE_DIRS "tinc")
+set(SIG_CLASSES "${CMAKE_CURRENT_SOURCE_DIR}/tinc/signal_classes.h")
 
 # create the template file
-file(WRITE "include_dirs.cmake.in" "target_include_directories(@TARGET@ INTERFACE @INCLUDE_DIRS@)\n")
+file(WRITE "include_dirs.cmake.in" "target_compile_options(app_signal_classes PUBLIC -DSIGNAL_CLASSES_H=@SIG_CLASSES@)\n")
 
 # configure the include_dirs.cmake file
 configure_file(include_dirs.cmake.in include_dirs.cmake @ONLY)

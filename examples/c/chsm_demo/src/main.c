@@ -2,7 +2,7 @@
 #include <time.h>
 #include "crf.h"
 #include "chsm.h"
-#include "signal_classes.h"
+#include SIGNAL_CLASSES_H
 #include "chsm_demo.h"
 
 void delay(int milliseconds)

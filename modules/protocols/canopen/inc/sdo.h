@@ -2,7 +2,7 @@
 #define SDO_H
 
 #include "crf.h"
-#include "signal_classes.h"
+#include SIGNAL_CLASSES_H
 #include "od.h"
 #include "sys_if.h"
 #include "can_if.h"

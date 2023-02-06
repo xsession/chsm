@@ -27,22 +27,10 @@ message(STATUS "
 ----------------------> Chsm <-----------------------------------
 ")
 
-add_library(app_signal_classes INTERFACE)
-# target_sources(app_signal_classes INTERFACE tinc/signal_classes.h)
-target_link_libraries(app_signal_classes INTERFACE chsm::crf)
-# target_include_directories(app_signal_classes INTERFACE
-#         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tinc>
-#         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/app_signal_classes>)
-# set_target_properties(app_signal_classes
-#         PROPERTIES 
-#         C_STANDARD          11
-#         C_STANDARD_REQUIRED ON)
-
 add_subdirectory(modules)
 add_subdirectory(reactive_frameworks/c_rf)
     
 if(CHSM_BUILD_TESTS)
-    # include(FindUnity)
     message(STATUS "----------> Enabled the tests! <-------------------")
     enable_testing()
     add_subdirectory(unity)

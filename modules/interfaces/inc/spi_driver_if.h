@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "crf.h"
-#include "signal_classes.h"
+#include SIGNAL_CLASSES_H
 
 typedef enum spi_driver_signals_ten
 {

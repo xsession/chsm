@@ -1,7 +1,7 @@
 #ifndef VCNL4040_FUNCTIONS_H
 #define VCNL4040_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2022.12.10 21.29.01*/
+/*Generated with CHSM v0.0.0 at 2023.02.06 21.35.50*/
 
 #include "vcnl4040.h"
 #include "chsm.h"
@@ -32,9 +32,6 @@ void vcnl4040_update_data(chsm_tst *self, const cevent_tst *e_pst);
 
 typedef enum vcnl4040_state_id_ten
 {
-    S_VCNL4040 = 0,
-    S_INIT = 1,
-    S_ONLINE = 2,
     S_CONFIG = 3,
     S_READ_ID = 4,
     S_UNPLUGGED = 5,
@@ -48,7 +45,7 @@ Signals:
     SIG_I2C_RESULT_ADDR_NACK 
     SIG_I2C_RESULT_DATA_NACK 
     SIG_I2C_RESULT_SUCCESS   
-    SIG_SYS_TIICK_10ms       
+    SIG_SYS_TICK_10ms        
     SIG_VCNL4040_READ        
 */
 

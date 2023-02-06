@@ -16,7 +16,7 @@ add_subdirectory(protocols/spi_master)
 # add_subdirectory(devices/temperature/lm73)
 # add_subdirectory(devices/temperature/tmp468)
 
-# add_subdirectory(devices/proximity/vcnl4040)
+add_subdirectory(devices/proximity/vcnl4040)
 
 # add_subdirectory(devices/display/ssd1306)
 

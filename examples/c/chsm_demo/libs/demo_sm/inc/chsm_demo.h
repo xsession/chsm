@@ -6,7 +6,7 @@
 #include "stdint.h"
 #include "crf.h"
 #include "sys_if.h"
-#include "signal_classes.h"
+#include SIGNAL_CLASSES_H
 
 #define TEST_HSM_LOG_SIZE 1024
 
