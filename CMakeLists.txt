@@ -7,7 +7,12 @@ DESCRIPTION "CHSM - Hierarchical State Machine (HSM) Framework for C The project
 
 ########################  External .cmake files includes  ############################ 
 
-include(cmake_utils/cmake_utils.cmake)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+  message(STATUS "CHSM is the top-level project")
+  include(cmake_utils/cmake_utils.cmake)
+else()
+  message(STATUS "CHSM is a sub-project")
+endif()
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 

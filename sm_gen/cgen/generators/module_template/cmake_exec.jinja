@@ -1,0 +1,15 @@
+
+add_module_executable(
+        NAME 
+                {{exec_name}}
+        SOURCE 
+                src/{{source_files}} 
+        INCLUDE 
+                {{include_libs}}
+        LINK 
+                {{linked_libs}}
+        DEFINES 
+                {{defines}}
+        STANDARD
+                11
+)

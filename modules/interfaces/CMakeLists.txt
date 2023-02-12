@@ -18,20 +18,20 @@ add_module_lib(
 )
 
 
-add_module_lib(
-        NAME
-                app_signal_classes
-        PACKAGE
-                chsm
-        SOURCE
-                src/app_signal_classes.c
-        INCLUDE
-        LINK
-                chsm::crf
-        DEFINES
-        STANDARD
-                11
-)
+# add_module_lib(
+#         NAME
+#                 app_signal_classes
+#         PACKAGE
+#                 chsm
+#         SOURCE
+#                 src/app_signal_classes.c
+#         INCLUDE
+#         LINK
+#                 chsm::crf
+#         DEFINES
+#         STANDARD
+#                 11
+# )
 
 
 
