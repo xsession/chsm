@@ -10,28 +10,13 @@ add_module_lib(
                 inc
         LINK 
                 chsm::crf
-                app_signal_classes
         DEFINES 
                 NDEBUG
+                SIGNAL_CLASSES_H=${SIGNAL_CLASSES_H_PATH}
         STANDARD
                 11
 )
 
-
-# add_module_lib(
-#         NAME
-#                 app_signal_classes
-#         PACKAGE
-#                 chsm
-#         SOURCE
-#                 src/app_signal_classes.c
-#         INCLUDE
-#         LINK
-#                 chsm::crf
-#         DEFINES
-#         STANDARD
-#                 11
-# )
 
 
 
