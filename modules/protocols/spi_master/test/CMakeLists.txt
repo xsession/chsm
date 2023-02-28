@@ -13,7 +13,7 @@ add_module_test(
         spi_master
     DEFINES
         NDEBUG 
-        SIGNAL_CLASSES_H=$<TARGET_PROPERTY:i2c_master_test,"${CMAKE_CURRENT_SOURCE_DIR}/tinc/signal_classes.h">
+        $<TARGET_PROPERTY:spi_master_test,SIGNAL_CLASSES_H="${CMAKE_CURRENT_SOURCE_DIR}/tinc/signal_classes.h">
     STANDARD
         11
 ) 
