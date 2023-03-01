@@ -13,9 +13,7 @@ add_module_test(
         i2c_master
     DEFINES
         NDEBUG 
-        $<$<TARGET_PROPERTY:i2c_master_test,${SIGNAL_CLASSES_H}="${CMAKE_CURRENT_SOURCE_DIR}/tinc/signal_classes.h">
+        $<IF:$<STREQUAL:$<TARGET_PROPERTY:NAME>,i2c_master_test>,$CACHE{SIGNAL_CLASSES_H}="${CMAKE_CURRENT_SOURCE_DIR}/tinc/signal_classes.h","default_value">
     STANDARD
         11
 ) 
-
-

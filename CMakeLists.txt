@@ -7,13 +7,14 @@ DESCRIPTION "CHSM - Hierarchical State Machine (HSM) Framework for C The project
 
 ########################  External .cmake files includes  ############################ 
 
+set(SIGNAL_CLASSES_H "signal_classes.h" CACHE STRING "asdf")
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(STATUS "CHSM is the top-level project")
+  # set(SIGNAL_CLASSES_H "signal_classes.h" CACHE STRING "asdf")
   include(cmake_utils/cmake_utils.cmake)
-  set(SIGNAL_CLASSES_H "Default_signal_classes_path_from_root" CACHE STRING "asdf")
   else()
   include(cmake_utils/cmake_utils.cmake)
-  set(SIGNAL_CLASSES_H "Default_signal_classes_path_from_root" CACHE STRING "asdf")
+  # set(SIGNAL_CLASSES_H "Default_signal_classes_path_from_root" CACHE STRING "asdf")
   message(STATUS "CHSM is a sub-project")
 endif()
 include(GNUInstallDirs)
