@@ -18,7 +18,7 @@ import logging
 from pprint import pprint
 import collections
 import subprocess
-
+import os
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
@@ -269,9 +269,13 @@ def save_state_machine(drawing: str, json_data: str, filepath: str):
         logging.info(f'User selected path: {filepath}')
         save_html(Path(filepath), drawing, json_data)
 
+
 @eel.expose
 def open_window():
-    subprocess.Popen(["py","./cgen/chsm_backend.py"], shell=True)
+    python_path = os.environ['PYTHON_PATH']
+    print("Python environment variable:")
+    print(python_path)
+    subprocess.Popen([ python_path + "/python.exe","./cgen/chsm_backend.py"], shell=True)
 
 @eel.expose
 def open_file():
