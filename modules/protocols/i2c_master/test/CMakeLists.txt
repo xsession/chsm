@@ -13,7 +13,7 @@ add_module_test(
         i2c_master
     DEFINES
         NDEBUG 
-        $CACHE{SIGNAL_CLASSES_H}=$CACHE{SIGNAL_CLASSES_H_PATH}
+        "SIGNAL_CLASSES_H=$<JOIN:SIGNAL_CLASSES_H,$CACHE{SIGNAL_CLASSES_H_PATH}>"
     STANDARD
         11
 ) 
@@ -29,10 +29,10 @@ configure_file(include_dirs.cmake.in include_dirs.cmake)
 
 # add the custom command
 add_custom_command(
+    PRE_BUILD i2c_master_test
     OUTPUT include_dirs.cmake
     COMMAND ${CMAKE_COMMAND} -E echo "configuring include_dirs.cmake"
     DEPENDS include_dirs.cmake.in
-    PRE_BUILD i2c_master_test
 )
 
 # include the generated file
