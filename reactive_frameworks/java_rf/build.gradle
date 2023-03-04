@@ -1,0 +1,9 @@
+wrapper {
+    gradleVersion = '6.5.1'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}

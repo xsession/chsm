@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'pmd'
+apply plugin: 'maven-publish'
+
+pmd {
+    toolVersion = '6.0.0'
+    ignoreFailures = true
+    ruleSetFiles = files("${rootDir}/pmd-rules.xml")
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+if (project.version == 'unspecified' && project.hasProperty('projectVersion')) {
+    project.version = project.projectVersion
+}
+
+def publishArtifactId = project.name
+if (project.hasProperty("projectArtifactId")) {
+    publishArtifactId = projectArtifactId
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId publishArtifactId
+            from components.java
+        }
+    }
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.3'
+    /* compile 'com.google.guava:guava:17.0' */
+    compile 'com.google.guava:guava-jdk5:13.0'
+}
+
+task reportDate doLast {
+    println "execution at: " + new Date()
+    println "group: " + project.group
+    println "name: " + project.name
+    println "version: " + project.version
+}
+
+allprojects {
+    afterEvaluate { project ->
+        project.tasks.publishToMavenLocal.dependsOn project.tasks.reportDate
+    }
+}
