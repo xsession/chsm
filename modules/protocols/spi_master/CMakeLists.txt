@@ -14,7 +14,7 @@ add_module_lib(
                 chsm::crf
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H=$CACHE{SIGNAL_CLASSES_H_PATH}
+                SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
         STANDARD
                 11
 )

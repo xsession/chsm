@@ -30,8 +30,8 @@ add_module_lib(
     LINK
         crf_interfaces
     DEFINES
-        SIGNAL_CLASSES_H=$CACHE{SIGNAL_CLASSES_H_PATH}
-    STANDARD
+        SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
+        STANDARD
         11
 )
 
@@ -45,7 +45,7 @@ add_module_lib(
     LINK
         crf_interfaces
     DEFINES
-        SIGNAL_CLASSES_H=$CACHE{SIGNAL_CLASSES_H_PATH}
+        SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
     STANDARD
         11
 )

@@ -1,0 +1,55 @@
+@startuml sm_gen_swad
+scale 800 width
+skinparam backgroundColor #FFEBDC
+scale 1
+
+skinparam cloud {
+  backgroundColor Olive
+  borderColor orange
+}
+
+title Architecture Diagram of the CHSM package
+
+left to right direction
+
+package "sm_gen" as sm_gen{
+
+package "cgen" as cgen{
+    package "sm" as sm{
+        class StateMachine{
+
+        }
+    }
+    package "ast" as ast{
+        class "Ast"{}
+        class "Node"{}
+        class "Comment"{}
+        class "Include"{}
+        class "ifndef"{}
+        class "Define"{}
+        class "Endif"{}
+        class "Block"{}
+        class "If"{}
+        class "switch"{}
+        class "Break"{}
+        class "Decl"{}
+        class "Enum"{}
+        class "Argument"{}
+        class "Blank"{}
+        class "Case"{}
+        class "FunctionDeclaration"{}
+        class "Func"{}
+        class "Call"{}
+        class "Expr"{}
+        class "Return"{
+            -
+        }
+    }
+}
+package "pygen" as pygen{}
+package "jsgen" as jsgen{}
+package "javagen" as javagen{}
+}
+
+
+@enduml
