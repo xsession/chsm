@@ -1,0 +1,16 @@
+@startuml
+
+package "CHSM" as chsm {
+    package "Backend" as backend {
+        class "Project" as project{
+
+        }
+    }
+    package "Frontend" as frontend {
+        interface frontend_int
+    }
+}
+
+backend --( frontend_int
+
+@enduml

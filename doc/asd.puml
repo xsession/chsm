@@ -1,0 +1,29 @@
+@startuml
+
+title ECS Fargate API and Aurora MySQL
+
+cloud Internet {
+}
+ 
+node "ECS Cluster" {
+   node "ECS Fargate Service" {
+      node "ECS Task" {
+        [API]
+        [Log Forwarder] as LF  
+        interface HTTP as PORT
+        artifact "LogFiles" as LogFiles
+      }
+  }
+} 
+
+database "MySQL" {
+    [Stored Procs]
+}
+
+Internet -down-( PORT
+[API] -up- PORT
+LF --> LogFiles : reads
+[API] --> LogFiles : writes
+API <..> [Stored Procs] : calls
+
+@enduml

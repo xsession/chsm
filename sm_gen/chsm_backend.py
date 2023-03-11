@@ -214,7 +214,6 @@ class Project:
             
         return self._find_file(h_dir, 'settings.json')
 
-
     def _load_user_config(self, hpath):
         user_cfg_path = self._find_user_config_file(hpath.parent, hpath.stem)
 
