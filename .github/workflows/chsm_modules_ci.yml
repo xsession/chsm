@@ -2,7 +2,7 @@ name: chsm_modules_ci
 
 on:
   push:
-    branches: [ feature/fix_test_runs, master, main ]
+    branches: [ feature/multi_lang_sm_gen, feature/fix_test_runs, master, main ]
 
 jobs:
   build:
