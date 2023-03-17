@@ -12,9 +12,9 @@ add_module_lib(
         LINK 
                 crf_interfaces
                 chsm::crf
+                signal_classes_modules
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
         STANDARD
                 11
 )

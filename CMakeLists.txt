@@ -32,7 +32,7 @@ include(CMakePackageConfigHelpers)
 
 ########################  Global settings  ############################ 
 set(DEBUG ON)
-option(CHSM_BUILD_TESTS OFF)
+option(CHSM_BUILD_TESTS ON)
 set(OUTSIDE_PYTHON_PATH ${$ENV{PYTHON_PATH}})
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
@@ -50,6 +50,9 @@ add_subdirectory(reactive_frameworks/c_rf)
 if(CHSM_BUILD_TESTS)
     message(STATUS "----------> Enabled the tests! <-------------------")
     enable_testing()
+    set(UNITY_EXTENSION_FIXTURE ON CACHE INTERNAL "Set UNITY_EXTENSION_FIXTURE CACHE INTERNAL.")
+    set(UNITY_EXTENSION_MEMORY ON CACHE INTERNAL "Set UNITY_EXTENSION_MEMORY CACHE INTERNAL.")
+    
     add_subdirectory(unity)
 endif()
 

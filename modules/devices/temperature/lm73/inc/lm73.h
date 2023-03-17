@@ -4,16 +4,10 @@
 #include "i2c_master.h"
 #include "i2c_driver_if.h"
 #include "crf.h"
-// #include "signals.h"
 #include "sys_if.h"
 
-#ifndef INC_SIGNAL_CLASSES_APP_H
-    #include "default_signal_classes.h"
-    #warning "You aren't defined APP level header that can give your own value for SIG_CLASS_LM73 module."
-#else
-    #include "signal_classes_app.h"
-#else
-
+#include "signal_classes_modules.h"
+ 
 /*
 LM73 driver
 ==========

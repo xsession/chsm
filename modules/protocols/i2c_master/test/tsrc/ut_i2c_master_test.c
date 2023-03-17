@@ -1,5 +1,5 @@
 /*
- * ut_i2c_driver_mock_test.c
+ * ut_i2c_master_test.c
  *
  *  Created on: 2020. dec. 19.
  *      Author: jszeman

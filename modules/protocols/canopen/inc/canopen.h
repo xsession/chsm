@@ -1,12 +1,12 @@
 #ifndef CANOPEN_H
 #define CANOPEN_H
 
+#include <stdint.h>
 #include "crf.h"
-#include "signal_classes.h"
 #include "sdo.h"
 #include "od.h"
 #include "sys_if.h"
-#include <stdint.h>
+#include "signal_classes_modules.h"
 
 /*
  * CANOPEN INTERFACE SIGNALS
