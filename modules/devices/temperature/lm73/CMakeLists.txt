@@ -13,7 +13,7 @@ add_module_lib(
                 chsm::i2c_master
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H="${CHSM_SIGNAL_CLASSES_H}"
+                # SIGNAL_CLASSES_H="${CHSM_SIGNAL_CLASSES_H}"
         STANDARD
                 11
 )

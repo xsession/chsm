@@ -1,0 +1,32 @@
+@startuml signal_classes_distribution
+scale 800 width
+skinparam backgroundColor #FFEBDC
+scale 1
+
+skinparam cloud {
+  backgroundColor Olive
+  borderColor orange
+}
+
+title Architecture Diagram of the CHSM package
+
+left to right direction
+
+package chsm {
+    package interfaces{
+        rectangle signal_classes_if{
+            typedef enum sig_class_ten {
+    SIG_CLASS_SYS = CRF_SIGNAL_CLASS_START,
+    SIG_CLASS_I2C_DRIVER,
+    SIG_CLASS_SPI_DRIVER,
+    SIG_CLASS_MEM,
+    SIG_CLASS_CAN,
+    SIG_APP_NAMESPACE_START,
+} sig_class_ten;
+        }
+
+    }
+}
+
+
+@enduml

@@ -42,6 +42,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}
 message(STATUS "
 ----------------------> Chsm <-----------------------------------
 ")
+# add_library(app_signal_classes STATIC dummy.h) 
 
 add_subdirectory(modules)
 add_subdirectory(reactive_frameworks/c_rf)

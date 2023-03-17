@@ -30,7 +30,7 @@ add_module_lib(
     LINK
         crf_interfaces
     DEFINES
-        SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
+        # SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
         STANDARD
         11
 )
@@ -45,7 +45,7 @@ add_module_lib(
     LINK
         crf_interfaces
     DEFINES
-        SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
+        # SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
     STANDARD
         11
 )

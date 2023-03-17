@@ -10,9 +10,10 @@ add_module_lib(
                 inc
         LINK 
                 chsm::crf
+                # app_signal_classes
         DEFINES 
                 NDEBUG
-                SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
+                # SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
         STANDARD
                 11
 )
