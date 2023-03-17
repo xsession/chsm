@@ -1,0 +1,32 @@
+@startuml
+scale 400 width
+skinparam backgroundColor #FFEBDC
+scale 1
+
+skinparam cloud {
+  backgroundColor Olive
+  borderColor orange
+}
+
+title
+    CHSM signal classes distribution
+end title
+
+' left to right direction
+
+package app {
+    rectangle SIG_EXT_APP_NAMESPACE_START as sig_ext_app_namespace_start2
+    package chsm_modules {
+        rectangle SIG_APP_NAMESPACE_START as sig_app_namespace_start
+        rectangle SIG_EXT_APP_NAMESPACE_START as sig_ext_app_namespace_start
+        package interfaces {
+            rectangle CRF_SIGNAL_CLASS_START as crf_signal_class_start
+            rectangle SIG_APP_NAMESPACE_START as sig_app_namespace_start2
+        }
+    }
+}
+crf_signal_class_start --> sig_app_namespace_start2
+sig_app_namespace_start2 --> sig_app_namespace_start
+sig_app_namespace_start --> sig_ext_app_namespace_start
+sig_ext_app_namespace_start --> sig_ext_app_namespace_start2
+@enduml
