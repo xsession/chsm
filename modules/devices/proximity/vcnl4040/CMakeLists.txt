@@ -10,8 +10,10 @@ add_module_lib(
         INCLUDE 
                 inc
         LINK 
-                chsm::crf
+                chsm::i2c_master
+                signal_classes_modules
         DEFINES 
+                NDEBUG
         STANDARD
                 11
 )

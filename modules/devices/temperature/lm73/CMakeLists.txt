@@ -11,6 +11,7 @@ add_module_lib(
                 inc
         LINK 
                 chsm::i2c_master
+                signal_classes_modules
         DEFINES 
                 NDEBUG
         STANDARD

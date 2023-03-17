@@ -3,10 +3,10 @@
 
 #include "crf.h"
 #include "i2c_driver_if.h"
-#include "i2c_master.h"
-#include "signals.h"
 #include "sys_if.h"
+#include "i2c_master.h"
 #include "tmp468_regs.h"
+#include "signal_classes_modules.h"
 
 /*
 TMP468 driver

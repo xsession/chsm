@@ -2,10 +2,11 @@
 #define SDO_H
 
 #include "crf.h"
-#include "signal_classes.h"
 #include "od.h"
 #include "sys_if.h"
 #include "can_if.h"
+
+#include "signal_classes_modules.h"
 
 #define SDO_BLOCK_SIZE 7
 #define SDO_BLOCK_BUFFER_SIZE (SDO_BLOCK_SIZE * 7)

@@ -1,0 +1,27 @@
+
+add_module_lib(
+        NAME 
+                canopen
+        PACKAGE
+                chsm
+        SOURCE
+                src/canopen.c
+                src/canopen_functions.c
+                src/od.c
+                src/sdo.c
+                src/sdo_block_dl.c
+                src/sdo_block_ul.c
+                src/sdo_dl.c
+                src/sdo_functions.c
+                src/sdo_ul.c
+        INCLUDE 
+                inc
+        LINK 
+                crf_interfaces
+                chsm::crf
+                signal_classes_modules
+        DEFINES 
+                NDEBUG
+        STANDARD
+                11
+)
