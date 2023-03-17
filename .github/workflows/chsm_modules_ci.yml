@@ -16,7 +16,10 @@ jobs:
       
     - name: Check cmake version
       run: cmake --version
-      
+
+    - name: Init the submodules
+      run: git submodule init 
+
     - name: Update submodules
       run: git submodule update --recursive
 
