@@ -12,7 +12,7 @@
 # add_subdirectory(humidity/sht30)
 
 # Temperature
-# add_subdirectory(temperature/lm73)
+add_subdirectory(temperature/lm73)
 # add_subdirectory(temperature/tmp468)
 
 # Proximity
