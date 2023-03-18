@@ -6,14 +6,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         submodules: recursive
-    
+    - name: Install gcc
+      uses: mstfbl/setup-gcc@v1
+      with:
+        gcc-version: '6.4.0'
+
     - name: List out the directory
       run: tree ${{ github.workspace }}
       
