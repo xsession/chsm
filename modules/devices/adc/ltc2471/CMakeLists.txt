@@ -1,0 +1,19 @@
+
+add_module_lib(
+        NAME 
+                ltc2471
+        PACKAGE
+                chsm
+        SOURCE
+                src/ltc2471.c
+                src/ltc2471_functions.c
+        INCLUDE 
+                inc
+        LINK 
+                chsm::i2c_master
+                signal_classes_modules
+        DEFINES 
+                NDEBUG
+        STANDARD
+                11
+)

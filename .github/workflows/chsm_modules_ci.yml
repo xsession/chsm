@@ -6,19 +6,13 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         submodules: recursive
-        
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v2
-      with:
-        gcc-version: '6.4.0'
-        platform: x64
 
     - name: List out the directory
       run: tree ${{ github.workspace }}

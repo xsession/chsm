@@ -1,0 +1,18 @@
+
+add_module_lib(
+        NAME 
+                {{lib_name}}
+        PACKAGE
+                {{package_name}}
+        SOURCE 
+                src/{{lib_name}}.c
+                src/{{lib_name}}_functions.c 
+        INCLUDE 
+                inc
+        LINK 
+                {{linked_libs}}
+        DEFINES 
+                NDEBUG
+        STANDARD
+                11
+)

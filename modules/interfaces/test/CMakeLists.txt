@@ -14,7 +14,7 @@ add_module_test(
         i2c_drv_mock
         spi_drv_mock
     DEFINES
-        # NDEBUG 
+        NDEBUG 
     STANDARD
         11
 ) 
@@ -30,8 +30,8 @@ add_module_lib(
     LINK
         crf_interfaces
     DEFINES
-        # SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
-        STANDARD
+        NDEBUG 
+    STANDARD
         11
 )
 
@@ -45,7 +45,7 @@ add_module_lib(
     LINK
         crf_interfaces
     DEFINES
-        # SIGNAL_CLASSES_H=$<TARGET_PROPERTY:SIGNAL_CLASSES_H>
+        NDEBUG
     STANDARD
         11
 )

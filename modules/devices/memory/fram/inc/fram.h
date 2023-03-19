@@ -4,7 +4,7 @@
 #include "i2c_master.h"
 #include "i2c_driver_if.h"
 #include "crf.h"
-#include SIGNAL_CLASSES_H
+#include "signal_classes_modules.h"
 #include "mem_driver_if.h"
 
 /*

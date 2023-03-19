@@ -1,0 +1,19 @@
+
+add_module_lib(
+        NAME 
+                dac8565
+        PACKAGE
+                chsm
+        SOURCE
+                src/dac8565.c
+                src/dac8565_functions.c
+        INCLUDE 
+                inc
+        LINK 
+                chsm::i2c_master
+                signal_classes_modules
+        DEFINES 
+                NDEBUG
+        STANDARD
+                11
+)
