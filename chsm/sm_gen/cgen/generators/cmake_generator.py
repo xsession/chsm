@@ -12,9 +12,8 @@ import pprint
 
 class CmakeGen:
     def __init__(self):
-        self.lib_linked_libs = 
-        self.test_linked_libs = 
-        pass
+        self.lib_linked_libs = ''
+        self.test_linked_libs = ''
     
     def createFile(self, file_loc, file_name, content):
         file_dir = os.path.join(file_loc, file_name)
@@ -43,7 +42,6 @@ class CmakeGen:
         self.createFile(os.path.join(str(cmake_path), str(module_name) + "/test"), 
                         "CMakeLists.txt", 
                         self.cmake_test_build_template.format(name=module_name) )
-        return py_str
         
         
         
