@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.02.06 21.35.50*/
+/*Generated with CHSM v0.0.0 at 2023.03.19 10.43.58*/
 #include "cevent.h"
 #include "chsm.h"
 #include "vcnl4040.h"
@@ -83,10 +83,6 @@ static chsm_result_ten s_idle(chsm_tst *self, const cevent_tst  *e_pst)
 {
     switch(e_pst->sig)
     {
-        case SIG_VCNL4040_READ:
-            vcnl4040_start_read(self, e_pst);
-            return chsm_transition(self, s_reading);
-
         case SIG_SYS_TICK_10ms:
             vcnl4040_10ms_callback(self, e_pst);
             break;
@@ -157,7 +153,7 @@ static chsm_result_ten s_reading(chsm_tst *self, const cevent_tst  *e_pst)
     return chsm_ignored(self);
 }
 
-chsm_result_ten (None, None)(chsm_tst *self, const cevent_tst  *e_pst)
+chsm_result_ten vcnl4040_top(chsm_tst *self, const cevent_tst  *e_pst)
 {
     switch(e_pst->sig)
     {

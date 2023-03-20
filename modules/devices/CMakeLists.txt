@@ -16,7 +16,7 @@ add_subdirectory(adc/ltc2471)
 # add_subdirectory(gesture/apds9960)
 
 # Humidity
-# add_subdirectory(humidity/sht30)
+add_subdirectory(humidity/sht30)
 # add_subdirectory(humidity/hts221)
 
 # Inertial_module
@@ -29,7 +29,7 @@ add_subdirectory(memory/fram)
 # add_subdirectory(pressure/lps22hb)
 
 # Proximity
-# add_subdirectory(devices/proximity/vcnl4040)
+# add_subdirectory(proximity/vcnl4040)
 
 # Pulseoximeter
 # add_subdirectory(pulseoximeter/max30100)

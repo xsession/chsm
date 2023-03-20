@@ -423,7 +423,7 @@ static chsm_result_ten s_init(chsm_tst *self, const cevent_tst *e_pst, chsm_call
     return chsm_handle_in_parent(self, ctx_pst, s_tmp468, NULL, guards_only_b);
 }
 
-chsm_result_ten tmp468_top(chsm_tst *self, const cevent_tst *e_pst, chsm_call_ctx_tst *ctx_pst)
+chsm_result_ten tmp468_top(chsm_tst *self, const cevent_tst *e_pst)
 {
     bool guards_only_b = true;
     switch (e_pst->sig)

@@ -17,3 +17,5 @@ add_module_test(
         11
 ) 
 
+set_property(TARGET lm73_test PROPERTY ECLIPSE_GENERATE_SOURCE_PROJECT ON)
+set_property(TARGET lm73_test PROPERTY ECLIPSE_GENERATE_LINKED_RESOURCES ON)

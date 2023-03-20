@@ -46,7 +46,7 @@ class CmakeGen:
         
         
         
-if __name__ == '__main__':
+# if __name__ == '__main__':
     
-    c = CmakeGen()
-    c.generate_cmake_files('C:\Users\Yoga\OneDrive\Desktop\GIT\paper_dispenser\fw\c\externals\chsm\chsm\sm_gen\cgen\generators\test', 'kecske1', 'library')
+#     c = CmakeGen()
+#     c.generate_cmake_files('C:\Users\Yoga\OneDrive\Desktop\GIT\paper_dispenser\fw\c\externals\chsm\chsm\sm_gen\cgen\generators\test', 'kecske1', 'library')

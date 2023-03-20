@@ -3,10 +3,10 @@
 
 #include "crf.h"
 #include "i2c_driver_if.h"
+#include "sys_if.h"
 #include "i2c_master.h"
 #include "sht30_regs.h"
-#include "signals.h"
-#include "sys_if.h"
+#include "signal_classes_modules.h"
 
 /*
 SHT30 driver

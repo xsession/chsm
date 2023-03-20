@@ -3,14 +3,13 @@
 #define VCNL4040_H_
 
 #include "crf.h"
-#include "signals.h"
 #include "sys_if.h"
 #include "vcnl4040_regs.h"
+#include "signal_classes_modules.h"
 
 
 /*
 VCNL4040 module
-==========blank
 
 0.0.1.
 
@@ -25,7 +24,7 @@ Requirements for the module:
 
 typedef enum vcnl4040_signals_ten
 {
-    SIG_VCNL4040 = SIGNAL_FROM_CLASS(SIG_CLASS_vcnl4040),
+    SIG_VCNL4040 = SIGNAL_FROM_CLASS(SIG_CLASS_VCNL4040),
     SIG_VCNL4040_ONLINE,
     SIG_VCNL4040_OFFLINE,
 } vcnl4040_signals_ten;
@@ -47,24 +46,25 @@ typedef struct vcnl4040_status_tst
 
 typedef struct vcnl4040_cfg_tst
 {
+    uint16_t max_error_cnt_u16;
 } vcnl4040_cfg_tst;
 
 typedef struct
 {
     /* PUBLIC */
-    chsm_tst                             super;
+    chsm_tst         super;
+    vcnl4040_cfg_tst cfg_st;
 
     /* PRIVATE */
 }vcnl4040_tst;
 
-chsm_result_ten vcnl4040_top(chsm_tst *self, const cevent_tst *e_pst, chsm_call_ctx_tst *ctx_pst);
+chsm_result_ten vcnl4040_top(chsm_tst *self, const cevent_tst *e_pst);
 
 bool vcnl4040_timeout(chsm_tst *self, const cevent_tst *e_pst, uint32_t timeout_u32);
-bool vcnl4040_error_count(chsm_tst *self, const cevent_tst *e_pst, uint16_t error_cnt_threshold_u16);
+bool vcnl4040_error_cnt(chsm_tst *self, const cevent_tst *e_pst, uint16_t error_cnt_threshold_u16);
 
-#define VCNL4040_READ_PERIOD_VALUE     100
-
-#define VCNL4040_RETRY_TIMEOUT   500
-#define VCNL4040_MAX_ERROR_COUNT (((bodycontour_tst *)self)->config_st.max_error_cnt_u16)
+#define VCNL4040_READ_PERIOD_VALUE      100
+#define VCNL4040_RETRY_TIMEOUT          500
+#define VCNL4040_MAX_ERROR_COUNT        (((vcnl4040_tst *)self)->cfg_st.max_error_cnt_u16)
 
 #endif /* VCNL4040_H_ */

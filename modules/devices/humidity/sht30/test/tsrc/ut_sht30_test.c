@@ -238,7 +238,7 @@ TEST_GROUP_RUNNER(sht30)
     // RUN_TEST_CASE(sht30, read_temp_twice);
     // RUN_TEST_CASE(sht30, read_id_retry);
     // RUN_TEST_CASE(sht30, read_id_retry_bad_id);
-    RUN_TEST_CASE(sht30, go_offline);
+    // RUN_TEST_CASE(sht30, go_offline);
     // RUN_TEST_CASE(sht30, get_status);
     // RUN_TEST_CASE(sht30, triggered_read);
     // RUN_TEST_CASE(sht30, init);

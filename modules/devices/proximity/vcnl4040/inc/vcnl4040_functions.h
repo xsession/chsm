@@ -1,7 +1,7 @@
 #ifndef VCNL4040_FUNCTIONS_H
 #define VCNL4040_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.02.06 21.35.50*/
+/*Generated with CHSM v0.0.0 at 2023.03.19 10.43.58*/
 
 #include "vcnl4040.h"
 #include "chsm.h"
@@ -46,7 +46,6 @@ Signals:
     SIG_I2C_RESULT_DATA_NACK 
     SIG_I2C_RESULT_SUCCESS   
     SIG_SYS_TICK_10ms        
-    SIG_VCNL4040_READ        
 */
 
 /*
