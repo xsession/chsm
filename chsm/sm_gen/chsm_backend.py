@@ -41,7 +41,7 @@ def save_html(html_fname: Path, drawing: str, json_data: str):
         template_dir =     (backend_path / 'cgen' / 'templates').absolute().resolve()
         template_html =    template_dir / 'template.html'
         drawing_js =       template_dir / 'wheel.js'
-        web_dir =          (backend_path / '../../web').absolute().resolve()
+        web_dir =          (backend_path / 'web').absolute().resolve()
         drawing_css =      web_dir / 'drawing.css'
 
         if not template_html.exists():
@@ -275,7 +275,7 @@ def open_window():
     python_path = os.environ['PYTHON_PATH']
     print("Python environment variable:")
     print(python_path)
-    subprocess.Popen([ python_path + "/python.exe","./sm_gen/chsm_backend.py"], shell=True)
+    subprocess.Popen([ python_path + "/python.exe","./chsm/sm_gen/chsm_backend.py"], shell=True)
 
 @eel.expose
 def open_file():
@@ -328,7 +328,7 @@ if __name__ == '__main__':
                 project.generate_code()
                 quit()
 
-    eel.init((Path(__file__).parent / '../../web').absolute().resolve())
+    eel.init((Path(__file__).parent / 'web').absolute().resolve())
 
     if args['--server-only']:
         eel.start('main.html', mode=None, port=0)
