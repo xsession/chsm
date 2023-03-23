@@ -7,3 +7,6 @@
 [submodule "unity"]
 	path = unity
 	url = https://github.com/ThrowTheSwitch/Unity.git
+[submodule "doc/modules"]
+	path = doc/modules
+	url = https://github.com/xsession/chsm-docs.git
