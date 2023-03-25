@@ -12,8 +12,8 @@ import pprint
 
 class CmakeGen:
     def __init__(self):
-        self.lib_linked_libs = ''
-        self.test_linked_libs = ''
+        self.lib_linked_libs = []
+        self.test_linked_libs = []
     
     def createFile(self, file_loc, file_name, content):
         file_dir = os.path.join(file_loc, file_name)
@@ -31,8 +31,9 @@ class CmakeGen:
     
         tmpl_lib = jinja2.Template(template_lib, trim_blocks=True, lstrip_blocks=True)
         lib_str = tmpl_lib.render(lib_name = module_name, package_name = 'chsm', linked_libs = ('signal_classes_modules', ))
-        tmpl_lib = jinja2.Template(template_lib, trim_blocks=True, lstrip_blocks=True)
-        lib_str = tmpl_lib.render(lib_name = module_name, package_name = 'chsm', linked_libs = (''))
+        
+        tmpl_test = jinja2.Template(template_test, trim_blocks=True, lstrip_blocks=True)
+        test_str = tmpl_lib.render(lib_name = module_name, package_name = 'chsm', linked_libs = (''))
     
         if(cmake_target_mode_selector == "library"):
           self.createFile(os.path.join(str(cmake_path), str(module_name)),

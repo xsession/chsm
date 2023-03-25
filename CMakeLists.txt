@@ -46,7 +46,7 @@ if(CHSM_BUILD_TESTS)
     add_subdirectory(unity)
 endif()
 
-add_subdirectory(modules)
+add_subdirectory(modules/c)
 add_subdirectory(chsm/reactive_frameworks/c_rf)
     
 
