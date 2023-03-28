@@ -1,0 +1,6 @@
+[submodule "unity"]
+	path = unity
+	url = https://github.com/xsession/Unity.git
+[submodule "cmake_utils"]
+	path = cmake_utils
+	url = https://github.com/xsession/cmake_utils.git
