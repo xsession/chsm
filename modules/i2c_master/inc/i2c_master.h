@@ -3,7 +3,7 @@
 
 #include "crf.h"
 #include "i2c_driver_if.h"
-#include "signal_classes_if.h"
+#include "signal_classes_modules.h"
 #include "sys_if.h"
 
 #define I2C_MASTER_MAX_SCAN_CNT (0x7F)

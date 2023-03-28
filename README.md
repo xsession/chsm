@@ -1,3 +1,6 @@
+[![Actions Status](https://github.com/xsession/chsm/workflows/chsm_crf_ci/badge.svg)](https://github.com/xsession/chsm/actions)
+[![Actions Status](https://github.com/xsession/chsm/workflows/chsm_modules_ci/badge.svg)](https://github.com/xsession/chsm/actions)
+
 # CHSM - Hierarchical State Machine (HSM) Framework for C
 
 :warning: **Experimental code, expect breaking changes.**

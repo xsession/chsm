@@ -1,5 +1,5 @@
 #include "ut_i2c_driver_mock.h"
-#include "signals.h"
+#include "signal_classes_if.h"
 #include <stdio.h>
 
 static const cevent_tst i2c_tx_success_st = {.sig = SIG_I2C_WRITE_SUCCESS};

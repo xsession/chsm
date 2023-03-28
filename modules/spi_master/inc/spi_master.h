@@ -3,7 +3,7 @@
 
 #include "spi_driver_if.h"
 #include "crf.h"
-#include "signal_classes_if.h"
+#include "signal_classes_modules.h"
 
 /*
 SPI master

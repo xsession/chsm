@@ -1,6 +1,7 @@
-#include "spi_driver_if.h"
-#include "ut_spi_driver_mock.h"
 #include "crf.h"
+#include "spi_driver_if.h"
+#include "signal_classes_if.h"
+#include "ut_spi_driver_mock.h"
 
 static const cevent_tst spi_drv_succes_event_st = {.sig = SIG_SPI_DRIVER_TRANSFER_SUCCESS};
 static const cevent_tst spi_drv_fail_event_st = {.sig = SIG_SPI_DRIVER_TRANSFER_FAIL};

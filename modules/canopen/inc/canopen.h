@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "crf.h"
 #include "sys_if.h"
-#include "signal_classes_if"
+#include "signal_classes_modules.h"
 #include "sdo.h"
 #include "od.h"
 

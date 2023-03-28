@@ -1,4 +1,3 @@
-#include "signals.h"
 #include "sys_if.h"
 #include "cevent.h"
 
