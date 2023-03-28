@@ -1,0 +1,32 @@
+#ifndef SIGNAL_CLASSES_MODULES_H
+#define SIGNAL_CLASSES_MODULES_H
+
+#include "crf.h"
+#include "signal_classes_if.h"
+
+typedef enum sig_class_modules_en {
+    // Protocol
+    SIG_CLASS_I2C_MASTER = SIG_MODULES_NAMESPACE_START,
+    SIG_CLASS_SPI_MASTER,
+    SIG_CLASS_CANOPEN,
+    // Devices
+    SIG_CLASS_LTC2471,
+    SIG_CLASS_DAC8565,
+    SIG_CLASS_SSD1306,
+    SIG_CLASS_APDS9960,
+    SIG_CLASS_MPR121,
+    SIG_CLASS_HTS221,
+    SIG_CLASS_SHT30,
+    SIG_CLASS_LSM9DS1,
+    SIG_CLASS_FRAM,
+    SIG_CLASS_LPS22HB,
+    SIG_CLASS_VCNL4040,
+    SIG_CLASS_MAX30100,
+    SIG_CLASS_DS3232M,
+    SIG_CLASS_LM73,
+    SIG_CLASS_TMP468,
+    SIG_EXT_NAMESPACE_START,
+} sig_class_modules_ten;
+
+
+#endif // SIGNAL_CLASSES_MODULES_H

@@ -1,11 +1,11 @@
 #ifndef LTC2471_H
 #define LTC2471_H
 
-#include "i2c_master.h"
-#include "i2c_driver_if.h"
 #include "crf.h"
 #include "sys_if.h"
-#include SIGNAL_CLASSES_H
+#include "i2c_driver_if.h"
+#include "i2c_master.h"
+#include "signal_classes_modules.h"
 
 typedef enum ltc2471_signals_ten
 {

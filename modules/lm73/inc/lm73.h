@@ -1,11 +1,11 @@
 #ifndef LM73_H
 #define LM73_H
 
-#include "i2c_master.h"
-#include "i2c_driver_if.h"
 #include "crf.h"
-#include "signals.h"
 #include "sys_if.h"
+#include "i2c_driver_if.h"
+#include "i2c_master.h"
+#include "signal_classes_modules.h"
 
 /*
 LM73 driver

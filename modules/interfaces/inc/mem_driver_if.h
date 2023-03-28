@@ -5,8 +5,8 @@
 #include <stdbool.h>
 #include "crf.h"
 #include "cqueue.h"
-#include SIGNAL_CLASSES_H
 #include "cevent.h"
+#include "signal_classes_if.h"
 
 /*
  * MEMORY INTERFACE SIGNALS
