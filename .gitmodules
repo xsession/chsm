@@ -1,12 +1,9 @@
-[submodule "cmake_utils"]
-	path = cmake_utils
-	url = https://github.com/xsession/cmake_utils.git
-[submodule "examples/c/menu_stucture"]
-	path = examples/c/menu_stucture
-	url = https://github.com/xsession/menu_structure.git
-[submodule "unity"]
-	path = unity
-	url = https://github.com/ThrowTheSwitch/Unity.git
 [submodule "doc/modules"]
 	path = doc/modules
 	url = https://github.com/xsession/chsm-docs.git
+[submodule "languages/c/cmake_utils"]
+	path = languages/c/cmake_utils
+	url = https://github.com/xsession/cmake_utils.git
+[submodule "languages/c/unity"]
+	path = languages/c/unity
+	url = https://github.com/xsession/Unity.git

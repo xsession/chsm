@@ -1,0 +1,20 @@
+
+add_module_test(
+        NAME 
+                {{test_name}}
+        SOURCE 
+                tsrc/main.c 
+                tsrc/ut_{{test_name}}.c 
+        INCLUDE 
+                tinc
+        LINK 
+                unity
+                {{linked_libs}}
+        DEFINES 
+                NDEBUG
+        STANDARD
+                11
+)
+
+set_property(TARGET {{test_name}} PROPERTY ECLIPSE_GENERATE_SOURCE_PROJECT ON)
+set_property(TARGET {{test_name}} PROPERTY ECLIPSE_GENERATE_LINKED_RESOURCES ON)
