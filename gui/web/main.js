@@ -1279,29 +1279,7 @@ class App {
 	}
 }
 
-
 window.addEventListener('DOMContentLoaded', event => {window.app = new App(state_machine)});
-// window.app = new App(state_machine);
-
-
-// let interval = null;
-// if(window.app.auto_save_cb.checked)
-// {
-// 	if((interval == null) && (window.app.is_opened_statemachine == "opened"))
-// 	{
-// 		console.log("Enter setInterval start state");
-// 		interval = setInterval(function(){
-// 			eel.save_state_machine(window.app.main.innerHTML, window.app.model.get_data_string(), window.app.filepath);
-// 		},5000);
-// 		console.log(interval);
-// 	}
-// }else
-// {
-// 	if(interval != null)
-// 	{
-// 		clearInterval(interval);
-// 	}
-// }
 
 eel.expose(load_json); // Expose this function to Python
 function load_json(data, filename, filepath) {

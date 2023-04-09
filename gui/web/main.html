@@ -190,6 +190,38 @@
         }
 
         init_theme_selector();
+        
+        // Toggle auto-save with checkbox
+        const autosaveCheckbox = document.getElementById('cb-auto_save');
+        let autosaveInterval = null;
+        
+        if (autosaveCheckbox.checked) {
+            // Enable auto-save
+            autosaveInterval = setInterval(autoSave, 5000); // 5000 ms (5 seconds) auto-save interval
+        } 
+        else 
+        {
+            // Disable auto-save
+            clearInterval(autosaveInterval);
+            autosaveInterval = null;
+        }
+
+        autosaveCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+            // Enable auto-save
+            autosaveInterval = setInterval(autoSave, 5000); // 5000 ms (5 seconds) auto-save interval
+            } else {
+            // Disable auto-save
+            clearInterval(autosaveInterval);
+            autosaveInterval = null;
+            }
+        });
+
+        // Auto-save function
+        function autoSave() {
+            window.app.model.set_view(window.app.gui.get_view());
+            eel.save_state_machine(window.app.main.innerHTML, window.app.model.get_data_string(), window.app.filepath);
+        } 
     </script>
 </body>
 </html>
