@@ -129,6 +129,7 @@
     stroke: none;
     rx: 0.5px;
     cursor: move;
+    /* pointer-events: none; */
 }
 
 .state_resize_handle {

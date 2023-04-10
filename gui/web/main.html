@@ -2,12 +2,18 @@
 <html>
 
 <head>
+    <title>CHSM</title>
     <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" type="text/css" href="drawing.css">
     <link rel="stylesheet" id="theme_sheet" type="text/css" href="themes/default.css">
     <script type="text/javascript" src="eel.js"></script>
     <script type='module' src="./main.js"></script>
-    <title>CHSM</title>
+    <style>
+        #input-to-update {
+          display: none;
+          position: absolute;
+        }
+      </style>
 </head>
 
 <body>
@@ -55,7 +61,7 @@
                     <fieldset>
                         <li class="checkbox-lable">
                             <label for=cb-auto_save>Autosave</label>
-                            <input type="checkbox" id='cb-auto_save' checked>
+                            <input type="checkbox" id='cb-auto_save'>
                         </li>
                         <li class="checkbox-lable">
                             <label for="theme-selector">Themes</label>
@@ -162,6 +168,7 @@
 			</svg>
 		</main>
 	</div>
+    <input type="text" id="input-to-update">
     <script>
         function init_theme_selector()
         {

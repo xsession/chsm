@@ -116,27 +116,31 @@ class App {
 			}
 		});
 
-		// this.body.addEventListener('touchmove', event => {
-		// 	this.mouse_pos = this.gui.get_absolute_pos(event);
-		// 	this.dispatch('MOUSEMOVE', event);
-		// });
+		this.body.addEventListener('touchmove', event => {});
+		this.body.addEventListener('touchend', event => {});
+		this.gui.svg.addEventListener('touchstart', event => {});
 
-		// this.body.addEventListener('touchend', event => {
-		// 	console.log("touch_end")
-		// 	this.dispatch('MOUSEUP', event);
-		// });
+		this.inputElement = document.getElementById('input-to-update');
+		this.activeTextElement = null;
 
-		// this.gui.svg.addEventListener('touchstart', event => {
-		// 	console.log("touch_start")
-		// 	if (event.ctrlKey)
-		// 	{
-		// 		this.dispatch('DRAWING_CTRL_MDOWN', event);
-		// 	}
-		// 	else
-		// 	{
-		// 		this.dispatch('DRAWING_MDOWN', event);
-		// 	}
-		// });
+		// this.get_state_text_elements();
+
+		this.inputElement.addEventListener('keydown', function (event) {
+			if (event.key === 'Enter') {
+			  // Update the text element and hide the input
+			  if (this.activeTextElement) {
+				this.activeTextElement.textContent = this.inputElement.value;
+				this.activeTextElement = null;
+			  }
+			  this.inputElement.style.display = 'none';
+			}
+		  });
+	  
+		  // Hide the input when it loses focus
+		  this.inputElement.addEventListener('blur', function () {
+			this.inputElement.style.display = 'none';
+		  });
+
 
 		this.gui.svg.addEventListener('click', event => {
 			this.dispatch('CLICK', event);
@@ -162,29 +166,65 @@ class App {
 		eel.startup()
 	}
 
-	toggleDarkMode() {
-		let bodyTag = document.getElementsByTagName('body');
-		let toggleTag = document.getElementById('colorToggle');
+	// toggleDarkMode() {
+	// 	let bodyTag = document.getElementsByTagName('body');
+	// 	let toggleTag = document.getElementById('colorToggle');
 		
-		if (bodyTag.classList.contains('lightMode')) {
-			bodyTag.classList.replace('lightMode', 'darkMode');
-			toggleTag.innerHTML = 'Light Mode';
-		} else {
-			bodyTag.classList.replace('darkMode', 'lightMode');
-			toggleTag.innerHTML = 'Dark Mode';
-		}
-	}
+	// 	if (bodyTag.classList.contains('lightMode')) {
+	// 		bodyTag.classList.replace('lightMode', 'darkMode');
+	// 		toggleTag.innerHTML = 'Light Mode';
+	// 	} else {
+	// 		bodyTag.classList.replace('darkMode', 'lightMode');
+	// 		toggleTag.innerHTML = 'Dark Mode';
+	// 	}
+	// }
 
-	handleDarkMode() {
-		let bodyTag = document.getElementsByTagName('body')[0];
-		let toggleTag = document.getElementById('colorToggle');
-		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			bodyTag.classList.add('darkMode');
-			toggleTag.innerHTML = 'Light Mode';
-		} else {
-			bodyTag.classList.add('lightMode');
-			toggleTag.innerHTML = 'Dark Mode';
+	// handleDarkMode() {
+	// 	let bodyTag = document.getElementsByTagName('body')[0];
+	// 	let toggleTag = document.getElementById('colorToggle');
+	// 	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+	// 		bodyTag.classList.add('darkMode');
+	// 		toggleTag.innerHTML = 'Light Mode';
+	// 	} else {
+	// 		bodyTag.classList.add('lightMode');
+	// 		toggleTag.innerHTML = 'Dark Mode';
+	// 	}
+	// }
+
+	showInput(element) 
+	{
+		console.log("Enter into dblclick callback");
+		// Set input value to the current text and show the input
+		this.inputElement.value = element.textContent;
+		this.inputElement.style.display = 'block';
+
+		// Position the input on top of the text element
+		const rect = element.getBoundingClientRect();
+		this.inputElement.style.left = rect.left + 'px';
+		this.inputElement.style.top = rect.top + 'px';
+
+		// Focus the input and select the text
+		this.inputElement.focus();
+		this.inputElement.select();
+
+		// Store a reference to the active text element
+		this.activeTextElement = element;
+	}
+	
+	get_state_text_elements() 
+	{
+		const stateTitleElements = document.querySelectorAll('svg g .state_title, .state_text .function');
+		// Add the event listeners to each element
+		stateTitleElements.forEach((element) => {
+		try 
+		{
+			element.addEventListener('dblclick', this.showInput);
+		} catch (error) 
+		{
+			// Handle the error
+			console.error('Error in the event handler:', error.message);
 		}
+		});
 	}
 
 	load_model(data, fname, fpath)
@@ -1283,8 +1323,8 @@ window.addEventListener('DOMContentLoaded', event => {window.app = new App(state
 
 eel.expose(load_json); // Expose this function to Python
 function load_json(data, filename, filepath) {
-	//console.log(data)
 	window.app.load_model(data, filename, filepath);
+	window.app.get_state_text_elements();
 }
 
 eel.expose(send_event);
