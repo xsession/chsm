@@ -166,31 +166,6 @@ class App {
 		eel.startup()
 	}
 
-	// toggleDarkMode() {
-	// 	let bodyTag = document.getElementsByTagName('body');
-	// 	let toggleTag = document.getElementById('colorToggle');
-		
-	// 	if (bodyTag.classList.contains('lightMode')) {
-	// 		bodyTag.classList.replace('lightMode', 'darkMode');
-	// 		toggleTag.innerHTML = 'Light Mode';
-	// 	} else {
-	// 		bodyTag.classList.replace('darkMode', 'lightMode');
-	// 		toggleTag.innerHTML = 'Dark Mode';
-	// 	}
-	// }
-
-	// handleDarkMode() {
-	// 	let bodyTag = document.getElementsByTagName('body')[0];
-	// 	let toggleTag = document.getElementById('colorToggle');
-	// 	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-	// 		bodyTag.classList.add('darkMode');
-	// 		toggleTag.innerHTML = 'Light Mode';
-	// 	} else {
-	// 		bodyTag.classList.add('lightMode');
-	// 		toggleTag.innerHTML = 'Dark Mode';
-	// 	}
-	// }
-
 	showInput(element) 
 	{
 		console.log("Enter into dblclick callback");
@@ -214,16 +189,11 @@ class App {
 	get_state_text_elements() 
 	{
 		const stateTitleElements = document.querySelectorAll('svg g .state_title, .state_text .function');
+		// const stateTitleElements = document.querySelectorAll('.state_drag_handle');
 		// Add the event listeners to each element
 		stateTitleElements.forEach((element) => {
-		try 
-		{
-			element.addEventListener('dblclick', this.showInput);
-		} catch (error) 
-		{
-			// Handle the error
-			console.error('Error in the event handler:', error.message);
-		}
+			// element.addEventListener('dblclick', this.showInput);
+			element.addEventListener('dblclick', e => function(){console.log({element});});
 		});
 	}
 
