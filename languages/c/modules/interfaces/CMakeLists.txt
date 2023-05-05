@@ -15,7 +15,3 @@ add_module_lib(
         STANDARD
                 11
 )
-
-# add_dependencies(crf_interfaces i2c_master_test)
-
-message("----------------> COMPILE_OPTIONS: ${COMPILE_OPTIONS}")

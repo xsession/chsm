@@ -16,7 +16,7 @@ add_subdirectory(adc/ltc2471)
 # add_subdirectory(gesture/apds9960)
 
 # Humidity
-add_subdirectory(humidity/sht30)
+# add_subdirectory(humidity/sht30)
 # add_subdirectory(humidity/hts221)
 
 # Inertial_module
