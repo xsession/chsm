@@ -108,7 +108,7 @@ typedef struct
     uint8_t             rx_buff_au8[10];
 } tmp468_tst;
 
-chsm_result_ten tmp468_top(chsm_tst *self, const cevent_tst *e_pst, chsm_call_ctx_tst *ctx_pst);
+chsm_result_ten tmp468_top(chsm_tst *self, const cevent_tst *e_pst);
 
 bool tmp468_timeout(chsm_tst *self, const cevent_tst *e_pst, uint32_t timeout_u32);
 bool tmp468_error_count(chsm_tst *self, const cevent_tst *e_pst, uint16_t error_cnt_threshold_u16);

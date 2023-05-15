@@ -1,7 +1,7 @@
 #ifndef LM73_FUNCTIONS_H
 #define LM73_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2022.12.13 14.51.39*/
+/*Generated with CHSM v0.0.0 at 2023.05.11 15.31.30*/
 
 #include "lm73.h"
 #include "chsm.h"
@@ -46,10 +46,6 @@ bool lm73_wait_cnt(chsm_tst *self, const cevent_tst *e_pst);
 
 typedef enum lm73_state_id_ten
 {
-    S_LM73 = 0,
-    S_INIT = 1,
-    S_CONFIG = 2,
-    S_ONLINE = 3,
     S_READ_ID_REG = 4,
     S_UNPLUGGED = 5,
     S_SET_RESOLUTION = 6,
@@ -69,7 +65,7 @@ Signals:
     SIG_I2C_RESULT_DATA_NACK 
     SIG_I2C_RESULT_SUCCESS   
     SIG_LM73_READ            
-    SIG_SYS_TICK_10ms
+    SIG_SYS_TICK_10ms        
 */
 
 /*

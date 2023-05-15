@@ -1,12 +1,13 @@
 #ifndef SHT30_FUNCTIONS_H
 #define SHT30_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2021.11.25 16.00.24*/
+/*Generated with CHSM v0.0.0 at 2023.05.11 15.35.37*/
 
-#include "cevent.h"
-#include "chsm.h"
 #include "sht30.h"
+#include "chsm.h"
+#include "cevent.h"
 #include <stdbool.h>
+
 
 void sht30_10ms_callback(chsm_tst *self, const cevent_tst *e_pst);
 
@@ -40,28 +41,26 @@ void sht30_unplugged(chsm_tst *self, const cevent_tst *e_pst);
 
 void sht30_update_data(chsm_tst *self, const cevent_tst *e_pst);
 
+
 typedef enum sht30_state_id_ten
 {
-    S_SHT30                  = 0,
-    S_IDLE                   = 1,
-    S_MEASUREMENT_WRITE      = 2,
-    S_ONLINE                 = 4,
-    S_CHECK_STATUS           = 5,
-    S_INIT_READ              = 6,
-    S_INIT                   = 7,
+    S_IDLE = 1,
+    S_MEASUREMENT_WRITE = 2,
+    S_CHECK_STATUS = 5,
     S_MEASUREMENT_INIT_WRITE = 8,
-    S_MEASUREMENT_INIT_READ  = 9,
-    S_UNPLUGGED              = 10,
-    S_CLEAR_STATUS_REG       = 11,
+    S_MEASUREMENT_INIT_READ = 9,
+    S_UNPLUGGED = 10,
+    S_CLEAR_STATUS_REG = 11,
 } sht30_state_id_ten;
+
 
 /*
 Signals:
-    SIG_I2C_RESULT_ADDR_NACK
-    SIG_I2C_RESULT_DATA_NACK
-    SIG_I2C_RESULT_SUCCESS
-    SIG_SHT30_I2C_POWER_STATE
-    SIG_SYS_TICK_10ms
+    SIG_I2C_RESULT_ADDR_NACK  
+    SIG_I2C_RESULT_DATA_NACK  
+    SIG_I2C_RESULT_SUCCESS    
+    SIG_SHT30_I2C_POWER_STATE 
+    SIG_SYS_TICK_10ms         
 */
 
 /*

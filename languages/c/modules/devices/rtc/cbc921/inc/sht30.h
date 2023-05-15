@@ -3,10 +3,10 @@
 
 #include "crf.h"
 #include "i2c_driver_if.h"
-#include "sys_if.h"
 #include "i2c_master.h"
 #include "sht30_regs.h"
-#include "signal_classes_modules.h"
+#include "signals.h"
+#include "sys_if.h"
 
 /*
 SHT30 driver
@@ -105,7 +105,7 @@ struct sht30_st
     uint8_t             rx_buff_au8[10];
 };
 
-chsm_result_ten sht30_top(chsm_tst *self, const cevent_tst *e_pst);
+chsm_result_ten sht30_top(chsm_tst *self, const cevent_tst *e_pst, chsm_call_ctx_tst *ctx_pst);
 
 bool sht30_timeout(chsm_tst *self, const cevent_tst *e_pst, uint32_t timeout_u32);
 bool sht30_error_count(chsm_tst *self, const cevent_tst *e_pst, uint16_t error_cnt_threshold_u16);
