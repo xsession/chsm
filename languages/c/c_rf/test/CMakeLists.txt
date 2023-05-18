@@ -12,21 +12,21 @@ add_module_test(
             tsrc/cvalue_test.c
             tsrc/chsm_test_functions.c
             tsrc/chsm_test_machine.c
-            tsrc/chsm_test_machine2.c
-            tsrc/chsm_test_machine3.c
             tsrc/chsm_test_machine4.c
             tsrc/bus_driver.c
             tsrc/bus_driver_functions.c
             tsrc/dev_driver.c
             tsrc/dev_driver_functions.c
             tsrc/atomic_functions.c
+            tsrc/chsm_simple_machine.c
+            tsrc/chsm_simple_machine_functions.c
+            tsrc/chsm_test_simple.c
         INCLUDE 
             tinc
         LINK 
             unity
             crf
         DEFINES
-            # NDEBUG 
         STANDARD
             11
 ) 

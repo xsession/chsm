@@ -66,14 +66,20 @@ void sht30_init(chsm_tst *self, const cevent_tst *e_pst)
     _self->t_st.read_data_pu8  = _self->rx_buff_au8;
     _self->t_st.write_data_pu8 = _self->tx_buff_au8;
 
-    sht30_set_state(self, e_pst, S_SHT30);
+    // sht30_set_state(self, e_pst, S_SHT30);
+
+    _self->t_st.read_cnt_u16 = 0;
+    _self->t_st.write_cnt_u16 = 1;
+    _self->t_st.write_data_pu8 = 0;
+
+    CRF_EMIT(&_self->t_st);
 }
 
 void sht30_send_online_event(chsm_tst *self, const cevent_tst *e_pst)
 {
 
     sht30_tst *_self = (sht30_tst *)self;
-    sht30_set_state(self, e_pst, S_ONLINE);
+    // sht30_set_state(_self, e_pst, S_ONLINE);
 
     TYPEOF(SIG_SHT30_ONLINE) *online_pst = CRF_NEW(SIG_SHT30_ONLINE);
 
@@ -130,7 +136,7 @@ void sht30_init_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
 {
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
-    sht30_set_state(self, e_pst, S_INIT_READ);
+    // sht30_set_state(self, e_pst, S_INIT_READ);
 
     sht30_commands_ten command   = SHT30_CMD_MEAS_CLOCKSTR_L;
     uint8_t            command_l = command & 0xff;
@@ -159,30 +165,31 @@ void sht30_measurement_reg_read(chsm_tst *self, const cevent_tst *e_pst)
     CRF_EMIT(&_self->t_st);
 }
 
-void sht30_get_status(chsm_tst *self, const cevent_tst *e_pst)
+void sht30_get_status(chsm_tst *_self, const cevent_tst *e_pst)
 {
     CRF_UNUSED(e_pst);
-    sht30_tst *_self = (sht30_tst *)self;
-    sht30_set_state(self, e_pst, S_CHECK_STATUS);
+    volatile sht30_tst *self = (sht30_tst *)_self;
 
-    sht30_commands_ten command   = SHT30_CMD_READ_STATUS;
-    uint8_t            command_l = command & 0xff;
-    uint8_t            command_h = command >> 8;
+    volatile sht30_commands_ten command   = SHT30_CMD_READ_STATUS;
+    volatile uint8_t            command_l = command & 0xff;
+    volatile uint8_t            command_h = command >> 8;
 
-    _self->t_st.slave_addr_u16 = _self->config_st.address_u8;
-    _self->t_st.super.sig      = SIG_I2C_WR_TRANSACTION;
-    _self->t_st.write_cnt_u16  = 2;
-    _self->t_st.read_cnt_u16   = 3;
-    _self->tx_buff_au8[0]      = command_h;
-    _self->tx_buff_au8[1]      = command_l;
+    self->t_st.slave_addr_u16 = self->config_st.address_u8;
+    self->t_st.super.sig      = SIG_I2C_WR_TRANSACTION;
+    self->t_st.write_cnt_u16  = 2;
+    self->t_st.read_cnt_u16   = 3;
+    self->tx_buff_au8[0]      = command_h;
+    self->tx_buff_au8[1]      = command_l;
 
-    CRF_EMIT(&_self->t_st);
+    CRF_EMIT(&self->t_st);
+//    self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
 
 void sht30_unplugged(chsm_tst *self, const cevent_tst *e_pst)
 {
     CRF_UNUSED(e_pst);
-    sht30_set_state(self, e_pst, S_UNPLUGGED);
+    sht30_tst *_self = (sht30_tst *)self;
+//    sht30_set_state(_self, e_pst, S_UNPLUGGED);
 }
 
 void sht30_clear_status_reg(chsm_tst *self, const cevent_tst *e_pst)
@@ -236,7 +243,7 @@ void sht30_reset_timer(chsm_tst *self, const cevent_tst *e_pst)
 {
     sht30_tst *_self = (sht30_tst *)self;
 
-    sht30_set_state(self, e_pst, S_IDLE);
+//    sht30_set_state(_self, e_pst, S_IDLE);
 
     _self->counter_u32 = 0;
 }

@@ -35,8 +35,8 @@ class StateMachine:
         self.add_parent_signals(self.states)
         self.process_transitions(self.states)               # Calculate transition exit and entry paths and the exact end state
 
-        with open("states.txt", 'w') as f:
-            pprint.pprint(self.states, f, indent=4)
+        # with open("states.txt", 'w') as f:
+        #     pprint.pprint(self.states, f, indent=4)
         
         self.delete_non_leaf_states(self.states)
 

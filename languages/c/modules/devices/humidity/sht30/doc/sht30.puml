@@ -1,0 +1,1511 @@
+@startjson
+
+           {
+    "states": {
+        "__top__": {
+            "pos": [
+                -99999990,
+                -100000003
+            ],
+            "size": [
+                200000000,
+                200000000
+            ],
+            "title": "__top__",
+            "text": [],
+            "connectors": [],
+            "parent": null,
+            "children": [
+                "state_0",
+                "istate_0"
+            ],
+            "type": "top"
+        },
+        "state_0": {
+            "pos": [
+                33,
+                14
+            ],
+            "size": [
+                139,
+                120
+            ],
+            "title": "s_sht30",
+            "text": [
+                "entry/ sht30_init()",
+                "SIG_SYS_TICK_10ms/ sht30_10ms_callback()",
+                "SIG_SHT30_I2C_POWER_STATE/ sht30_i2c_power_state()",
+                ""
+            ],
+            "connectors": [
+                "conn_1"
+            ],
+            "parent": "__top__",
+            "children": [
+                "state_7",
+                "istate_2",
+                "state_1"
+            ],
+            "type": "normal"
+        },
+        "istate_0": {
+            "pos": [
+                72,
+                9
+            ],
+            "size": [
+                2,
+                2
+            ],
+            "title": "istate_0",
+            "text": [
+                "entry/",
+                "exit/"
+            ],
+            "connectors": [
+                "conn_0"
+            ],
+            "parent": "__top__",
+            "children": [],
+            "type": "initial"
+        },
+        "state_5": {
+            "pos": [
+                45,
+                33
+            ],
+            "size": [
+                23,
+                8
+            ],
+            "title": "s_check_status",
+            "text": [
+                "entry/ sht30_get_status()",
+                ""
+            ],
+            "connectors": [
+                "conn_22",
+                "conn_12",
+                "conn_14",
+                "conn_19",
+                "conn_29",
+                "conn_36"
+            ],
+            "parent": "state_7",
+            "children": [],
+            "type": "normal"
+        },
+        "state_6": {
+            "pos": [
+                69,
+                40
+            ],
+            "size": [
+                61,
+                39
+            ],
+            "title": "s_init_read",
+            "text": [
+                "entry/ sht30_reset_timer()"
+            ],
+            "connectors": [
+                "conn_23",
+                "conn_38",
+                "conn_40",
+                "conn_41",
+                "conn_42",
+                "conn_43",
+                "conn_44"
+            ],
+            "parent": "state_7",
+            "children": [
+                "state_8",
+                "state_9",
+                "istate_4",
+                "state_11"
+            ],
+            "type": "normal"
+        },
+        "state_7": {
+            "pos": [
+                40,
+                27
+            ],
+            "size": [
+                125,
+                56
+            ],
+            "title": "s_init",
+            "text": [
+                "entry/ sht30_init()"
+            ],
+            "connectors": [
+                "conn_17",
+                "conn_39",
+                "conn_45",
+                "conn_5"
+            ],
+            "parent": "state_0",
+            "children": [
+                "state_5",
+                "state_6",
+                "istate_3",
+                "state_10"
+            ],
+            "type": "normal"
+        },
+        "istate_2": {
+            "pos": [
+                36,
+                29
+            ],
+            "size": [
+                2,
+                2
+            ],
+            "title": "istate_2",
+            "text": [
+                "entry/",
+                "exit/"
+            ],
+            "connectors": [
+                "conn_16"
+            ],
+            "parent": "state_0",
+            "children": [],
+            "type": "initial"
+        },
+        "istate_3": {
+            "pos": [
+                42,
+                37
+            ],
+            "size": [
+                2,
+                2
+            ],
+            "title": "istate_3",
+            "text": [
+                "entry/",
+                "exit/"
+            ],
+            "connectors": [
+                "conn_28"
+            ],
+            "parent": "state_7",
+            "children": [],
+            "type": "initial"
+        },
+        "state_8": {
+            "pos": [
+                75,
+                58
+            ],
+            "size": [
+                27,
+                8
+            ],
+            "title": "s_measurement_init_write",
+            "text": [
+                "entry/ sht30_init_measurement_reg_write()",
+                "exit/ sht30_reset_timer()"
+            ],
+            "connectors": [
+                "conn_26",
+                "conn_3"
+            ],
+            "parent": "state_6",
+            "children": [],
+            "type": "normal"
+        },
+        "state_9": {
+            "pos": [
+                75,
+                69
+            ],
+            "size": [
+                27,
+                6
+            ],
+            "title": "s_measurement_init_read",
+            "text": [
+                "entry/ sht30_measurement_reg_read()"
+            ],
+            "connectors": [
+                "conn_27",
+                "conn_6"
+            ],
+            "parent": "state_6",
+            "children": [],
+            "type": "normal"
+        },
+        "istate_4": {
+            "pos": [
+                73,
+                47
+            ],
+            "size": [
+                2,
+                2
+            ],
+            "title": "istate_4",
+            "text": [
+                "entry/",
+                "exit/"
+            ],
+            "connectors": [
+                "conn_30"
+            ],
+            "parent": "state_6",
+            "children": [],
+            "type": "initial"
+        },
+        "state_10": {
+            "pos": [
+                45,
+                48
+            ],
+            "size": [
+                16,
+                11
+            ],
+            "title": "s_unplugged",
+            "text": [
+                "init/ sht30_reset_timer()",
+                "entry/ sht30_unplugged()",
+                ""
+            ],
+            "connectors": [
+                "conn_13",
+                "conn_15",
+                "conn_18",
+                "conn_37"
+            ],
+            "parent": "state_7",
+            "children": [],
+            "type": "normal"
+        },
+        "state_11": {
+            "pos": [
+                75,
+                47
+            ],
+            "size": [
+                24,
+                8
+            ],
+            "title": "s_clear_status_reg",
+            "text": [
+                "entry/ sht30_clear_status_reg()",
+                ""
+            ],
+            "connectors": [
+                "conn_31",
+                "conn_2"
+            ],
+            "parent": "state_6",
+            "children": [],
+            "type": "normal"
+        },
+        "state_1": {
+            "pos": [
+                41,
+                90
+            ],
+            "size": [
+                102,
+                38
+            ],
+            "title": "s_kecske",
+            "text": [
+                "entry/ sht30_send_online_event()",
+                "exit/ sht30_send_offline_event()"
+            ],
+            "connectors": [
+                "conn_4",
+                "conn_7"
+            ],
+            "parent": "state_0",
+            "children": [
+                "state_2",
+                "state_3",
+                "istate_1"
+            ],
+            "type": "normal"
+        },
+        "state_2": {
+            "pos": [
+                49,
+                103
+            ],
+            "size": [
+                22,
+                19
+            ],
+            "title": "s_idle",
+            "text": [
+                "init/ sht30_reset_timer()"
+            ],
+            "connectors": [
+                "conn_9",
+                "conn_10",
+                "conn_21",
+                "conn_25",
+                "conn_33",
+                "conn_35"
+            ],
+            "parent": "state_1",
+            "children": [],
+            "type": "normal"
+        },
+        "state_3": {
+            "pos": [
+                108,
+                103
+            ],
+            "size": [
+                28,
+                19
+            ],
+            "title": "s_measurement_write",
+            "text": [
+                "entry/ sht30_measurement_reg_write()"
+            ],
+            "connectors": [
+                "conn_11",
+                "conn_20",
+                "conn_24",
+                "conn_32",
+                "conn_34"
+            ],
+            "parent": "state_1",
+            "children": [],
+            "type": "normal"
+        },
+        "istate_1": {
+            "pos": [
+                55,
+                99
+            ],
+            "size": [
+                2,
+                2
+            ],
+            "title": "istate_1",
+            "text": [
+                "entry/",
+                "exit/"
+            ],
+            "connectors": [
+                "conn_8"
+            ],
+            "parent": "state_1",
+            "children": [],
+            "type": "initial"
+        }
+    },
+    "connectors": {
+        "conn_0": {
+            "parent": "istate_0",
+            "offset": 0,
+            "side": "all",
+            "dir": "out",
+            "transition": "trans_0"
+        },
+        "conn_1": {
+            "parent": "state_0",
+            "offset": 39,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_0"
+        },
+        "conn_22": {
+            "parent": "state_5",
+            "offset": 4,
+            "side": "right",
+            "dir": "out",
+            "transition": "trans_11"
+        },
+        "conn_23": {
+            "parent": "state_6",
+            "offset": 7,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_11"
+        },
+        "conn_26": {
+            "parent": "state_8",
+            "offset": 9,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_13"
+        },
+        "conn_27": {
+            "parent": "state_9",
+            "offset": 9,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_13"
+        },
+        "conn_30": {
+            "parent": "istate_4",
+            "offset": 0,
+            "side": "all",
+            "dir": "out",
+            "transition": "trans_15"
+        },
+        "conn_31": {
+            "parent": "state_11",
+            "offset": 11,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_15"
+        },
+        "conn_12": {
+            "parent": "state_5",
+            "offset": 20,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_6"
+        },
+        "conn_13": {
+            "parent": "state_10",
+            "offset": 2,
+            "side": "bottom",
+            "dir": "in",
+            "transition": "trans_6"
+        },
+        "conn_14": {
+            "parent": "state_5",
+            "offset": 21,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_7"
+        },
+        "conn_15": {
+            "parent": "state_10",
+            "offset": 1,
+            "side": "bottom",
+            "dir": "in",
+            "transition": "trans_7"
+        },
+        "conn_18": {
+            "parent": "state_10",
+            "offset": 1,
+            "side": "top",
+            "dir": "out",
+            "transition": "trans_9"
+        },
+        "conn_19": {
+            "parent": "state_5",
+            "offset": 1,
+            "side": "bottom",
+            "dir": "in",
+            "transition": "trans_9"
+        },
+        "conn_16": {
+            "parent": "istate_2",
+            "offset": 0,
+            "side": "all",
+            "dir": "out",
+            "transition": "trans_8"
+        },
+        "conn_17": {
+            "parent": "state_7",
+            "offset": 2,
+            "side": "left",
+            "dir": "in",
+            "transition": "trans_8"
+        },
+        "conn_2": {
+            "parent": "state_11",
+            "offset": 12,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_1"
+        },
+        "conn_3": {
+            "parent": "state_8",
+            "offset": 12,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_1"
+        },
+        "conn_28": {
+            "parent": "istate_3",
+            "offset": 0,
+            "side": "all",
+            "dir": "out",
+            "transition": "trans_14"
+        },
+        "conn_29": {
+            "parent": "state_5",
+            "offset": 4,
+            "side": "left",
+            "dir": "in",
+            "transition": "trans_14"
+        },
+        "conn_36": {
+            "parent": "state_5",
+            "offset": 22,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_18"
+        },
+        "conn_37": {
+            "parent": "state_10",
+            "offset": 9,
+            "side": "left",
+            "dir": "in",
+            "transition": "trans_18"
+        },
+        "conn_38": {
+            "parent": "state_6",
+            "offset": 31,
+            "side": "top",
+            "dir": "out",
+            "transition": "trans_19"
+        },
+        "conn_39": {
+            "parent": "state_7",
+            "offset": 8,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_19"
+        },
+        "conn_40": {
+            "parent": "state_6",
+            "offset": 3,
+            "side": "right",
+            "dir": "out",
+            "transition": "trans_20"
+        },
+        "conn_41": {
+            "parent": "state_6",
+            "offset": 4,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_20"
+        },
+        "conn_42": {
+            "parent": "state_6",
+            "offset": 7,
+            "side": "right",
+            "dir": "out",
+            "transition": "trans_21"
+        },
+        "conn_43": {
+            "parent": "state_6",
+            "offset": 8,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_21"
+        },
+        "conn_44": {
+            "parent": "state_6",
+            "offset": 18,
+            "side": "right",
+            "dir": "out",
+            "transition": "trans_22"
+        },
+        "conn_45": {
+            "parent": "state_7",
+            "offset": 31,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_22"
+        },
+        "conn_4": {
+            "parent": "state_1",
+            "offset": 5,
+            "side": "top",
+            "dir": "out",
+            "transition": "trans_2"
+        },
+        "conn_5": {
+            "parent": "state_7",
+            "offset": 5,
+            "side": "bottom",
+            "dir": "in",
+            "transition": "trans_2"
+        },
+        "conn_6": {
+            "parent": "state_9",
+            "offset": 15,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_3"
+        },
+        "conn_7": {
+            "parent": "state_1",
+            "offset": 50,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_3"
+        },
+        "conn_8": {
+            "parent": "istate_1",
+            "offset": 0,
+            "side": "all",
+            "dir": "out",
+            "transition": "trans_4"
+        },
+        "conn_9": {
+            "parent": "state_2",
+            "offset": 6,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_4"
+        },
+        "conn_10": {
+            "parent": "state_2",
+            "offset": 2,
+            "side": "right",
+            "dir": "out",
+            "transition": "trans_5"
+        },
+        "conn_11": {
+            "parent": "state_3",
+            "offset": 2,
+            "side": "left",
+            "dir": "in",
+            "transition": "trans_5"
+        },
+        "conn_20": {
+            "parent": "state_3",
+            "offset": 6,
+            "side": "left",
+            "dir": "out",
+            "transition": "trans_10"
+        },
+        "conn_21": {
+            "parent": "state_2",
+            "offset": 6,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_10"
+        },
+        "conn_24": {
+            "parent": "state_3",
+            "offset": 8,
+            "side": "left",
+            "dir": "out",
+            "transition": "trans_12"
+        },
+        "conn_25": {
+            "parent": "state_2",
+            "offset": 8,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_12"
+        },
+        "conn_32": {
+            "parent": "state_3",
+            "offset": 10,
+            "side": "left",
+            "dir": "out",
+            "transition": "trans_16"
+        },
+        "conn_33": {
+            "parent": "state_2",
+            "offset": 10,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_16"
+        },
+        "conn_34": {
+            "parent": "state_3",
+            "offset": 15,
+            "side": "left",
+            "dir": "out",
+            "transition": "trans_17"
+        },
+        "conn_35": {
+            "parent": "state_2",
+            "offset": 15,
+            "side": "right",
+            "dir": "in",
+            "transition": "trans_17"
+        }
+    },
+    "transitions": {
+        "trans_0": {
+            "start": "conn_0",
+            "end": "conn_1",
+            "vertices": [
+                [
+                    72,
+                    9
+                ],
+                [
+                    72,
+                    9
+                ],
+                [
+                    72,
+                    14
+                ]
+            ],
+            "label": "",
+            "label_offset": [
+                0.5,
+                -0.40000000000000036
+            ],
+            "label_anchor": 1,
+            "label_pos": [
+                72.5,
+                8.6
+            ]
+        },
+        "trans_11": {
+            "start": "conn_22",
+            "end": "conn_23",
+            "vertices": [
+                [
+                    68,
+                    37
+                ],
+                [
+                    76,
+                    37
+                ],
+                [
+                    76,
+                    40
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_SUCCESS/ sht30_check_status()",
+            "label_offset": [
+                1,
+                -0.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                69,
+                36.6
+            ]
+        },
+        "trans_13": {
+            "start": "conn_26",
+            "end": "conn_27",
+            "vertices": [
+                [
+                    84,
+                    66
+                ],
+                [
+                    84,
+                    67
+                ],
+                [
+                    84,
+                    67
+                ],
+                [
+                    84,
+                    69
+                ]
+            ],
+            "label": "[sht30_timeout(SHT30_CONVERSION_TIME)]",
+            "label_offset": [
+                0.5,
+                0.5999999999999943
+            ],
+            "label_anchor": 2,
+            "label_pos": [
+                84.5,
+                67.6
+            ]
+        },
+        "trans_15": {
+            "start": "conn_30",
+            "end": "conn_31",
+            "vertices": [
+                [
+                    73,
+                    47
+                ],
+                [
+                    73,
+                    47
+                ],
+                [
+                    73,
+                    45
+                ],
+                [
+                    86,
+                    45
+                ],
+                [
+                    86,
+                    47
+                ]
+            ],
+            "label": "",
+            "label_offset": [
+                5.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 2,
+            "label_pos": [
+                78.5,
+                44.6
+            ]
+        },
+        "trans_6": {
+            "start": "conn_12",
+            "end": "conn_13",
+            "vertices": [
+                [
+                    65,
+                    41
+                ],
+                [
+                    65,
+                    63
+                ],
+                [
+                    47,
+                    63
+                ],
+                [
+                    47,
+                    59
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_ADDR_NACK",
+            "label_offset": [
+                -17.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 1,
+            "label_pos": [
+                47.5,
+                62.6
+            ]
+        },
+        "trans_7": {
+            "start": "conn_14",
+            "end": "conn_15",
+            "vertices": [
+                [
+                    66,
+                    41
+                ],
+                [
+                    66,
+                    66
+                ],
+                [
+                    46,
+                    66
+                ],
+                [
+                    46,
+                    59
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_DATA_NACK",
+            "label_offset": [
+                -18.5,
+                -0.4000000000000057
+            ],
+            "label_anchor": 1,
+            "label_pos": [
+                47.5,
+                65.6
+            ]
+        },
+        "trans_9": {
+            "start": "conn_18",
+            "end": "conn_19",
+            "vertices": [
+                [
+                    46,
+                    48
+                ],
+                [
+                    46,
+                    45
+                ],
+                [
+                    46,
+                    45
+                ],
+                [
+                    46,
+                    41
+                ]
+            ],
+            "label": "[sht30_timeout(SHT30_UNPLUG_RETRY)]",
+            "label_offset": [
+                0.5,
+                -3.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                46.5,
+                44.6
+            ]
+        },
+        "trans_8": {
+            "start": "conn_16",
+            "end": "conn_17",
+            "vertices": [
+                [
+                    36,
+                    29
+                ],
+                [
+                    36,
+                    29
+                ],
+                [
+                    38,
+                    29
+                ],
+                [
+                    40,
+                    29
+                ]
+            ],
+            "label": "",
+            "label_offset": [
+                2.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 1,
+            "label_pos": [
+                38.5,
+                28.6
+            ]
+        },
+        "trans_1": {
+            "start": "conn_2",
+            "end": "conn_3",
+            "vertices": [
+                [
+                    87,
+                    55
+                ],
+                [
+                    87,
+                    57
+                ],
+                [
+                    87,
+                    57
+                ],
+                [
+                    87,
+                    58
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_SUCCESS",
+            "label_offset": [
+                0.5,
+                -0.29999999999999716
+            ],
+            "label_anchor": 2,
+            "label_pos": [
+                87.5,
+                56.7
+            ]
+        },
+        "trans_14": {
+            "start": "conn_28",
+            "end": "conn_29",
+            "vertices": [
+                [
+                    42,
+                    37
+                ],
+                [
+                    44,
+                    37
+                ],
+                [
+                    44,
+                    37
+                ],
+                [
+                    45,
+                    37
+                ]
+            ],
+            "label": "",
+            "label_offset": [
+                2,
+                -0.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                44,
+                36.6
+            ]
+        },
+        "trans_18": {
+            "start": "conn_36",
+            "end": "conn_37",
+            "vertices": [
+                [
+                    67,
+                    41
+                ],
+                [
+                    67,
+                    68
+                ],
+                [
+                    43,
+                    68
+                ],
+                [
+                    43,
+                    57
+                ],
+                [
+                    45,
+                    57
+                ]
+            ],
+            "label": "[sht30_timeout(SHT30_READ_PERIOD*2)]",
+            "label_offset": [
+                -23,
+                -0.4000000000000057
+            ],
+            "label_anchor": 1,
+            "label_pos": [
+                44,
+                67.6
+            ]
+        },
+        "trans_19": {
+            "start": "conn_38",
+            "end": "conn_39",
+            "vertices": [
+                [
+                    100,
+                    40
+                ],
+                [
+                    100,
+                    35
+                ],
+                [
+                    165,
+                    35
+                ]
+            ],
+            "label": "[sht30_timeout(SHT30_UNPLUG_RETRY)]",
+            "label_offset": [
+                0.5,
+                -5.399999999999999
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                100.5,
+                34.6
+            ]
+        },
+        "trans_20": {
+            "start": "conn_40",
+            "end": "conn_41",
+            "vertices": [
+                [
+                    130,
+                    43
+                ],
+                [
+                    138,
+                    43
+                ],
+                [
+                    138,
+                    44
+                ],
+                [
+                    130,
+                    44
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_ADDR_NACK/ sht30_inc_error_counter()",
+            "label_offset": [
+                1.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                131.5,
+                42.6
+            ]
+        },
+        "trans_21": {
+            "start": "conn_42",
+            "end": "conn_43",
+            "vertices": [
+                [
+                    130,
+                    47
+                ],
+                [
+                    138,
+                    47
+                ],
+                [
+                    138,
+                    48
+                ],
+                [
+                    130,
+                    48
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_DATA_NACK/ sht30_inc_error_counter()",
+            "label_offset": [
+                1.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                131.5,
+                46.6
+            ]
+        },
+        "trans_22": {
+            "start": "conn_44",
+            "end": "conn_45",
+            "vertices": [
+                [
+                    130,
+                    58
+                ],
+                [
+                    147,
+                    58
+                ],
+                [
+                    147,
+                    58
+                ],
+                [
+                    165,
+                    58
+                ]
+            ],
+            "label": "[sht30_error_count(SHT30_MAX_ERROR_COUNT)]",
+            "label_offset": [
+                1.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                131.5,
+                57.6
+            ]
+        },
+        "trans_2": {
+            "start": "conn_4",
+            "end": "conn_5",
+            "vertices": [
+                [
+                    46,
+                    90
+                ],
+                [
+                    46,
+                    87
+                ],
+                [
+                    45,
+                    87
+                ],
+                [
+                    45,
+                    83
+                ]
+            ],
+            "label": "[sht30_error_count(SHT30_MAX_ERROR_COUNT)]",
+            "label_offset": [
+                0.5,
+                -0.9000000000000057
+            ],
+            "label_anchor": 2,
+            "label_pos": [
+                45.5,
+                86.1
+            ]
+        },
+        "trans_3": {
+            "start": "conn_6",
+            "end": "conn_7",
+            "vertices": [
+                [
+                    90,
+                    75
+                ],
+                [
+                    90,
+                    83
+                ],
+                [
+                    91,
+                    83
+                ],
+                [
+                    91,
+                    90
+                ]
+            ],
+            "label": "SIG_I2C_RESULT_SUCCESS",
+            "label_offset": [
+                0.5,
+                2.299999999999983
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                90.5,
+                77.29999999999998
+            ]
+        },
+        "trans_4": {
+            "start": "conn_8",
+            "end": "conn_9",
+            "vertices": [
+                [
+                    55,
+                    99
+                ],
+                [
+                    55,
+                    99
+                ],
+                [
+                    55,
+                    103
+                ]
+            ],
+            "label": "",
+            "label_offset": [
+                0.5,
+                1.5999999999999943
+            ],
+            "label_anchor": 1,
+            "label_pos": [
+                55.5,
+                100.6
+            ]
+        },
+        "trans_5": {
+            "start": "conn_10",
+            "end": "conn_11",
+            "vertices": [
+                [
+                    71,
+                    105
+                ],
+                [
+                    86,
+                    105
+                ],
+                [
+                    86,
+                    105
+                ],
+                [
+                    108,
+                    105
+                ]
+            ],
+            "label": "trans_5",
+            "label_offset": [
+                15.5,
+                -0.4000000000000057
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                86.5,
+                104.6
+            ]
+        },
+        "trans_10": {
+            "start": "conn_20",
+            "end": "conn_21",
+            "vertices": [
+                [
+                    108,
+                    109
+                ],
+                [
+                    90,
+                    109
+                ],
+                [
+                    90,
+                    109
+                ],
+                [
+                    71,
+                    109
+                ]
+            ],
+            "label": "trans_10",
+            "label_offset": [
+                -18,
+                -0.4000000000000057
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                90,
+                108.6
+            ]
+        },
+        "trans_12": {
+            "start": "conn_24",
+            "end": "conn_25",
+            "vertices": [
+                [
+                    108,
+                    111
+                ],
+                [
+                    90,
+                    111
+                ],
+                [
+                    90,
+                    111
+                ],
+                [
+                    71,
+                    111
+                ]
+            ],
+            "label": "trans_12",
+            "label_offset": [
+                -18,
+                -0.4000000000000057
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                90,
+                110.6
+            ]
+        },
+        "trans_16": {
+            "start": "conn_32",
+            "end": "conn_33",
+            "vertices": [
+                [
+                    108,
+                    113
+                ],
+                [
+                    90,
+                    113
+                ],
+                [
+                    90,
+                    113
+                ],
+                [
+                    71,
+                    113
+                ]
+            ],
+            "label": "trans_16",
+            "label_offset": [
+                -18,
+                -0.4000000000000057
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                90,
+                112.6
+            ]
+        },
+        "trans_17": {
+            "start": "conn_34",
+            "end": "conn_35",
+            "vertices": [
+                [
+                    108,
+                    118
+                ],
+                [
+                    90,
+                    118
+                ],
+                [
+                    90,
+                    118
+                ],
+                [
+                    71,
+                    118
+                ]
+            ],
+            "label": "trans_17",
+            "label_offset": [
+                -18,
+                -0.4000000000000057
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                90,
+                117.6
+            ]
+        }
+    },
+    "notes": {
+        "SHT30_READ_TIMEOUT": "",
+        "SIG_I2C_RESULT_ADDR_NACK": "",
+        "trans_4": "",
+        "SIG_I2C_RESULT_DATA_NACK": "",
+        "sht30_update_temp()": "- Update the temperature display\n- Send an event with the new value\n- Decrease the error counter",
+        "sht30_reset_timer()": "Reset the timer counter.",
+        "sht30_inc_error_counter()": "Increase the error counter.",
+        "sht30_1ms_callback()": "Increase the timer counter.",
+        "sht30_reset_temp()": "Reset the temperature to an undefined/invalid value and send an event with it.",
+        "sht30_start_read()": "Send a read transaction to the SHT30.",
+        "sht30_error_count": "Return true, if the error counter is greater or equal then the parameter.",
+        "sht30_read_id()": "Try to read the ID register from the SHT30 by sending a write-read transaction to the I2C master.",
+        "entry": "",
+        "trans_7": "",
+        "SIG_I2C_RESULT_SUCCESS": "",
+        "sht30_id_match()": "True, if the response data is equal to 0x190. See SHT30 datasheet section: 7.5.1.7 Identification Register",
+        "sht30_timeout": "Evaluates to true if the internal timer counter is greater than or equal to the parameter.",
+        "trans_8": "",
+        "SHT30_MAX_ERROR_COUNT": "",
+        "sht30_reset_pointer()": "Reset the pointer register in the SHT30 to 0, so all subsequent reads will access the temperature register.",
+        "send_online_event()": "Send a SIG_SHT30_ONLINE event. This can be used to detect successful initialization.",
+        "SHT30_RETRY_TIMEOUT": "",
+        "send_offline_event()": "Send a SIG_SHT30_OFFLINE event. This can be used to detect communication errors between the module and the I2C slave.",
+        "SIG_SHT30_READ": "",
+        "trans_10": "",
+        "trans_2": "",
+        "trans_5": "",
+        "trans_6": "",
+        "sht30_measurement_reg_write()": "",
+        "trans_12": "",
+        "sht30_check_status()": "",
+        "SHT30_READ_PERIOD": "",
+        "SHT30_UNPLUG_RETRY": "",
+        "sht30_get_status()": "W 0xF23D",
+        "sht30_clear_status_reg()": "W 0x3041",
+        "sht30_init_measurement_reg_write()": "W 0x2C10",
+        "sht30_measurement_reg_read()": "WR 0x2C10",
+        "sht30_send_online_event()": "wefwsefwe",
+        "sht30_send_offline_event()": ""
+    },
+    "view": {
+        "translate": [
+            -89.5,
+            -66.5
+        ],
+        "scale": 8.5
+    }
+}
+
+@endjson

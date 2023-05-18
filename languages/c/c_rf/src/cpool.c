@@ -32,9 +32,9 @@ static void *cpool_new(cpool_tst *self)
 
         /* Try to change self->head to the value in the cell it points to
          * if self->head still holds the value we read previously.
-		 * If an interrupt here changes the value of self->head, the function call
-		 * will fail and return false so the code inside the if can't modify the
-		 * content of memory indexed by head.
+         * If an interrupt here changes the value of self->head, the function call
+         * will fail and return false so the code inside the if can't modify the
+         * content of memory indexed by head.
          */
         if (atomic_compare_exchange_u16(&self->head, &head, *((uint16_t *)(self->pool + head))))
         {
@@ -51,7 +51,7 @@ static bool cpool_gc(cpool_tst *self, const cevent_tst *e_pst)
     assert(NULL != self);
     assert(NULL != e_pst);
 
-	uint8_t *e_pu8 = (uint8_t *)e_pst;
+    uint8_t *e_pu8 = (uint8_t *)e_pst;
 
     if ((e_pu8 < self->pool) || (e_pu8 >= (self->pool + self->esize * self->ecnt))) return false; // The event is not from this pool
 

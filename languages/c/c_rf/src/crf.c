@@ -36,7 +36,7 @@ static void* new_event(crf_tst *self, uint32_t size, signal_t sig)
     return NULL;
 }
 
-static void	gc(crf_tst *self, const cevent_tst* e_pst)
+static void gc(crf_tst *self, const cevent_tst* e_pst)
 {
     if (NULL == self->pool_ast) return;
 
@@ -51,17 +51,19 @@ static void	gc(crf_tst *self, const cevent_tst* e_pst)
  * TODO: implement publish/subscribe method as a fallback, when the application
  * does'n provide a send function for a state macine
  */
-static void	publish(crf_tst *self, const cevent_tst* e)
+static void publish(crf_tst *self, const cevent_tst* e)
 {
-
+    (void)self;
+    (void)e;
 }
 
-static void	post(crf_tst *self, cevent_tst* e, cqueue_tst *q)
+static void post(crf_tst *self, cevent_tst* e, cqueue_tst *q)
 {
+    (void)self;
     q->put(q, e);
 }
 
-static bool	step(crf_tst *self)
+static bool step(crf_tst *self)
 {
     cevent_tst *e_pst = NULL;
     chsm_tst **hsm_ppst;
@@ -76,7 +78,8 @@ static bool	step(crf_tst *self)
             if (e_pst)
             {
                 event_found_b = true;
-                chsm_dispatch(hsm_pst, e_pst);
+
+                hsm_pst->state_handler_pft(hsm_pst, e_pst);
 
                 if (0 == e_pst->gc_info.ref_cnt)
                 {
