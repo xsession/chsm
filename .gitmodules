@@ -7,3 +7,5 @@
 [submodule "languages/c/unity"]
 	path = languages/c/unity
 	url = https://github.com/xsession/Unity.git
+[submodule "languages/c/examples/menu_structure"]
+	url = https://github.com/xsession/menu_structure.git
