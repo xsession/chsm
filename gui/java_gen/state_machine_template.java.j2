@@ -1,0 +1,85 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Signal {
+    private String name;
+    private int value;
+    private Map<SignalListener, Integer> listeners;
+
+    public Signal(String name, int value) {
+        this.name = name;
+        this.value = value;
+        this.listeners = new HashMap<>();
+    }
+
+    public void addListener(SignalListener listener) {
+        listeners.put(listener, 0);
+    }
+
+    public void removeListener(SignalListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void emit() {
+        for (SignalListener listener : listeners.keySet()) {
+            listener.handleSignal(this);
+        }
+    }
+}
+
+public interface SignalListener {
+    void handleSignal(Signal signal);
+}
+
+public class StateMachine implements SignalListener {
+    private Map<String, Map<Integer, String>> states;
+    private String currentState;
+    private Map<String, Signal> signals;
+    private Signal deferredSignal;
+
+    public StateMachine(Map<String, Map<Integer, String>> states, Map<String, Signal> signals) {
+        this.states = states;
+        this.currentState = "__top__";
+        this.signals = signals;
+        this.deferredSignal = null;
+    }
+
+    public void handleSignal(Signal signal) {
+        if (deferredSignal == signal) {
+            deferredSignal = null;
+            handleSignal(signal);
+        } else {
+            _handleSignal(signal);
+        }
+    }
+
+    private void _handleSignal(Signal signal) {
+        Map<Integer, String> currentStateData = states.get(currentState);
+        Map<Integer, String> transitions = currentStateData.getOrDefault(signal.getValue(), new HashMap<>());
+        if (transitions.containsKey(signal.getName())) {
+            currentState = transitions.get(signal.getValue());
+            return;
+        }
+
+        for (String parentState : currentStateData.values()) {
+            Map<Integer, String> parentStateData = states.get(parentState);
+            transitions = parentStateData.getOrDefault(signal.getValue(), new HashMap<>());
+            if (transitions.containsKey(signal.getName())) {
+                currentState = transitions.get(signal.getValue());
+                return;
+            }
+        }
+    }
+
+    public void addSignalListener(String signalName) {
+        signals.get(signalName).addListener(this);
+    }
+
+    public void deferSignal(Signal signal) {
+        deferredSignal = signal;
+    }
+
+    public void queueSignal(Signal signal) {
+        handleSignal(signal);
+    }
+}

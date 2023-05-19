@@ -1,0 +1,84 @@
+import queue
+
+class Signal:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+        self.listeners = []
+
+    def add_listener(self, listener):
+        self.listeners.append(listener)
+
+    def remove_listener(self, listener):
+        self.listeners.remove(listener)
+
+    def emit(self):
+        for listener in self.listeners:
+            listener.handle_signal(self)
+
+
+class StateMachine:
+    def __init__(self, state_data, signals):
+        self.states = state_data
+        self.current_state = ["__top__"]
+        self.signals = signals
+        self.signal_queue = queue.Queue()
+        self.deferred_signals = []
+
+    {% for state in state_data %}
+    {% if state.type == "initial" %}
+    def {{ state.title }}_entry(self):
+        # Entry code for state {{ state.title }}
+        pass
+
+    def {{ state.title }}_exit(self):
+        # Exit code for state {{ state.title }}
+        pass
+    {% endif %}
+    {% endfor %}
+
+    def handle_signal(self, signal):
+        if signal in self.deferred_signals:
+            self.deferred_signals.remove(signal)
+            self.signal_queue.put(signal)
+        else:
+            self._handle_signal(signal)
+
+    def _handle_signal(self, signal):
+        transitions = self.states[self.current_state[-1]]["transitions"]
+        for transition in transitions:
+            if (
+                transition["signal"] == signal.name
+                and transition["value"] == signal.value
+            ):
+                self.current_state[-1] = transition["next_state"]
+                return
+
+        for parent_state in self.current_state[:-1][::-1]:
+            transitions = self.states[parent_state]["transitions"]
+            for transition in transitions:
+                if (
+                    transition["signal"] == signal.name
+                    and transition["value"] == signal.value
+                ):
+                    self.current_state.pop()
+                    self.current_state.append(transition["next_state"])
+                    return
+
+    def add_signal_listener(self, signal_name):
+        self.signals[signal_name].add_listener(self)
+
+    def handle_signals(self):
+        while not self.signal_queue.empty():
+            signal = self.signal_queue.get()
+            self._handle_signal(signal)
+
+    def defer_signal(self, signal):
+        self.deferred_signals.append(signal)
+
+    def queue_signal(self, signal):
+        self.signal_queue.put(signal)
+
+    def run(self):
+        while True:
+            self.handle_signals()

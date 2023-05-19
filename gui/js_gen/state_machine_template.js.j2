@@ -1,0 +1,84 @@
+class Signal {
+    constructor(name, value) {
+        this.name = name;
+        this.value = value;
+        this.listeners = [];
+    }
+
+    addListener(listener) {
+        this.listeners.push(listener);
+    }
+
+    removeListener(listener) {
+        const index = this.listeners.indexOf(listener);
+        if (index !== -1) {
+            this.listeners.splice(index, 1);
+        }
+    }
+
+    emit() {
+        for (const listener of this.listeners) {
+            listener.handleSignal(this);
+        }
+    }
+}
+
+class StateMachine {
+    constructor(stateData, signals) {
+        this.states = stateData;
+        this.currentState = "__top__";
+        this.signals = signals;
+        this.deferredSignals = [];
+    }
+
+    handleSignal(signal) {
+        if (this.deferredSignals.includes(signal)) {
+            this.deferredSignals.splice(this.deferredSignals.indexOf(signal), 1);
+            this.handleSignal(signal);
+        } else {
+            this._handleSignal(signal);
+        }
+    }
+
+    _handleSignal(signal) {
+        const currentStateData = this.states[this.currentState];
+        const transitions = currentStateData.transitions;
+        for (const transition of transitions) {
+            if (transition.signal === signal.name && transition.value === signal.value) {
+                this.currentState = transition.nextState;
+                return;
+            }
+        }
+        const parentStates = currentStateData.parentStates;
+        for (const parentState of parentStates) {
+            const parentStateData = this.states[parentState];
+            const transitions = parentStateData.transitions;
+            for (const transition of transitions) {
+                if (transition.signal === signal.name && transition.value === signal.value) {
+                    this.currentState = transition.nextState;
+                    return;
+                }
+            }
+        }
+    }
+
+    addSignalListener(signalName) {
+        this.signals[signalName].addListener(this);
+    }
+
+    handleSignals() {
+        const signalQueue = [...this.deferredSignals];
+        this.deferredSignals = [];
+        for (const signal of signalQueue) {
+            this.handleSignal(signal);
+        }
+    }
+
+    deferSignal(signal) {
+        this.deferredSignals.push(signal);
+    }
+
+    queueSignal(signal) {
+        this.deferredSignals.push(signal);
+    }
+}
