@@ -118,35 +118,35 @@ class LTC2471StateMachineTest(unittest.TestCase):
 
     def test_state_transitions(self):
         # Test initial state
-        self.assertEqual(self.state_machine.current_state, ["__top__"])
+        self.assertEqual(self.state_machine.current_state, "__top__")
 
         # Emit SIG_SYS_TICK_1ms signal
         self.signals["SIG_SYS_TICK_1ms"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_ltc2471"])
+        self.assertEqual(self.state_machine.current_state, "s_ltc2471")
 
         # Emit SIG_START_READ signal
         self.signals["SIG_START_READ"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_reading"])
+        self.assertEqual(self.state_machine.current_state, "s_reading")
 
         # Emit SIG_I2C_RESULT_SUCCESS signal
         self.signals["SIG_I2C_RESULT_SUCCESS"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_idle"])
+        self.assertEqual(self.state_machine.current_state, "s_idle")
 
         # Emit SIG_RESTART_TIMER signal
         self.signals["SIG_RESTART_TIMER"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_idle"])
+        self.assertEqual(self.state_machine.current_state, "s_idle")
 
         # Emit SIG_START_READ signal again
         self.signals["SIG_START_READ"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_reading"])
+        self.assertEqual(self.state_machine.current_state, "s_reading")
 
         # Emit SIG_I2C_RESULT_TIMEOUT signal
         self.signals["SIG_I2C_RESULT_TIMEOUT"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_reading"])
+        self.assertEqual(self.state_machine.current_state, "s_reading")
 
         # Emit SIG_I2C_RESULT_SUCCESS signal
         self.signals["SIG_I2C_RESULT_SUCCESS"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_idle"])
+        self.assertEqual(self.state_machine.current_state, "s_idle")
 
     def test_signal_deferral(self):
         # Emit SIG_START_READ signal and defer it

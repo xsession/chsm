@@ -90,7 +90,16 @@ typedef struct i2c_transaction_tst
                                 // will put the results here
     uint8_t *write_data_pu8;    // Pointer to the data buffer for the write operation
     uint8_t *read_data_pu8;     // Pointer to the data buffer for the read operation
+    
 } i2c_transaction_tst;
+
+typedef struct i2c_errors_tst
+{
+    uint32_t sum_error_u32;
+    uint32_t addr_nack_u32;
+    uint32_t data_nack_u32;
+    uint32_t bus_busy_u32;
+}i2c_errors_tst;
 
 /*
  * ACTIVE OBJECT
@@ -100,6 +109,7 @@ typedef struct i2c_master_cfg_tst
 {
     i2c_driver_if_tst *driver_pst;
     uint8_t           *scan_result_au8;
+    i2c_errors_tst     error_counter_st;
 } i2c_master_cfg_tst;
 
 typedef struct i2c_master_tst i2c_master_tst;
