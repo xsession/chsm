@@ -40,7 +40,7 @@ Requirements for the I2C master module:
  * I2C_SIGNALS
  */
 
-typedef enum i2c_master_signals_ten
+typedef enum i2c_master_signals_en
 {
     /* Caller buffered transactions */
     SIG_I2C_W_TRANSACTION = SIGNAL_FROM_CLASS(SIG_CLASS_I2C_MASTER),
@@ -71,7 +71,7 @@ typedef enum i2c_master_signals_ten
 #define SIG_I2C_RESULT_DATA_NACK_TYPE cevent_tst
 #define SIG_I2C_RESULT_BUS_BUSY_TYPE  cevent_tst
 
-#define SIG_I2C_ADDRS_RELEASE_TYPE
+#define SIG_I2C_ADDRS_RELEASE_TYPE    cevent_tst
 #define SIG_I2C_BUS_SCAN_TYPE         cevent_tst
 
 /*
@@ -93,11 +93,22 @@ typedef struct i2c_transaction_tst
     
 } i2c_transaction_tst;
 
-typedef struct i2c_errors_tst
+typedef struct i2c_addr_nack_st
+{
+    uint32_t addr_nack_u32;
+    uint8_t last_slave_id_u8;
+}i2c_addr_nack_tst;
+
+typedef struct i2c_data_nack_st
+{
+    uint32_t data_nack_u32;
+    uint8_t last_slave_id_u8;
+}i2c_data_nack_tst;
+typedef struct i2c_errors_st
 {
     uint32_t sum_error_u32;
-    uint32_t addr_nack_u32;
-    uint32_t data_nack_u32;
+    i2c_addr_nack_tst addr_nack_st;
+    i2c_data_nack_tst data_nack_st;
     uint32_t bus_busy_u32;
 }i2c_errors_tst;
 

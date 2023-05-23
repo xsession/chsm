@@ -34,6 +34,8 @@ crf_tst					crf;
 const cevent_tst*       events_apst[4];
 cqueue_tst              q_st;
 
+uint8_t 				scan_result[128];
+
 static void drv_tick(uint32_t tick_cnt_u32)
 {
     for (uint32_t i=0; i<tick_cnt_u32; i++)
@@ -49,14 +51,15 @@ static void drv_tick(uint32_t tick_cnt_u32)
 
 TEST_SETUP(i2c_master)
 {
-    memset(events_apst, 0, sizeof events_apst);
-    memset(&q_st, 0, sizeof q_st);
-    memset(&drv_mock_st, 0, sizeof drv_mock_st);
-    memset(&i2c_master_st, 0, sizeof i2c_master_st);
-    memset(&crf, 0, sizeof crf);
-    memset(&i2c_master_events_apst, 0, sizeof i2c_master_events_apst);
-    memset(&pool_buff_au8, 0, sizeof pool_buff_au8);
-    memset(&pool_ast, 0, sizeof pool_ast);
+    memset(events_apst, 0, sizeof(events_apst));
+    memset(&q_st, 0, sizeof(q_st));
+    memset(&drv_mock_st, 0, sizeof(drv_mock_st));
+    memset(&i2c_master_st, 0, sizeof(i2c_master_st));
+    memset(&crf, 0, sizeof(crf));
+    memset(&i2c_master_events_apst, 0, sizeof(i2c_master_events_apst));
+    memset(&pool_buff_au8, 0, sizeof(pool_buff_au8));
+    memset(&pool_ast, 0, sizeof(pool_ast));
+	memset(&scan_result, 0, sizeof(scan_result));
 
 	cpool_init(pool_ast+0, pool_buff_au8, 64, 16);
 
@@ -65,6 +68,7 @@ TEST_SETUP(i2c_master)
     ut_i2c_driver_mock_init(&drv_mock_st);
 
 	i2c_master_st.config_st.driver_pst = drv_pst;
+	i2c_master_st.config_st.scan_result_au8 = scan_result;
 	chsm_ctor(&i2c_master_st.super, i2c_master_top, i2c_master_events_apst, 4, 4);
 
 	chsm_init((chsm_tst *)&i2c_master_st);
@@ -521,7 +525,8 @@ TEST(i2c_master, write_2b_read_2b)
 
 TEST(i2c_master, start_bus_scan)
 {
-	    i2c_mock_slave_device_tst dev_st = {
+	
+    i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 2,
 		.tx_data_au8 = {0x5a, 0x6b, 0x7c},
@@ -529,10 +534,40 @@ TEST(i2c_master, start_bus_scan)
     };
 
     drv_mock_st.slave_pst = &dev_st;
+
+	static const cevent_tst bus_scan_event_st = {.sig = SIG_I2C_BUS_SCAN};
+
+	TEST_ASSERT(bus_scan_event_st.sig);
+	drv_tick(200);
+	int32_t retval = q_st.put(&q_st, &bus_scan_event_st);
+	drv_tick(1000);
+	cevent_tst *e_pst = q_st.get(&q_st);
+	TEST_ASSERT(e_pst);
+
+	for(uint8_t i = 0; i < I2C_MASTER_MAX_SCAN_CNT; i++)
+	{
+		printf("%d",i2c_master_st.config_st.scan_result_au8[i]);
+	}
+
+	// drv_tick(1000);
+	// const cevent_tst *e2_pst = q_st.get(&q_st);
+
+
 }
 
 TEST(i2c_master, check_bus_scan_result)
 {
+
+}
+
+TEST(i2c_master, data_error_counter_increment)
+{
+
+}
+
+TEST(i2c_master, addr_error_counter_increment)
+{
+
 }
 
 TEST_GROUP_RUNNER(i2c_master)
@@ -550,7 +585,8 @@ TEST_GROUP_RUNNER(i2c_master)
 
 	RUN_TEST_CASE(i2c_master, start_bus_scan);
 	RUN_TEST_CASE(i2c_master, check_bus_scan_result);
-	//RUN_TEST_CASE(i2c_master, init);
+	RUN_TEST_CASE(i2c_master, data_error_counter_increment);
+	RUN_TEST_CASE(i2c_master, addr_error_counter_increment);
 	//RUN_TEST_CASE(i2c_master, init);
 	//RUN_TEST_CASE(i2c_master, init);
 	//RUN_TEST_CASE(i2c_master, init);

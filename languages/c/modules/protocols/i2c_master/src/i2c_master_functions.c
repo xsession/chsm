@@ -54,13 +54,15 @@ void i2c_master_send_fail_response(chsm_tst *_self, const cevent_tst *e_pst)
     {
         self->cached_tr_st.target_q_pst->put(self->cached_tr_st.target_q_pst, &addr_nack_response_st);
         self->config_st.error_counter_st.sum_error_u32++;
-        self->config_st.error_counter_st.addr_nack_u32++;
+        self->config_st.error_counter_st.addr_nack_st.addr_nack_u32++;
+        self->config_st.error_counter_st.addr_nack_st.last_slave_id_u8 = self->cached_tr_st.slave_addr_u16;
     }
     else if (self->config_st.driver_pst->status_un.bit_st.data_nack_u16)
     {
         self->cached_tr_st.target_q_pst->put(self->cached_tr_st.target_q_pst, &data_nack_response_st);
         self->config_st.error_counter_st.sum_error_u32++;
-        self->config_st.error_counter_st.data_nack_u32++;
+        self->config_st.error_counter_st.data_nack_st.data_nack_u32++;
+        self->config_st.error_counter_st.data_nack_st.last_slave_id_u8 = self->cached_tr_st.slave_addr_u16;
     }
 
 }
