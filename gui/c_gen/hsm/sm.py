@@ -394,6 +394,9 @@ class StateMachine:
 
         return nodes
 
+    def build_debug_func(self, debug_content = None):
+        
+        return "kecske3"
 
     def build_case_from_signal(self, signal):
         name = signal['name']
@@ -403,7 +406,7 @@ class StateMachine:
         else:
             name = f'{self.templates["signal_prefix"]}{name}'
 
-        c = Case(name)
+        c = Case(name,debug=f'debug_log_func("{name} -> ");')
 
         for guard in signal['guards'].values():
             nodes = self.guard_to_ast(guard)

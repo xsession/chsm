@@ -185,9 +185,10 @@ class Blank(Node):
         return f'\n'
 
 class Case(Node):
-    def __init__(self, label, **kwargs): 
+    def __init__(self, label, debug, **kwargs): 
         super().__init__('case', **kwargs)
         self.label = label
+        self.debug = debug
         self.nodes = []
 
     def __str__(self):
@@ -200,7 +201,9 @@ class Case(Node):
             nodes_str += f'{" " * (self.indent + 4)}break;\n'
 
         indent = ' ' * self.indent
-        return f'{indent}case {self.label}:\n{nodes_str}'
+        case = f'{indent}case {self.label}:\n'
+        debug_content = f'{" " * (self.indent + 4)}{self.debug}\n'
+        return f'{case}{debug_content}{nodes_str}'
 
     def add(self, node):
         self.nodes.append(node)

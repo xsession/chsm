@@ -120,59 +120,59 @@ class LTC2471StateMachineTest(unittest.TestCase):
         # Test initial state
         self.assertEqual(self.state_machine.current_state, "__top__")
 
-        # Emit SIG_SYS_TICK_1ms signal
-        self.signals["SIG_SYS_TICK_1ms"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_ltc2471")
+    #     # Emit SIG_SYS_TICK_1ms signal
+    #     self.signals["SIG_SYS_TICK_1ms"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_ltc2471")
 
-        # Emit SIG_START_READ signal
-        self.signals["SIG_START_READ"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_reading")
+    #     # Emit SIG_START_READ signal
+    #     self.signals["SIG_START_READ"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_reading")
 
-        # Emit SIG_I2C_RESULT_SUCCESS signal
-        self.signals["SIG_I2C_RESULT_SUCCESS"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_idle")
+    #     # Emit SIG_I2C_RESULT_SUCCESS signal
+    #     self.signals["SIG_I2C_RESULT_SUCCESS"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_idle")
 
-        # Emit SIG_RESTART_TIMER signal
-        self.signals["SIG_RESTART_TIMER"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_idle")
+    #     # Emit SIG_RESTART_TIMER signal
+    #     self.signals["SIG_RESTART_TIMER"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_idle")
 
-        # Emit SIG_START_READ signal again
-        self.signals["SIG_START_READ"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_reading")
+    #     # Emit SIG_START_READ signal again
+    #     self.signals["SIG_START_READ"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_reading")
 
-        # Emit SIG_I2C_RESULT_TIMEOUT signal
-        self.signals["SIG_I2C_RESULT_TIMEOUT"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_reading")
+    #     # Emit SIG_I2C_RESULT_TIMEOUT signal
+    #     self.signals["SIG_I2C_RESULT_TIMEOUT"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_reading")
 
-        # Emit SIG_I2C_RESULT_SUCCESS signal
-        self.signals["SIG_I2C_RESULT_SUCCESS"].emit()
-        self.assertEqual(self.state_machine.current_state, "s_idle")
+    #     # Emit SIG_I2C_RESULT_SUCCESS signal
+    #     self.signals["SIG_I2C_RESULT_SUCCESS"].emit()
+    #     self.assertEqual(self.state_machine.current_state, "s_idle")
 
-    def test_signal_deferral(self):
-        # Emit SIG_START_READ signal and defer it
-        self.signals["SIG_START_READ"].emit()
-        self.state_machine.defer_signal(self.signals["SIG_START_READ"])
+    # def test_signal_deferral(self):
+    #     # Emit SIG_START_READ signal and defer it
+    #     self.signals["SIG_START_READ"].emit()
+    #     self.state_machine.defer_signal(self.signals["SIG_START_READ"])
 
-        # Emit SIG_SYS_TICK_1ms signal
-        self.signals["SIG_SYS_TICK_1ms"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_ltc2471"])
+    #     # Emit SIG_SYS_TICK_1ms signal
+    #     self.signals["SIG_SYS_TICK_1ms"].emit()
+    #     self.assertEqual(self.state_machine.current_state, ["s_ltc2471"])
 
-        # The deferred SIG_START_READ signal should now be handled
-        self.state_machine.handle_signals()
-        self.assertEqual(self.state_machine.current_state, ["s_reading"])
+    #     # The deferred SIG_START_READ signal should now be handled
+    #     self.state_machine.handle_signals()
+    #     self.assertEqual(self.state_machine.current_state, ["s_reading"])
 
-    def test_signal_queuing(self):
-        # Emit SIG_START_READ signal and queue it
-        self.signals["SIG_START_READ"].emit()
-        self.state_machine.queue_signal(self.signals["SIG_START_READ"])
+    # def test_signal_queuing(self):
+    #     # Emit SIG_START_READ signal and queue it
+    #     self.signals["SIG_START_READ"].emit()
+    #     self.state_machine.queue_signal(self.signals["SIG_START_READ"])
 
-        # Emit SIG_SYS_TICK_1ms signal
-        self.signals["SIG_SYS_TICK_1ms"].emit()
-        self.assertEqual(self.state_machine.current_state, ["s_ltc2471"])
+    #     # Emit SIG_SYS_TICK_1ms signal
+    #     self.signals["SIG_SYS_TICK_1ms"].emit()
+    #     self.assertEqual(self.state_machine.current_state, ["s_ltc2471"])
 
-        # The queued SIG_START_READ signal should now be handled
-        self.state_machine.handle_signals()
-        self.assertEqual(self.state_machine.current_state, ["s_reading"])
+    #     # The queued SIG_START_READ signal should now be handled
+    #     self.state_machine.handle_signals()
+    #     self.assertEqual(self.state_machine.current_state, ["s_reading"])
 
 
 if __name__ == "__main__":

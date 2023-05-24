@@ -1,7 +1,7 @@
 #ifndef LM73_FUNCTIONS_H
 #define LM73_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.05.17 12.59.44*/
+/*Generated with CHSM v0.0.0 at 2023.05.24 06.35.54*/
 
 #include "lm73.h"
 #include "chsm.h"
