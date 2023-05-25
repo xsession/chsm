@@ -1,7 +1,7 @@
 #ifndef LM73_FUNCTIONS_H
 #define LM73_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.05.24 07.19.41*/
+/*Generated with CHSM v0.0.0 at 2023.05.24 20.54.17*/
 
 #include "lm73.h"
 #include "chsm.h"
@@ -38,6 +38,8 @@ void lm73_update_temp(chsm_tst *self, const cevent_tst *e_pst);
 void send_offline_event(chsm_tst *self, const cevent_tst *e_pst);
 
 void send_online_event(chsm_tst *self, const cevent_tst *e_pst);
+
+void debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, uint8_t *state_func);
 
 
 bool lm73_id_match(chsm_tst *self, const cevent_tst *e_pst);

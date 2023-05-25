@@ -101,6 +101,9 @@ class StateMachine:
             ast.nodes.append(FuncDeclaration(f, 'void', self.templates['user_func_params']))
 
         ast.nodes.append(Blank())
+        ast.nodes.append(Blank())
+        ast.nodes.append(f'void debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, uint8_t *state_func);')
+        ast.nodes.append(Blank())
 
         for g in sorted(guards):
             ast.nodes.append(Blank())
@@ -394,8 +397,18 @@ class StateMachine:
 
         return nodes
 
-    def build_debug_func(self, debug_content = None):
-        
+    def build_debug_func(self, landing_state = None):
+        # debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, uint8_t *state_func, uint8_t *landing_state)
+        # {
+        #     #ifdef CHSM_BUILD_TESTS
+        #     printf("%s --%s--> %s\n", state_func, trans_name, landing_state);
+        #     #else
+        #     CRF_UNUSED(self);
+        #     CRF_UNUSED(est);
+        #     CRF_UNUSED(trans_name);
+        #     CRF_UNUSED(state_func);
+        #     #endif
+        # }  
         return "debug_trace"
 
     def build_case_from_signal(self, signal):
@@ -406,7 +419,7 @@ class StateMachine:
         else:
             name = f'{self.templates["signal_prefix"]}{name}'
 
-        c = Case(name,debug=f'//debug_log_func("{name}", __FUNCTION__);')
+        c = Case(name,debug=f'//debug_log_func(setf, est, "{name}", __FUNCTION__, "{}");')
 
         for guard in signal['guards'].values():
             nodes = self.guard_to_ast(guard)
