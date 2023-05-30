@@ -1,0 +1,21 @@
+import unittest
+
+
+class {{ test_class_name }}(unittest.TestCase):
+    def setUp(self):
+        # Set up the state machine, state data, and signals
+        pass
+
+    def tearDown(self):
+        # Clean up the state machine
+        pass
+
+    {% for test_case in test_cases %}
+    def test_{{ test_case.name }}(self):
+        # Test case: {{ test_case.description }}
+        pass
+    {% endfor %}
+
+
+if __name__ == "__main__":
+    unittest.main()
