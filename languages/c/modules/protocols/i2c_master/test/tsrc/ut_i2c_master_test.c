@@ -94,6 +94,8 @@ TEST(i2c_master, init)
  */
 TEST(i2c_master, send_1b)
 {
+	printf("\n%s\n", __FUNCTION__);
+
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 1
@@ -140,7 +142,9 @@ TEST(i2c_master, send_1b)
  */
 TEST(i2c_master, send_2b)
 {
-    i2c_mock_slave_device_tst dev_st = {
+	printf("\n%s\n", __FUNCTION__);
+    
+	i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 2
     };
@@ -185,6 +189,8 @@ TEST(i2c_master, send_2b)
 
 TEST(i2c_master, send_1b_addr_nack)
 {
+	printf("\n%s\n", __FUNCTION__);
+
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x13,
         .nack_idx_u16 = 1
@@ -233,6 +239,8 @@ TEST(i2c_master, send_1b_addr_nack)
 
 TEST(i2c_master, send_1b_data_nack)
 {
+	printf("\n%s\n", __FUNCTION__);
+
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 0
@@ -278,6 +286,8 @@ TEST(i2c_master, send_1b_data_nack)
  */
 TEST(i2c_master, send_2x_1b)
 {
+	printf("\n%s\n", __FUNCTION__);
+    
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 4
@@ -341,6 +351,8 @@ TEST(i2c_master, send_2x_1b)
  */
 TEST(i2c_master, read_1b)
 {
+	printf("\n%s\n", __FUNCTION__);
+
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 4,
@@ -387,6 +399,8 @@ TEST(i2c_master, read_1b)
  */
 TEST(i2c_master, read_2b)
 {
+	printf("\n%s\n", __FUNCTION__);
+    
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 4,
@@ -433,6 +447,8 @@ TEST(i2c_master, read_2b)
  */
 TEST(i2c_master, read_1b_addr_nack)
 {
+	printf("\n%s\n", __FUNCTION__);
+    
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x13,
         .nack_idx_u16 = 4,
@@ -480,7 +496,9 @@ TEST(i2c_master, read_1b_addr_nack)
  */
 TEST(i2c_master, write_2b_read_2b)
 {
-    i2c_mock_slave_device_tst dev_st = {
+	printf("\n%s\n", __FUNCTION__);
+    
+	i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 2,
 		.tx_data_au8 = {0x5a, 0x6b, 0x7c},
@@ -525,7 +543,8 @@ TEST(i2c_master, write_2b_read_2b)
 
 TEST(i2c_master, start_bus_scan)
 {
-	
+	printf("\n%s\n", __FUNCTION__);
+    
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 2,
@@ -557,17 +576,17 @@ TEST(i2c_master, start_bus_scan)
 
 TEST(i2c_master, check_bus_scan_result)
 {
-
+	printf("\n%s\n", __FUNCTION__);
 }
 
 TEST(i2c_master, data_error_counter_increment)
 {
-
+	printf("\n%s\n", __FUNCTION__);
 }
 
 TEST(i2c_master, addr_error_counter_increment)
 {
-
+	printf("\n%s\n", __FUNCTION__);
 }
 
 TEST_GROUP_RUNNER(i2c_master)

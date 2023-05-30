@@ -102,7 +102,7 @@ class StateMachine:
 
         ast.nodes.append(Blank())
         ast.nodes.append(Blank())
-        ast.nodes.append(f'void debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, uint8_t *state_func);')
+        ast.nodes.append(f'void {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);')
         ast.nodes.append(Blank())
 
         for g in sorted(guards):
@@ -398,18 +398,8 @@ class StateMachine:
         return nodes
 
     def build_debug_func(self, landing_state = None):
-        # debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, uint8_t *state_func, uint8_t *landing_state)
-        # {
-        #     #ifdef CHSM_BUILD_TESTS
-        #     printf("%s --%s--> %s\n", state_func, trans_name, landing_state);
-        #     #else
-        #     CRF_UNUSED(self);
-        #     CRF_UNUSED(est);
-        #     CRF_UNUSED(trans_name);
-        #     CRF_UNUSED(state_func);
-        #     #endif
-        # }  
-        return "debug_trace"
+        printf_str = 'printf("%s --%s-->\\n", state_func, trans_name);'
+        return f'\nvoid {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tCRF_UNUSED(self); \n\t\tCRF_UNUSED(est); \n\t\tCRF_UNUSED(trans_name); \n\t\tCRF_UNUSED(state_func); \n\t#endif \n}}  '
 
     def build_case_from_signal(self, signal):
         name = signal['name']
@@ -419,7 +409,7 @@ class StateMachine:
         else:
             name = f'{self.templates["signal_prefix"]}{name}'
 
-        c = Case(name,debug=f'//debug_log_func(setf, est, "{name}", __FUNCTION__, "{}");')
+        c = Case(name,debug=f'{self.prefix}_debug_log_func(self, e_pst, "{name}", __FUNCTION__);')
 
         for guard in signal['guards'].values():
             nodes = self.guard_to_ast(guard)
@@ -473,7 +463,9 @@ class StateMachine:
 
 
         top_func = self.build_func_from_state(self.top_func, states['__top__'], True)
+        debug_func = self.build_debug_func()
         ast.nodes.append(top_func)
+        ast.nodes.append(debug_func)
 
         ast.nodes.insert(0, Blank())
         ast.nodes.insert(0, Include(self.funcs_h))

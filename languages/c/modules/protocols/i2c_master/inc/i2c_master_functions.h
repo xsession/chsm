@@ -1,7 +1,7 @@
 #ifndef I2C_MASTER_FUNCTIONS_H
 #define I2C_MASTER_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.03.30 16.20.17*/
+/*Generated with CHSM v0.0.0 at 2023.05.30 14.39.00*/
 
 #include "i2c_master.h"
 #include "chsm.h"
@@ -34,6 +34,8 @@ void i2c_scan_start_step(chsm_tst *self, const cevent_tst *e_pst);
 void scan_init(chsm_tst *self, const cevent_tst *e_pst);
 
 void store_transaction_info(chsm_tst *self, const cevent_tst *e_pst);
+
+void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);
 
 
 bool device_addr_max_cnt(chsm_tst *self, const cevent_tst *e_pst);
