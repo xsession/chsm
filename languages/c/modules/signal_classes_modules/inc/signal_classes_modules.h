@@ -1,7 +1,6 @@
 #ifndef SIGNAL_CLASSES_MODULES_H
 #define SIGNAL_CLASSES_MODULES_H
 
-#include "crf.h"
 #include "signal_classes_if.h"
 
 typedef enum sig_class_modules_en {
