@@ -398,7 +398,7 @@ class StateMachine:
         return nodes
 
     def build_debug_func(self, landing_state = None):
-        printf_str = 'printf("%s --%s-->\\n", state_func, trans_name);'
+        printf_str = f'printf("{self.prefix}_%s --%s-->\\n", state_func, trans_name);'
         return f'\nvoid {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tCRF_UNUSED(self); \n\t\tCRF_UNUSED(est); \n\t\tCRF_UNUSED(trans_name); \n\t\tCRF_UNUSED(state_func); \n\t#endif \n}}  '
 
     def build_case_from_signal(self, signal):

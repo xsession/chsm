@@ -96,13 +96,13 @@ typedef struct i2c_transaction_tst
 typedef struct i2c_addr_nack_st
 {
     uint32_t addr_nack_u32;
-    uint8_t last_slave_id_u8;
+    uint8_t last_nack_slave_id_u8;
 }i2c_addr_nack_tst;
 
 typedef struct i2c_data_nack_st
 {
     uint32_t data_nack_u32;
-    uint8_t last_slave_id_u8;
+    uint8_t last_data_slave_id_u8;
 }i2c_data_nack_tst;
 typedef struct i2c_errors_st
 {

@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.05.30 14.39.00*/
+/*Generated with CHSM v0.0.0 at 2023.06.08 12.49.50*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
@@ -329,7 +329,7 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
 void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) 
 {
 	#ifdef CHSM_BUILD_TESTS 
-		printf("%s --%s-->\n", state_func, trans_name); 
+		printf("i2c_master_%s --%s-->\n", state_func, trans_name); 
 	#else 
 		CRF_UNUSED(self); 
 		CRF_UNUSED(est); 

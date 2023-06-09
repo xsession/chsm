@@ -125,6 +125,7 @@ TEST_TEAR_DOWN(lm73)
  */
 TEST(lm73, init)
 {
+	printf("\n%s\n", __FUNCTION__);
 }
 
 /* read_temp_twice:
@@ -133,6 +134,7 @@ TEST(lm73, init)
  */
 TEST(lm73, read_temp_twice)
 {
+	printf("\n%s\n", __FUNCTION__);
 	    i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 20,
@@ -174,6 +176,8 @@ TEST(lm73, read_temp_twice)
  */
 TEST(lm73, read_id_retry)
 {
+	printf("\n%s\n", __FUNCTION__);
+
 	    i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x13,
         .nack_idx_u16 = 20,
@@ -209,6 +213,8 @@ TEST(lm73, read_id_retry)
  */
 TEST(lm73, read_id_retry_bad_id)
 {
+	printf("\n%s\n", __FUNCTION__);
+
 	    i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 20,
@@ -242,6 +248,8 @@ TEST(lm73, read_id_retry_bad_id)
  */
 TEST(lm73, go_online)
 {
+	printf("\n%s\n", __FUNCTION__);
+
     i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 20,
@@ -280,6 +288,8 @@ TEST(lm73, go_online)
  */
 TEST(lm73, go_offline)
 {
+	printf("\n%s\n", __FUNCTION__);
+
 	    i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 20,
@@ -327,6 +337,8 @@ TEST(lm73, go_offline)
  */
 TEST(lm73, triggered_read)
 {
+	printf("\n%s\n", __FUNCTION__);
+	
 	    i2c_mock_slave_device_tst dev_st = {
         .address_u8 = 0x12,
         .nack_idx_u16 = 20,

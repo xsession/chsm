@@ -84,6 +84,7 @@ TEST_TEAR_DOWN(i2c_master)
  */
 TEST(i2c_master, init)
 {
+	printf("\n%s\n", __FUNCTION__);
 }
 
 /* send_1b:
