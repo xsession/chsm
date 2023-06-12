@@ -24,7 +24,7 @@ Requirements for the SHT30 module:
 
 typedef enum sht30_signals_ten
 {
-    SIG_SHT30_READ_SAMPLE = SIGNAL_FROM_CLASS(SIG_CLASS_SHT30),
+    SIG_SHT30_READ_SAMPLE = SIGNAL_FROM_CLASS(SIG_CLASS_EXT_SHT30),
     SIG_SHT30_READ_STATUS,
     SIG_SHT30_ONLINE,
     SIG_SHT30_OFFLINE,
@@ -92,7 +92,7 @@ struct sht30_st
     sht30_status_tst     status_st;
     sht30_serial_num_tst serial_num;
     bool                 valid_b;
-    uint8_t              state_id_en;
+    uint32_t             state_id_en;
 
     /* PRIVATE */
     uint32_t counter_u32;

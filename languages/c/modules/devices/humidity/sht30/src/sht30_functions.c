@@ -35,6 +35,7 @@ static uint16_t sht30_u8_to_u16(uint8_t low, uint8_t high)
 
 void sht30_i2c_power_state(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_SIG_VAR(SIG_SHT30_I2C_POWER_STATE, sig_i2c_power_state_st, e_pst);
     if (sig_i2c_power_state_st->power_state_on_u16 == 0)
     {
@@ -44,6 +45,7 @@ void sht30_i2c_power_state(chsm_tst *self, const cevent_tst *e_pst)
 
 static void sht30_set_state(chsm_tst *self, const cevent_tst *e_pst, uint16_t state_id)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
     _self->state_id_en = state_id;
@@ -51,6 +53,7 @@ static void sht30_set_state(chsm_tst *self, const cevent_tst *e_pst, uint16_t st
 
 void sht30_init(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
     _self->counter_u32             = 0;
@@ -77,9 +80,8 @@ void sht30_init(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_send_online_event(chsm_tst *self, const cevent_tst *e_pst)
 {
-
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
-    // sht30_set_state(_self, e_pst, S_ONLINE);
 
     TYPEOF(SIG_SHT30_ONLINE) *online_pst = CRF_NEW(SIG_SHT30_ONLINE);
 
@@ -90,6 +92,7 @@ void sht30_send_online_event(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_send_offline_event(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
     _self->valid_b   = false;
 
@@ -102,6 +105,7 @@ void sht30_send_offline_event(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_10ms_callback(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
     _self->counter_u32 += 10;
@@ -109,12 +113,14 @@ void sht30_10ms_callback(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_inc_error_counter(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
     _self->error_counter_u32++;
 }
 
 void sht30_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
 
@@ -134,6 +140,7 @@ void sht30_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_init_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
     // sht30_set_state(self, e_pst, S_INIT_READ);
@@ -153,6 +160,7 @@ void sht30_init_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
 }
 void sht30_measurement_reg_read(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
     sht30_set_state(self, e_pst, S_MEASUREMENT_INIT_READ);
@@ -167,6 +175,7 @@ void sht30_measurement_reg_read(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_get_status(chsm_tst *_self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(_self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     volatile sht30_tst *self = (sht30_tst *)_self;
 
@@ -187,6 +196,7 @@ void sht30_get_status(chsm_tst *_self, const cevent_tst *e_pst)
 
 void sht30_unplugged(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
 //    sht30_set_state(_self, e_pst, S_UNPLUGGED);
@@ -194,6 +204,7 @@ void sht30_unplugged(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_clear_status_reg(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
     sht30_set_state(self, e_pst, S_CLEAR_STATUS_REG);
@@ -214,6 +225,7 @@ void sht30_clear_status_reg(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_check_status(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     CRF_UNUSED(e_pst);
     sht30_tst *_self  = (sht30_tst *)self;
     uint16_t   status = sht30_u8_to_u16(_self->rx_buff_au8[1], _self->rx_buff_au8[0]);
@@ -221,6 +233,7 @@ void sht30_check_status(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_update_data(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self            = (sht30_tst *)self;
     uint16_t   raw_temp_u16     = sht30_u8_to_u16(_self->rx_buff_au8[1], _self->rx_buff_au8[0]);
     uint16_t   raw_humidity_u16 = sht30_u8_to_u16(_self->rx_buff_au8[4], _self->rx_buff_au8[3]);
@@ -241,6 +254,7 @@ void sht30_update_data(chsm_tst *self, const cevent_tst *e_pst)
 
 void sht30_reset_timer(chsm_tst *self, const cevent_tst *e_pst)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
 //    sht30_set_state(_self, e_pst, S_IDLE);
@@ -250,6 +264,7 @@ void sht30_reset_timer(chsm_tst *self, const cevent_tst *e_pst)
 
 bool sht30_timeout(chsm_tst *self, const cevent_tst *e_pst, uint32_t timeout_u32)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
     return _self->counter_u32 >= timeout_u32;
@@ -257,6 +272,7 @@ bool sht30_timeout(chsm_tst *self, const cevent_tst *e_pst, uint32_t timeout_u32
 
 bool sht30_error_count(chsm_tst *self, const cevent_tst *e_pst, uint16_t error_cnt_threshold_u16)
 {
+    sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
     return _self->error_counter_u32 >= error_cnt_threshold_u16;

@@ -2,10 +2,10 @@
 #include "cbits.h"
 #include "cevent.h"
 #include "crf.h"
+#include "sys_if.h"
 #include "i2c_master.h"
 #include "sht30.h"
 #include "sht30_regs.h"
-#include "sys_if.h"
 #include "unity_fixture.h"
 #include "ut_i2c_driver_mock.h"
 #include <stdbool.h>
@@ -37,7 +37,7 @@ crf_tst crf;
 const cevent_tst *events_apst[4];
 cqueue_tst        q_st;
 
-const cevent_tst tick_1ms_st = { .sig = SIG_SYS_TICK_1ms };
+const cevent_tst tick_10ms_st = { .sig = SIG_SYS_TICK_10ms };
 
 static void tick_ms(uint32_t tick_cnt_u32)
 {
@@ -45,7 +45,7 @@ static void tick_ms(uint32_t tick_cnt_u32)
     {
         drv_mock_st.tick(&drv_mock_st);
 
-        CRF_POST(&tick_1ms_st, &sht30_st);
+        CRF_POST(&tick_10ms_st, &sht30_st);
 
         while (CRF_STEP())
         {
@@ -123,33 +123,48 @@ TEST_TEAR_DOWN(sht30)
  */
 TEST(sht30, init)
 {
+    printf("\n%s\n", __FUNCTION__);
     TEST_ASSERT(1);
 }
 
-TEST(sht30, get_status)
+TEST(sht30, check_status)
 {
-    i2c_mock_slave_device_tst dev_st = { 
+    printf("\n%s\n", __FUNCTION__);
+
+    i2c_mock_slave_device_tst slave_dev_mock_st = { 
         .address_u8 = SHT30_ADDR_ADDR_PIN_LOW, 
         .nack_idx_u16 = 20, 
-        .tx_data_au8 = { 0x80, 0x10, 0xe1 } 
+        .tx_data_au8 = {    0x80,0x10,0xE1, // response for get_status
+                            0x66,0xDD,      // temperature response for read_measure_data
+                            0xC6,           // crc
+                            0x6D,0x69,      // humidity response for read_measurement_data
+                            0xA7            // crc
+                        } 
         };
 
     const sht30_sample_tst *s_pst;
 
-    drv_mock_st.slave_pst = &dev_st;
-}
+    drv_mock_st.slave_pst = &slave_dev_mock_st;
 
-TEST(sht30, read_measurement_in_online_state)
-{
+    tick_ms(10);
+
+
     
 }
 
 TEST(sht30, unplug_check)
 {
+    printf("\n%s\n", __FUNCTION__);
+
     i2c_mock_slave_device_tst dev_st = { 
         .address_u8 = SHT30_ADDR_ADDR_PIN_LOW, 
         .nack_idx_u16 = 20, 
-        .tx_data_au8 = { 0x80, 0x10, 0xe1 } 
+        .tx_data_au8 = {    0x80,0x10,0xE1, // response for get_status
+                            0x66,0xDD,      // temperature response for read_measure_data
+                            0xC6,           // crc
+                            0x6D,0x69,      // humidity response for read_measurement_data
+                            0xA7            // crc
+                        } 
         };
 
     const sht30_sample_tst *s_pst;
@@ -164,8 +179,42 @@ TEST(sht30, unplug_check)
     // TEST_ASSERT_EQUAL_HEX(0x5566, s_pst->sample_u16);
 }
 
+TEST(sht30, go_online)
+{
+    printf("\n%s\n", __FUNCTION__);
+}
+
+TEST(sht30, go_offline)
+{
+    printf("\n%s\n", __FUNCTION__);
+}
+
+TEST(sht30, read_measure_data)
+{
+    printf("\n%s\n", __FUNCTION__);
+
+    i2c_mock_slave_device_tst dev_st = { 
+        .address_u8 = SHT30_ADDR_ADDR_PIN_LOW, 
+        .nack_idx_u16 = 20, 
+        .tx_data_au8 = {    0x80,0x10,0xE1, // response for get_status
+                            0x66,0xDD,      // temperature response for read_measure_data
+                            0xC6,           // crc
+                            0x6D,0x69,      // humidity response for read_measurement_data
+                            0xA7            // crc
+                        } 
+        };
+}
+
 TEST_GROUP_RUNNER(sht30)
 {
     RUN_TEST_CASE(sht30, init);
-    RUN_TEST_CASE(sht30, unplug_check);
+    RUN_TEST_CASE(sht30, check_status);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
+    // RUN_TEST_CASE(sht30, init);
 }
