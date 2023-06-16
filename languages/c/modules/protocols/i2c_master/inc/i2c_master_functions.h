@@ -1,7 +1,7 @@
 #ifndef I2C_MASTER_FUNCTIONS_H
 #define I2C_MASTER_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.06.08 12.49.50*/
+/*Generated with CHSM v0.0.0 at 2023.06.16 12.24.52*/
 
 #include "i2c_master.h"
 #include "chsm.h"
@@ -36,7 +36,7 @@ void scan_init(chsm_tst *self, const cevent_tst *e_pst);
 void store_transaction_info(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);
-
+extern char i2c_master_debug_state_ac[20];
 
 bool device_addr_max_cnt(chsm_tst *self, const cevent_tst *e_pst);
 
@@ -54,16 +54,18 @@ typedef enum i2c_master_state_id_ten
 
 /*
 Signals:
-    SIG_I2C_ADDRS_RELEASE  
-    SIG_I2C_BUS_SCAN       
-    SIG_I2C_READ_FAIL      
-    SIG_I2C_READ_SUCCESS   
-    SIG_I2C_R_TRANSACTION  
-    SIG_I2C_WRITE_FAIL     
-    SIG_I2C_WRITE_SUCCESS  
-    SIG_I2C_WR_TRANSACTION 
-    SIG_I2C_W_TRANSACTION  
-    SIG_SYS_TICK_1ms       
+    SIG_I2C_ADDRS_RELEASE        
+    SIG_I2C_BUS_SCAN             
+    SIG_I2C_DEFER_QUEUE_OVERFLOW 
+    SIG_I2C_QUEUE_OVERFLOW       
+    SIG_I2C_READ_FAIL            
+    SIG_I2C_READ_SUCCESS         
+    SIG_I2C_R_TRANSACTION        
+    SIG_I2C_WRITE_FAIL           
+    SIG_I2C_WRITE_SUCCESS        
+    SIG_I2C_WR_TRANSACTION       
+    SIG_I2C_W_TRANSACTION        
+    SIG_SYS_TICK_1ms             
 */
 
 /*

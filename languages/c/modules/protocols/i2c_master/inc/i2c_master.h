@@ -60,6 +60,8 @@ typedef enum i2c_master_signals_en
 
     SIG_I2C_ADDRS_RELEASE,
     SIG_I2C_BUS_SCAN,
+    SIG_I2C_QUEUE_OVERFLOW,
+    SIG_I2C_DEFER_QUEUE_OVERFLOW,
 } i2c_master_signals_ten;
 
 #define SIG_I2C_W_TRANSACTION_TYPE  i2c_transaction_tst
@@ -71,8 +73,10 @@ typedef enum i2c_master_signals_en
 #define SIG_I2C_RESULT_DATA_NACK_TYPE cevent_tst
 #define SIG_I2C_RESULT_BUS_BUSY_TYPE  cevent_tst
 
-#define SIG_I2C_ADDRS_RELEASE_TYPE    cevent_tst
-#define SIG_I2C_BUS_SCAN_TYPE         cevent_tst
+#define SIG_I2C_ADDRS_RELEASE_TYPE          cevent_tst
+#define SIG_I2C_BUS_SCAN_TYPE               cevent_tst
+#define SIG_I2C_QUEUE_OVERFLOW_TYPE         cevent_tst
+#define SIG_I2C_DEFER_QUEUE_OVERFLOW_TYPE   cevent_tst
 
 /*
  * EVENT DEFINITIONS

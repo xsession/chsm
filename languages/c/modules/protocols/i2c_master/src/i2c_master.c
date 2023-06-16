@@ -1,9 +1,11 @@
-/*Generated with CHSM v0.0.0 at 2023.06.08 12.49.50*/
+/*Generated with CHSM v0.0.0 at 2023.06.16 12.24.52*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
 #include "i2c_master_functions.h"
+#include "string.h"
 
+char i2c_master_debug_state_ac[20];
 
 static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_scan_idle(chsm_tst *self, const cevent_tst  *e_pst);
@@ -93,6 +95,22 @@ static chsm_result_ten s_write(chsm_tst *self, const cevent_tst  *e_pst)
             clear_transaction_info(self, e_pst);
             return chsm_transition(self, s_idle);
 
+        case SIG_I2C_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_QUEUE_OVERFLOW", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        case SIG_I2C_DEFER_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_DEFER_QUEUE_OVERFLOW", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
         case SIG_SYS_TICK_1ms:
             i2c_master_debug_log_func(self, e_pst, "SIG_SYS_TICK_1ms", __FUNCTION__);
             i2c_1ms_callback(self, e_pst);
@@ -139,6 +157,22 @@ static chsm_result_ten s_read(chsm_tst *self, const cevent_tst  *e_pst)
 
         case SIG_I2C_READ_FAIL:
             i2c_master_debug_log_func(self, e_pst, "SIG_I2C_READ_FAIL", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        case SIG_I2C_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_QUEUE_OVERFLOW", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        case SIG_I2C_DEFER_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_DEFER_QUEUE_OVERFLOW", __FUNCTION__);
             i2c_master_send_fail_response(self, e_pst);
             i2c_master_stop(self, e_pst);
             chsm_recall(self, e_pst);
@@ -194,6 +228,22 @@ static chsm_result_ten s_wr_write(chsm_tst *self, const cevent_tst  *e_pst)
             clear_transaction_info(self, e_pst);
             return chsm_transition(self, s_idle);
 
+        case SIG_I2C_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_QUEUE_OVERFLOW", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        case SIG_I2C_DEFER_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_DEFER_QUEUE_OVERFLOW", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
         case SIG_SYS_TICK_1ms:
             i2c_master_debug_log_func(self, e_pst, "SIG_SYS_TICK_1ms", __FUNCTION__);
             i2c_1ms_callback(self, e_pst);
@@ -240,6 +290,22 @@ static chsm_result_ten s_wr_read(chsm_tst *self, const cevent_tst  *e_pst)
 
         case SIG_I2C_READ_FAIL:
             i2c_master_debug_log_func(self, e_pst, "SIG_I2C_READ_FAIL", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        case SIG_I2C_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_QUEUE_OVERFLOW", __FUNCTION__);
+            i2c_master_send_fail_response(self, e_pst);
+            i2c_master_stop(self, e_pst);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
+
+        case SIG_I2C_DEFER_QUEUE_OVERFLOW:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_DEFER_QUEUE_OVERFLOW", __FUNCTION__);
             i2c_master_send_fail_response(self, e_pst);
             i2c_master_stop(self, e_pst);
             chsm_recall(self, e_pst);
@@ -330,10 +396,13 @@ void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *t
 {
 	#ifdef CHSM_BUILD_TESTS 
 		printf("i2c_master_%s --%s-->\n", state_func, trans_name); 
+//		 i2c_master_debug_state_ac = state_func;
 	#else 
 		CRF_UNUSED(self); 
 		CRF_UNUSED(est); 
 		CRF_UNUSED(trans_name); 
 		CRF_UNUSED(state_func); 
+		memcpy(i2c_master_debug_state_ac, 0, 20);
+		memcpy(i2c_master_debug_state_ac, state_func, 20);
 	#endif 
 }  
