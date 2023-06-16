@@ -1,21 +1,23 @@
-import unittest
+#include <stdio.h>
+#include "unity_fixture.h"
+#include "unity.h"
 
+void disableInterrupts(void)
+{
 
-class {{ test_class_name }}(unittest.TestCase):
-    def setUp(self):
-        # Set up the state machine, state data, and signals
-        pass
+}
 
-    def tearDown(self):
-        # Clean up the state machine
-        pass
+void enableInterrupts(void)
+{
 
-    {% for test_case in test_cases %}
-    def test_{{ test_case.name }}(self):
-        # Test case: {{ test_case.description }}
-        pass
-    {% endfor %}
+}
 
+void run_lm73_tests(void)
+{
+	RUN_TEST_GROUP(lm73);
+}
 
-if __name__ == "__main__":
-    unittest.main()
+int main(int argc, const char * argv[])
+{
+	return UnityMain(argc, argv, run_lm73_tests);
+}
