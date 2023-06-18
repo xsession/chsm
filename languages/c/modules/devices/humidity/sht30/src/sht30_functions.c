@@ -69,12 +69,6 @@ void sht30_init(chsm_tst *self, const cevent_tst *e_pst)
     _self->t_st.read_data_pu8  = _self->rx_buff_au8;
     _self->t_st.write_data_pu8 = _self->tx_buff_au8;
 
-    // sht30_set_state(self, e_pst, S_SHT30);
-
-    _self->t_st.read_cnt_u16 = 0;
-    _self->t_st.write_cnt_u16 = 1;
-    _self->t_st.write_data_pu8 = 0;
-
     CRF_EMIT(&_self->t_st);
 }
 

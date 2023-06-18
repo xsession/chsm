@@ -10,6 +10,7 @@ Welcome CHSM
    tutorial/index
    internals/index
    development/index
+   modules/index
    examples/index
    faq
 
