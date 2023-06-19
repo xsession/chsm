@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.06.08 12.50.40*/
+/*Generated with CHSM v0.0.0 at 2023.06.19 13.34.39*/
 #include "cevent.h"
 #include "chsm.h"
 #include "sht30.h"
@@ -12,6 +12,7 @@ static chsm_result_ten s_unplugged(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_measurement_init_read(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_measurement_init_write(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_check_status(chsm_tst *self, const cevent_tst  *e_pst);
+char sht30_debug_state_ac[20];
 
 static chsm_result_ten s_check_status(chsm_tst *self, const cevent_tst  *e_pst)
 {
@@ -299,7 +300,7 @@ static chsm_result_ten s_measurement_write(chsm_tst *self, const cevent_tst  *e_
 
     if(sht30_timeout(self, e_pst, SHT30_READ_PERIOD))
     {
-        sht30_reset_timer(self, e_pst);
+        sht30_inc_error_counter(self, e_pst);
         sht30_reset_timer(self, e_pst);
         return chsm_transition(self, s_idle);
     }
@@ -339,5 +340,7 @@ void sht30_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_
 		CRF_UNUSED(est); 
 		CRF_UNUSED(trans_name); 
 		CRF_UNUSED(state_func); 
+		memcpy(sht30_debug_state_ac, 0, 20); 
+		memcpy(sht30_debug_state_ac, state_func, 20); 
 	#endif 
 }  

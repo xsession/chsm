@@ -1,7 +1,7 @@
 #ifndef I2C_MASTER_FUNCTIONS_H
 #define I2C_MASTER_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.06.16 12.24.52*/
+/*Generated with CHSM v0.0.0 at 2023.06.19 13.53.37*/
 
 #include "i2c_master.h"
 #include "chsm.h"
@@ -12,6 +12,10 @@
 void clear_transaction_info(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_1ms_callback(chsm_tst *self, const cevent_tst *e_pst);
+
+void i2c_master_clear_defer_queue(chsm_tst *self, const cevent_tst *e_pst);
+
+void i2c_master_clear_queue(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_master_inc_dev_addr(chsm_tst *self, const cevent_tst *e_pst);
 
@@ -38,7 +42,7 @@ void store_transaction_info(chsm_tst *self, const cevent_tst *e_pst);
 void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);
 extern char i2c_master_debug_state_ac[20];
 
-bool device_addr_max_cnt(chsm_tst *self, const cevent_tst *e_pst);
+bool i2c_master_device_addr_max_cnt(chsm_tst *self, const cevent_tst *e_pst);
 
 typedef enum i2c_master_state_id_ten
 {
@@ -70,5 +74,7 @@ Signals:
 
 /*
 Other function notes:
+
+i2c_master_fault_cnt:
 */
 #endif

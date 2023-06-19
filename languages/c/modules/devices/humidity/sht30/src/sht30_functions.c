@@ -77,6 +77,7 @@ void sht30_send_online_event(chsm_tst *self, const cevent_tst *e_pst)
     sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
     sht30_tst *_self = (sht30_tst *)self;
 
+    _self->valid_b   = true;
     TYPEOF(SIG_SHT30_ONLINE) *online_pst = CRF_NEW(SIG_SHT30_ONLINE);
 
     online_pst->id_u16 = _self->config_st.id_u16;
@@ -118,7 +119,7 @@ void sht30_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
     CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
 
-    sht30_commands_ten command   = SHT30_CMD_MEAS_CLOCKSTR_L;
+    sht30_commands_ten command   = SHT30_CMD_FETCH_DATA;
     uint8_t            command_l = command & 0xff;
     uint8_t            command_h = command >> 8;
 
@@ -139,7 +140,7 @@ void sht30_init_measurement_reg_write(chsm_tst *self, const cevent_tst *e_pst)
     sht30_tst *_self = (sht30_tst *)self;
     // sht30_set_state(self, e_pst, S_INIT_READ);
 
-    sht30_commands_ten command   = SHT30_CMD_MEAS_CLOCKSTR_L;
+    sht30_commands_ten command   = SHT30_CMD_MEAS_PERI_10_L;
     uint8_t            command_l = command & 0xff;
     uint8_t            command_h = command >> 8;
 
@@ -170,12 +171,13 @@ void sht30_measurement_reg_read(chsm_tst *self, const cevent_tst *e_pst)
 void sht30_get_status(chsm_tst *_self, const cevent_tst *e_pst)
 {
     sht30_debug_log_func(_self,e_pst,"",__FUNCTION__);
-    CRF_UNUSED(e_pst);
-    volatile sht30_tst *self = (sht30_tst *)_self;
 
-    volatile sht30_commands_ten command   = SHT30_CMD_READ_STATUS;
-    volatile uint8_t            command_l = command & 0xff;
-    volatile uint8_t            command_h = command >> 8;
+    sht30_tst *self = (sht30_tst *)_self;
+    sht30_tst *kecske = (sht30_tst *)_self;
+
+    sht30_commands_ten command   = SHT30_CMD_READ_STATUS;
+    uint8_t            command_l = command & 0xff;
+    uint8_t            command_h = command >> 8;
 
     self->t_st.slave_addr_u16 = self->config_st.address_u8;
     self->t_st.super.sig      = SIG_I2C_WR_TRANSACTION;
@@ -183,15 +185,18 @@ void sht30_get_status(chsm_tst *_self, const cevent_tst *e_pst)
     self->t_st.read_cnt_u16   = 3;
     self->tx_buff_au8[0]      = command_h;
     self->tx_buff_au8[1]      = command_l;
+    self->rx_buff_au8[0]      = 0;
+    self->rx_buff_au8[1]      = 0;
+    self->rx_buff_au8[2]      = 0;
 
-    CRF_EMIT(&self->t_st);
+//    CRF_EMIT(&self->t_st);
+    self->super.send(_self, (const cevent_tst *)(&self->t_st));
 //    self->super.send(_self, (const cevent_tst *)(&self->t_st));
 }
 
 void sht30_unplugged(chsm_tst *self, const cevent_tst *e_pst)
 {
     sht30_debug_log_func(self,e_pst,"",__FUNCTION__);
-    CRF_UNUSED(e_pst);
     sht30_tst *_self = (sht30_tst *)self;
 //    sht30_set_state(_self, e_pst, S_UNPLUGGED);
 }

@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.06.08 13.07.02*/
+/*Generated with CHSM v0.0.0 at 2023.06.19 09.27.32*/
 #include "cevent.h"
 #include "chsm.h"
 #include "lm73.h"
@@ -15,6 +15,7 @@ static chsm_result_ten s_reset_ptr_reg(chsm_tst *self, const cevent_tst  *e_pst)
 static chsm_result_ten s_set_resolution(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_unplugged(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst);
+char lm73_debug_state_ac[20];
 
 static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst)
 {
@@ -442,5 +443,7 @@ void lm73_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_n
 		CRF_UNUSED(est); 
 		CRF_UNUSED(trans_name); 
 		CRF_UNUSED(state_func); 
+		memcpy(lm73_debug_state_ac, 0, 20); 
+		memcpy(lm73_debug_state_ac, state_func, 20); 
 	#endif 
 }  

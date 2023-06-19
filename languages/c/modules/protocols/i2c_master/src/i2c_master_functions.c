@@ -12,6 +12,9 @@ const cevent_tst bus_busy_response_st = {.sig = SIG_I2C_RESULT_BUS_BUSY};
 const cevent_tst sig_addr_release_st = {.sig = SIG_I2C_ADDRS_RELEASE};
 const cevent_tst sig_bus_scan_st = {.sig = SIG_I2C_BUS_SCAN};
 
+const cevent_tst sig_queue_overflow_st = {.sig = SIG_I2C_QUEUE_OVERFLOW};
+const cevent_tst sig_defer_queue_overflow_st = {.sig = SIG_I2C_DEFER_QUEUE_OVERFLOW};
+
 void i2c_master_init(chsm_tst *_self, const cevent_tst *e_pst)
 {
     i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
@@ -27,6 +30,14 @@ void store_transaction_info(chsm_tst *_self, const cevent_tst *e_pst)
     i2c_master_tst *self = (i2c_master_tst *)_self;
 
     self->cached_tr_st = *((i2c_transaction_tst *)e_pst);
+    if(self->super.defer_q_st.fault_cnt)
+    {
+        CRF_EMIT(&sig_defer_queue_overflow_st);
+    }
+    if(self->super.event_q_st.fault_cnt)
+    {
+        CRF_EMIT(&sig_queue_overflow_st);
+    }
 }
 
 void clear_transaction_info(chsm_tst *self, const cevent_tst *e_pst)
@@ -110,7 +121,7 @@ void scan_init(chsm_tst *_self, const cevent_tst *e_pst)
     self->scan_cnt_u8 = 1;
     *self->config_st.scan_result_au8 = 0;
 }
-bool device_addr_max_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+bool i2c_master_device_addr_max_cnt(chsm_tst *_self, const cevent_tst *e_pst)
 {
     i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
     i2c_master_tst *self = (i2c_master_tst *)_self;
@@ -125,12 +136,18 @@ bool device_addr_max_cnt(chsm_tst *_self, const cevent_tst *e_pst)
         CRF_POST_TO_SELF(&self->cached_tr_st.super);
         return true;
     }
-    else
-    {
-        CRF_EMIT(&sig_addr_release_st);
-        return false;
-    }
+
+    CRF_POST_TO_SELF(&sig_addr_release_st);
+    return false;
 }
+
+//void i2c_master_addr_release(chsm_tst *_self, const cevent_tst *e_pst)
+//{
+//    i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
+//    i2c_master_tst *self = (i2c_master_tst *)_self;
+//    CRF_EMIT(&sig_addr_release_st);
+//}
+
 void i2c_1ms_callback(chsm_tst *_self, const cevent_tst *e_pst)
 {
     i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
@@ -162,4 +179,39 @@ void i2c_scan_start_step(chsm_tst *_self, const cevent_tst *e_pst)
 
     self->config_st.driver_pst->start_tx(self->config_st.driver_pst, t_pst->slave_addr_u16, t_pst->write_data_pu8, t_pst->write_cnt_u16);
     self->config_st.driver_pst->stop(self->config_st.driver_pst);
+}
+
+void i2c_master_clear_defer_queue(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
+    i2c_master_tst *self = (i2c_master_tst *)_self;
+
+    self->super.defer_q_st.head = 0;
+    self->super.defer_q_st.tail = 0;
+    self->super.defer_q_st.fault_cnt = 0;
+}
+
+void i2c_master_clear_queue(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
+    i2c_master_tst *self = (i2c_master_tst *)_self;
+
+    self->super.event_q_st.head = 0;
+    self->super.event_q_st.tail = 0;
+    self->super.event_q_st.fault_cnt = 0;
+}
+
+bool i2c_master_fault_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
+    i2c_master_tst *self = (i2c_master_tst *)_self;
+    if(self->super.defer_q_st.fault_cnt)
+    {
+        return true;
+    }
+    if(self->super.event_q_st.fault_cnt)
+    {
+        return true;
+    }
+    return false;
 }

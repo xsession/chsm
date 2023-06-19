@@ -139,8 +139,11 @@ struct i2c_master_tst
     i2c_transaction_tst cached_tr_st;
     uint8_t             scan_cnt_u8;
     uint32_t            counter_u32;
+    uint32_t            fault_cnt_u32;
 };
 
 chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst);
+
+#define I2C_MASTER_FAUL_CNT 10U
 
 #endif

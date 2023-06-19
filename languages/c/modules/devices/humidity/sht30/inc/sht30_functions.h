@@ -1,7 +1,7 @@
 #ifndef SHT30_FUNCTIONS_H
 #define SHT30_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.06.08 12.50.40*/
+/*Generated with CHSM v0.0.0 at 2023.06.19 13.34.39*/
 
 #include "sht30.h"
 #include "chsm.h"
@@ -47,7 +47,7 @@ void sht30_unplugged(chsm_tst *self, const cevent_tst *e_pst);
 void sht30_update_data(chsm_tst *self, const cevent_tst *e_pst);
 
 void sht30_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);
-
+extern char sht30_debug_state_ac[20];
 
 typedef enum sht30_state_id_ten
 {

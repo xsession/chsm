@@ -102,6 +102,7 @@ void send_online_event(chsm_tst *_self, const cevent_tst *e_pst)
 
     lm73_tst*   self = (lm73_tst *)_self;
 
+    self->valid_b = true;
     TYPEOF(SIG_LM73_ONLINE)* online_pst = CRF_NEW(SIG_LM73_ONLINE);
 
     online_pst->id_u16 = self->config_st.id_u16;
