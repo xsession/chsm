@@ -2,15 +2,13 @@ import sys
 import os
 import shutil
 
-sys.path.insert(0, os.path.abspath('../../../languages\c\modules\protocols\i2c_master\doc'))
+#sys.path.insert(0, os.path.abspath('../../../languages\c\modules\protocols\i2c_master\doc'))
 
-
-
-source_path = "../../../languages\c\modules\protocols\i2c_master\doc/i2c_master.html"
-destination_path = "./_static/i2c_master.html"
+#source_path = "../../../languages\c\modules\protocols\i2c_master\doc/i2c_master.html"
+#destination_path = "./_static/i2c_master.html"
 
 # copy the source file to the destination
-shutil.copyfile(source_path, destination_path)
+#shutil.copyfile(source_path, destination_path)
 
 
 # Configuration file for the Sphinx documentation builder.
