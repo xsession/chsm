@@ -2,13 +2,23 @@ import sys
 import os
 import shutil
 
-#sys.path.insert(0, os.path.abspath('../../../languages\c\modules\protocols\i2c_master\doc'))
+# Protocols
+sys.path.insert(0, os.path.abspath('../../../languages/c/modules/protocols/i2c_master/doc'))
+shutil.copyfile("../../../languages/c/modules/protocols/i2c_master/doc/i2c_master.html", "./_static/i2c_master.html")
 
-#source_path = "../../../languages\c\modules\protocols\i2c_master\doc/i2c_master.html"
-#destination_path = "./_static/i2c_master.html"
+sys.path.insert(0, os.path.abspath('../../../languages/c/modules/protocols/spi_master/doc'))
+shutil.copyfile("../../../languages/c/modules/protocols/spi_master/doc/spi_master.html", "./_static/spi_master.html")
 
-# copy the source file to the destination
-#shutil.copyfile(source_path, destination_path)
+sys.path.insert(0, os.path.abspath('../../../languages/c/modules/protocols/canopen/doc'))
+shutil.copyfile("../../../languages/c/modules/protocols/canopen/doc/canopen.html", "./_static/canopen.html")
+
+# Devices
+sys.path.insert(0, os.path.abspath('../../../languages/c/modules/devices/temperature/lm73/doc'))
+shutil.copyfile("../../../languages/c/modules/devices/temperature/lm73/doc/lm73.html", "./_static/lm73.html")
+
+sys.path.insert(0, os.path.abspath('../../../languages/c/modules/devices/temperature/tmp468/doc'))
+shutil.copyfile("../../../languages/c/modules/devices/temperature/tmp468/doc/tmp468.html", "./_static/tmp468.html")
+
 
 
 # Configuration file for the Sphinx documentation builder.
@@ -39,3 +49,6 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_css_files = [
+    'decorator.css',
+]
