@@ -215,3 +215,8 @@ bool i2c_master_fault_cnt(chsm_tst *_self, const cevent_tst *e_pst)
     }
     return false;
 }
+
+void i2c_master_bus_reset(chsm_tst *self, const cevent_tst *e_pst)
+{
+
+}

@@ -1,10 +1,11 @@
-/*Generated with CHSM v0.0.0 at 2023.06.19 13.53.37*/
+/*Generated with CHSM v0.0.0 at 2023.06.28 10.26.33*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
 #include "i2c_master_functions.h"
 
 
+static chsm_result_ten s_i2c_bus_reset(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_scan_idle(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_wr_read(chsm_tst *self, const cevent_tst  *e_pst);
@@ -408,6 +409,23 @@ static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst)
     return chsm_ignored(self);
 }
 
+static chsm_result_ten s_i2c_bus_reset(chsm_tst *self, const cevent_tst  *e_pst)
+{
+    switch(e_pst->sig)
+    {
+        case SIG_SYS_TICK_1ms:
+            i2c_master_debug_log_func(self, e_pst, "SIG_SYS_TICK_1ms", __FUNCTION__);
+            i2c_1ms_callback(self, e_pst);
+            break;
+    }
+
+    chsm_recall(self, e_pst);
+    clear_transaction_info(self, e_pst);
+    return chsm_transition(self, s_idle);
+
+    return chsm_ignored(self);
+}
+
 chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
 {
     switch(e_pst->sig)
@@ -415,9 +433,8 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
         case C_SIG_INIT:
             i2c_master_debug_log_func(self, e_pst, "C_SIG_INIT", __FUNCTION__);
             i2c_master_init(self, e_pst);
-            chsm_recall(self, e_pst);
-            clear_transaction_info(self, e_pst);
-            return chsm_transition(self, s_idle);
+            i2c_master_bus_reset(self, e_pst);
+            return chsm_transition(self, s_i2c_bus_reset);
     }
 
     return chsm_ignored(self);

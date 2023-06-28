@@ -1,7 +1,7 @@
 #ifndef I2C_MASTER_FUNCTIONS_H
 #define I2C_MASTER_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.06.19 13.53.37*/
+/*Generated with CHSM v0.0.0 at 2023.06.28 10.26.33*/
 
 #include "i2c_master.h"
 #include "chsm.h"
@@ -12,6 +12,8 @@
 void clear_transaction_info(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_1ms_callback(chsm_tst *self, const cevent_tst *e_pst);
+
+void i2c_master_bus_reset(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_master_clear_defer_queue(chsm_tst *self, const cevent_tst *e_pst);
 
@@ -53,6 +55,7 @@ typedef enum i2c_master_state_id_ten
     S_WR_READ = 6,
     S_SCAN_IDLE = 9,
     S_SCAN_WRITE = 11,
+    S_I2C_BUS_RESET = 12,
 } i2c_master_state_id_ten;
 
 
