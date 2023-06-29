@@ -7,8 +7,16 @@ i2c_master
 
 .. raw:: html
 
-    <iframe src="../_static/i2c_master.html" height="800px" width="100%"></iframe>
-
+    <iframe id="i2c_master" src="../_static/i2c_master.html" height="1000px" width="100%"></iframe>
+    <script>
+        var iframe = document.getElementById('i2c_master');
+        iframe.onload = function() {
+            var iframeContentHeight = iframe.contentWindow.document.body.scrollHeight;
+            var iframeContentWidth = iframe.contentWindow.document.body.scrollWidth;
+            console.log('Height: ' + iframeContentHeight);
+            console.log('Width: ' + iframeContentWidth);
+        }
+    </script>
 
 spi_master
 -----------

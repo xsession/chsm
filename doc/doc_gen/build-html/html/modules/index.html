@@ -8,6 +8,8 @@
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/decorator.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/dark_mode_css/dark.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -17,6 +19,8 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/dark_mode_js/default_dark.js"></script>
+        <script src="../_static/dark_mode_js/theme_switcher.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,9 +49,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../usage/index.html">First Steps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../man/index.html">Manual</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../internals/index.html">Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/index.html">Development</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#i2c-master">i2c_master</a></li>
@@ -88,7 +89,16 @@
 <h1>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h1>
 <section id="i2c-master">
 <h2>i2c_master<a class="headerlink" href="#i2c-master" title="Permalink to this heading"></a></h2>
-<iframe src="../_static/i2c_master.html" height="800px" width="100%"></iframe></section>
+<iframe id="i2c_master" src="../_static/i2c_master.html" height="1000px" width="100%"></iframe>
+<script>
+    var iframe = document.getElementById('i2c_master');
+    iframe.onload = function() {
+        var iframeContentHeight = iframe.contentWindow.document.body.scrollHeight;
+        var iframeContentWidth = iframe.contentWindow.document.body.scrollWidth;
+        console.log('Height: ' + iframeContentHeight);
+        console.log('Width: ' + iframeContentWidth);
+    }
+</script></section>
 <section id="spi-master">
 <h2>spi_master<a class="headerlink" href="#spi-master" title="Permalink to this heading"></a></h2>
 <iframe src="../_static/spi_master.html" height="800px" width="100%"></iframe></section>

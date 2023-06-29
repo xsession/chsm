@@ -18,7 +18,50 @@
             height: 100%;
         }
 
-        .state_body {
+        :root {
+    --nc-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --nc-font-mono: Consolas, monaco, 'Ubuntu Mono', 'Liberation Mono', 'Courier New', Courier, monospace;
+
+    /* drawing.css */
+    --state-body-color: rgb(0, 0, 0);
+    --state-border-color: rgb(0, 191, 255);
+    --state-border-highlight-color: rgb(23, 197, 66);
+    --intial-state-fill-color: rgb(0, 0, 0);
+    --initial-state-hover-color: rgb(0, 191, 255);
+    --state-border-deleting-color: rgb(255, 0, 0);
+    --transition-handle-color: rgb(0, 191, 255);
+    --transition-handle-deleting-color: rgb(255, 0, 0);
+    --transition-handle-highlight-edit-color: rgb(23, 197, 66);
+    --state-separator-color: rgb(128, 128, 128);
+    --state-resize-mark-color: rgb(128, 128, 128);
+    --function-color: rgb(0, 0, 0);
+    --function-hover-color: rgb(0, 0, 255);
+    --state-drag-handle-color: rgb(211, 102, 1);
+    --state-resize-handle-color: rgb(255, 255, 255);
+    --transition-line-color: rgb(70, 130, 180);
+    --transition-arrow-color: rgb(70, 130, 180);
+
+    /* main.css */
+    --sidebar-handle-border-left-color: rgb(221, 221, 221);
+    --sidebar-handle-hover-border-left-color: rgb(170, 170, 170);
+    --sidebar-handle-text-bg-color: rgb(170, 170, 170);
+    --sidebar-handle-text-color: rgb(20, 20, 126);
+    --sidebar-handle-text-hover-color: rgb(153, 153, 153);
+    --button-bg-color: rgb(70, 130, 180);
+    --button-text-color: rgb(255, 255, 255);
+    --button-hover-bg-color: rgb(44, 118, 179);
+    --button-inline-bg-color: rgb(70, 130, 180);
+    --button-inline-text-color: rgb(255, 255, 255);
+    --button-inline-hover-bg-color: rgb(44, 118, 179);
+    --button-border-color: rgb(221, 221, 221);
+    --details-border-color: rgb(8, 0, 0);
+    --input-text-bg-color: rgb(245, 245, 245);
+    --input-textarea-bg-color: rgb(245, 245, 245);
+
+    --html-bg: rgb(255, 255, 255);
+}
+        
+.state_body {
     stroke: var(--state-body-color);
     stroke-width: 0.2;
     fill: none;
@@ -181,8 +224,8 @@
 				<g display="none">
 					<path id="arrow" d="M 0 0 L 0.9 -0.4 L 0.9 0.4 Z" class="arrow_template"></path>
 				</g>
-				<g id="drawing" transform="translate(151.5, 146) scale(8.5, 8.5)"><g><path d="M 76 15 L 54 15 L 54 15 L 31 15" class="transition_line"></path><use href="#arrow" transform="translate(31 15) " class="transition_arrow" display="block"></use><text x="49.5" y="14.6" class="transition_label">[<tspan class="function">i2c_master_fault_cnt</tspan>(<tspan class="function">I2C_MASTER_FAUL_CNT</tspan>)]</text><path d="M 76 15 L 54 15 L 54 15 L 31 15" class="transition_handle"></path></g><g><path d="M 76 5 L 54 5 L 54 5 L 31 5" class="transition_line"></path><use href="#arrow" transform="translate(31 5) " class="transition_arrow" display="block"></use><text x="37" y="4.6" class="transition_label"><tspan class="function">SIG_I2C_DEFER_QUEUE_OVERFLOW</tspan>/ <tspan class="function">i2c_master_clear_defer_queue()</tspan></text><path d="M 76 5 L 54 5 L 54 5 L 31 5" class="transition_handle"></path></g><g><path d="M 76 7 L 54 7 L 54 7 L 31 7" class="transition_line"></path><use href="#arrow" transform="translate(31 7) " class="transition_arrow" display="block"></use><text x="44.5" y="6.6" class="transition_label"><tspan class="function">SIG_I2C_QUEUE_OVERFLOW</tspan>/ <tspan class="function">i2c_master_clear_queue()</tspan></text><path d="M 76 7 L 54 7 L 54 7 L 31 7" class="transition_handle"></path></g><g><path d="M 19 0 L 19 0 L 19 4" class="transition_line"></path><use href="#arrow" transform="translate(19 4) rotate(-90) " class="transition_arrow" display="block"></use><text x="19.5" y="0.6" class="transition_label"></text><path d="M 19 0 L 19 0 L 19 4" class="transition_handle"></path></g><g><path d="M 35 82 L 41 82 L 41 84 L 35 84" class="transition_line"></path><use href="#arrow" transform="translate(35 84) " class="transition_arrow" display="block"></use><text x="35.5" y="81.6" class="transition_label">[<tspan class="function">i2c_master_device_addr_max_cnt()</tspan>]</text><path d="M 35 82 L 41 82 L 41 84 L 35 84" class="transition_handle"></path></g><g><path d="M 77 93 L 53 93 L 53 93 L 35 93" class="transition_line"></path><use href="#arrow" transform="translate(35 93) " class="transition_arrow" display="block"></use><text x="38.5" y="92.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_SUCCESS</tspan>/ <tspan class="function">i2c_master_inc_success_dev_addr()</tspan></text><path d="M 77 93 L 53 93 L 53 93 L 35 93" class="transition_handle"></path></g><g><path d="M 73 87 L 51 87 L 51 87 L 35 87" class="transition_line"></path><use href="#arrow" transform="translate(35 87) " class="transition_arrow" display="block"></use><text x="46.5" y="86.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_FAIL</tspan>/ <tspan class="function">i2c_master_inc_dev_addr()</tspan></text><path d="M 73 87 L 51 87 L 51 87 L 35 87" class="transition_handle"></path></g><g><path d="M 29 81 L 29 74 L 29 74 L 29 63" class="transition_line"></path><use href="#arrow" transform="translate(29 63) rotate(90) " class="transition_arrow" display="block"></use><text x="29.5" y="78.19999999999999" class="transition_label"><tspan class="function">SIG_I2C_ADDRS_RELEASE</tspan></text><path d="M 29 81 L 29 74 L 29 74 L 29 63" class="transition_handle"></path></g><g><path d="M 35 90 L 46 90 L 46 90 L 77 90" class="transition_line"></path><use href="#arrow" transform="translate(77 90) rotate(180) " class="transition_arrow" display="block"></use><text x="35.5" y="89.6" class="transition_label"><tspan class="function">SIG_I2C_W_TRANSACTION</tspan></text><path d="M 35 90 L 46 90 L 46 90 L 77 90" class="transition_handle"></path></g><g><path d="M 23 77 L 23 77 L 23 81" class="transition_line"></path><use href="#arrow" transform="translate(23 81) rotate(-90) " class="transition_arrow" display="block"></use><text x="23.5" y="79.1" class="transition_label"></text><path d="M 23 77 L 23 77 L 23 81" class="transition_handle"></path></g><g><path d="M 16 63 L 16 69 L 16 69 L 16 71" class="transition_line"></path><use href="#arrow" transform="translate(16 71) rotate(-90) " class="transition_arrow" display="block"></use><text x="16.5" y="65.19999999999999" class="transition_label"><tspan class="function">SIG_I2C_BUS_SCAN</tspan></text><path d="M 16 63 L 16 69 L 16 69 L 16 71" class="transition_handle"></path></g><g><path d="M 42 -15 L 42 -15 L 42 -12" class="transition_line"></path><use href="#arrow" transform="translate(42 -12) rotate(-90) " class="transition_arrow" display="block"></use><text x="42.5" y="-14.9" class="transition_label"></text><path d="M 42 -15 L 42 -15 L 42 -12" class="transition_handle"></path></g><g><path d="M 89 45 L 89 45 L 89 48" class="transition_line"></path><use href="#arrow" transform="translate(89 48) rotate(-90) " class="transition_arrow" display="block"></use><text x="89.5" y="46.1" class="transition_label"></text><path d="M 89 45 L 89 45 L 89 48" class="transition_handle"></path></g><g><path d="M 76 12 L 37 12 L 37 12 L 31 12" class="transition_line"></path><use href="#arrow" transform="translate(31 12) " class="transition_arrow" display="block"></use><text x="46.5" y="11.6" class="transition_label"><tspan class="function">SIG_I2C_READ_FAIL</tspan>/ <tspan class="function">i2c_master_send_fail_response()</tspan></text><path d="M 76 12 L 37 12 L 37 12 L 31 12" class="transition_handle"></path></g><g><path d="M 76 10 L 37 10 L 37 10 L 31 10" class="transition_line"></path><use href="#arrow" transform="translate(31 10) " class="transition_arrow" display="block"></use><text x="46.5" y="9.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_FAIL</tspan>/ <tspan class="function">i2c_master_send_fail_response()</tspan></text><path d="M 76 10 L 37 10 L 37 10 L 31 10" class="transition_handle"></path></g><g><path d="M 81 61 L 41 61 L 41 61 L 31 61" class="transition_line"></path><use href="#arrow" transform="translate(31 61) " class="transition_arrow" display="block"></use><text x="41.5" y="60.6" class="transition_label"><tspan class="function">SIG_I2C_READ_SUCCESS</tspan>/ <tspan class="function">i2c_master_send_success_response()</tspan></text><path d="M 81 61 L 41 61 L 41 61 L 31 61" class="transition_handle"></path></g><g><path d="M 83 54 L 83 55 L 83 55 L 83 58" class="transition_line"></path><use href="#arrow" transform="translate(83 58) rotate(-90) " class="transition_arrow" display="block"></use><text x="83.5" y="56.2" class="transition_label"><tspan class="function">SIG_I2C_WRITE_SUCCESS</tspan></text><path d="M 83 54 L 83 55 L 83 55 L 83 58" class="transition_handle"></path></g><g><path d="M 31 40 L 42 40 L 42 40 L 78 40" class="transition_line"></path><use href="#arrow" transform="translate(78 40) rotate(180) " class="transition_arrow" display="block"></use><text x="32" y="39.6" class="transition_label"><tspan class="function">SIG_I2C_WR_TRANSACTION</tspan></text><path d="M 31 40 L 42 40 L 42 40 L 78 40" class="transition_handle"></path></g><g><path d="M 78 33 L 42 33 L 42 33 L 31 33" class="transition_line"></path><use href="#arrow" transform="translate(31 33) " class="transition_arrow" display="block"></use><text x="41" y="32.6" class="transition_label"><tspan class="function">SIG_I2C_READ_SUCCESS</tspan>/ <tspan class="function">i2c_master_send_success_response()</tspan></text><path d="M 78 33 L 42 33 L 42 33 L 31 33" class="transition_handle"></path></g><g><path d="M 31 31 L 42 31 L 42 31 L 78 31" class="transition_line"></path><use href="#arrow" transform="translate(78 31) rotate(180) " class="transition_arrow" display="block"></use><text x="32" y="30.6" class="transition_label"><tspan class="function">SIG_I2C_R_TRANSACTION</tspan></text><path d="M 31 31 L 42 31 L 42 31 L 78 31" class="transition_handle"></path></g><g><path d="M 78 24 L 42 24 L 42 24 L 31 24" class="transition_line"></path><use href="#arrow" transform="translate(31 24) " class="transition_arrow" display="block"></use><text x="41" y="23.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_SUCCESS</tspan>/ <tspan class="function">i2c_master_send_success_response()</tspan></text><path d="M 78 24 L 42 24 L 42 24 L 31 24" class="transition_handle"></path></g><g><path d="M 31 22 L 42 22 L 42 22 L 78 22" class="transition_line"></path><use href="#arrow" transform="translate(78 22) rotate(180) " class="transition_arrow" display="block"></use><text x="32.5" y="21.6" class="transition_label"><tspan class="function">SIG_I2C_W_TRANSACTION</tspan></text><path d="M 31 22 L 42 22 L 42 22 L 78 22" class="transition_handle"></path></g>
-				<g transform="translate(-100000000, -100000000)"><rect x="0" y="0" width="200000000" height="200000000" class="state_body"></rect><line x1="0" y1="2" x2="200000000" y2="2" class="state_separator"></line><line x1="0" y1="2" x2="200000000" y2="2" class="state_separator"></line><line x1="199999999" y1="200000000" x2="200000000" y2="199999999" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">__top__</text><rect x="0" y="0" width="200000000" height="2" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"></text><rect x="0" y="0" width="200000000" height="200000000" class="state_border"></rect><circle cx="199999999.75" cy="199999999.75" class="state_resize_handle"></circle></g><g transform="translate(12, 4)"><rect x="0" y="0" width="19" height="59" class="state_body"></rect><line x1="0" y1="2" x2="19" y2="2" class="state_separator"></line><line x1="0" y1="6" x2="19" y2="6" class="state_separator"></line><line x1="18" y1="59" x2="19" y2="58" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_idle</text><rect x="0" y="0" width="19" height="6" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">init</tspan>/ <tspan class="function">clear_transaction_info()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">chsm_recall</tspan></tspan></text><rect x="0" y="0" width="19" height="59" class="state_border"></rect><circle cx="18.75" cy="58.75" class="state_resize_handle"></circle></g><g transform="translate(76, 1)"><rect x="0" y="0" width="32" height="67" class="state_body"></rect><line x1="0" y1="2" x2="32" y2="2" class="state_separator"></line><line x1="0" y1="12" x2="32" y2="12" class="state_separator"></line><line x1="31" y1="67" x2="32" y2="66" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_busy</text><rect x="0" y="0" width="32" height="12" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">store_transaction_info()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">exit</tspan>/ <tspan class="function">i2c_master_stop()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_I2C_W_TRANSACTION</tspan>/ <tspan class="function">chsm_defer</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_I2C_R_TRANSACTION</tspan>/ <tspan class="function">chsm_defer</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_I2C_WR_TRANSACTION</tspan>/ <tspan class="function">chsm_defer</tspan></tspan></text><rect x="0" y="0" width="32" height="67" class="state_border"></rect><circle cx="31.75" cy="66.75" class="state_resize_handle"></circle></g><g transform="translate(78, 20)"><rect x="0" y="0" width="23" height="7" class="state_body"></rect><line x1="0" y1="2" x2="23" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="23" y2="4" class="state_separator"></line><line x1="22" y1="7" x2="23" y2="6" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_write</text><rect x="0" y="0" width="23" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_tx()</tspan></tspan></text><rect x="0" y="0" width="23" height="7" class="state_border"></rect><circle cx="22.75" cy="6.75" class="state_resize_handle"></circle></g><g transform="translate(78, 29)"><rect x="0" y="0" width="23" height="7" class="state_body"></rect><line x1="0" y1="2" x2="23" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="23" y2="4" class="state_separator"></line><line x1="22" y1="7" x2="23" y2="6" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_read</text><rect x="0" y="0" width="23" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_rx()</tspan></tspan></text><rect x="0" y="0" width="23" height="7" class="state_border"></rect><circle cx="22.75" cy="6.75" class="state_resize_handle"></circle></g><g transform="translate(78, 38)"><rect x="0" y="0" width="28" height="28" class="state_body"></rect><line x1="0" y1="2" x2="28" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="28" y2="4" class="state_separator"></line><line x1="27" y1="28" x2="28" y2="27" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_write_read</text><rect x="0" y="0" width="28" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"></tspan></text><rect x="0" y="0" width="28" height="28" class="state_border"></rect><circle cx="27.75" cy="27.75" class="state_resize_handle"></circle></g><g transform="translate(81, 48)"><rect x="0" y="0" width="17" height="6" class="state_body"></rect><line x1="0" y1="2" x2="17" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="17" y2="4" class="state_separator"></line><line x1="16" y1="6" x2="17" y2="5" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_wr_write</text><rect x="0" y="0" width="17" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_tx()</tspan></tspan></text><rect x="0" y="0" width="17" height="6" class="state_border"></rect><circle cx="16.75" cy="5.75" class="state_resize_handle"></circle></g><g transform="translate(81, 58)"><rect x="0" y="0" width="17" height="6" class="state_body"></rect><line x1="0" y1="2" x2="17" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="17" y2="4" class="state_separator"></line><line x1="16" y1="6" x2="17" y2="5" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_wr_read</text><rect x="0" y="0" width="17" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_rx()</tspan></tspan></text><rect x="0" y="0" width="17" height="6" class="state_border"></rect><circle cx="16.75" cy="5.75" class="state_resize_handle"></circle></g><circle cx="89" cy="45" class="initial_state"></circle><g transform="translate(9, -12)"><rect x="0" y="0" width="102" height="115" class="state_body"></rect><line x1="0" y1="2" x2="102" y2="2" class="state_separator"></line><line x1="0" y1="6" x2="102" y2="6" class="state_separator"></line><line x1="101" y1="115" x2="102" y2="114" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_i2c_master</text><rect x="0" y="0" width="102" height="6" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">init</tspan>/ <tspan class="function">i2c_master_init()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_SYS_TICK_1ms</tspan>/ <tspan class="function">i2c_1ms_callback()</tspan></tspan></text><rect x="0" y="0" width="102" height="115" class="state_border"></rect><circle cx="101.75" cy="114.75" class="state_resize_handle"></circle></g><circle cx="42" cy="-15" class="initial_state"></circle><g transform="translate(15, 71)"><rect x="0" y="0" width="88" height="29" class="state_body"></rect><line x1="0" y1="2" x2="88" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="88" y2="4" class="state_separator"></line><line x1="87" y1="29" x2="88" y2="28" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_bus_scan</text><rect x="0" y="0" width="88" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">scan_init()</tspan></tspan></text><rect x="0" y="0" width="88" height="29" class="state_border"></rect><circle cx="87.75" cy="28.75" class="state_resize_handle"></circle></g><circle cx="23" cy="77" class="initial_state"></circle><g transform="translate(17, 81)"><rect x="0" y="0" width="18" height="15" class="state_body"></rect><line x1="0" y1="2" x2="18" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="18" y2="4" class="state_separator"></line><line x1="17" y1="15" x2="18" y2="14" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_scan_idle</text><rect x="0" y="0" width="18" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">chsm_recall</tspan></tspan></text><rect x="0" y="0" width="18" height="15" class="state_border"></rect><circle cx="17.75" cy="14.75" class="state_resize_handle"></circle></g><g transform="translate(77, 84)"><rect x="0" y="0" width="18" height="12" class="state_body"></rect><line x1="0" y1="2" x2="18" y2="2" class="state_separator"></line><line x1="0" y1="6" x2="18" y2="6" class="state_separator"></line><line x1="17" y1="12" x2="18" y2="11" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_scan_write</text><rect x="0" y="0" width="18" height="6" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_scan_start_step()</tspan></tspan><tspan x="0.6" dy="2"></tspan></text><rect x="0" y="0" width="18" height="12" class="state_border"></rect><circle cx="17.75" cy="11.75" class="state_resize_handle"></circle></g><g transform="translate(73, 78)"><rect x="0" y="0" width="27" height="19" class="state_body"></rect><line x1="0" y1="2" x2="27" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="27" y2="4" class="state_separator"></line><line x1="26" y1="19" x2="27" y2="18" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_scan_busy</text><rect x="0" y="0" width="27" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">store_transaction_info()</tspan></tspan></text><rect x="0" y="0" width="27" height="19" class="state_border"></rect><circle cx="26.75" cy="18.75" class="state_resize_handle"></circle></g><circle cx="19" cy="0" class="initial_state"></circle></g>
+				<g id="drawing" transform="translate(93.5, 165.5) scale(6, 6)"><g><path d="M 19 14 L 19 19 L 19 19 L 19 23" class="transition_line"></path><use href="#arrow" transform="translate(19 23) rotate(-90) " class="transition_arrow" display="block"></use><text x="19.5" y="18.1" class="transition_label"></text><path d="M 19 14 L 19 19 L 19 19 L 19 23" class="transition_handle"></path></g><g><path d="M 19 0 L 19 0 L 19 5" class="transition_line"></path><use href="#arrow" transform="translate(19 5) rotate(-90) " class="transition_arrow" display="block"></use><text x="19.5" y="1.6" class="transition_label"></text><path d="M 19 0 L 19 0 L 19 5" class="transition_handle"></path></g><g><path d="M 91 34 L 54 34 L 54 34 L 31 34" class="transition_line"></path><use href="#arrow" transform="translate(31 34) " class="transition_arrow" display="block"></use><text x="49.5" y="33.6" class="transition_label">[<tspan class="function">i2c_master_fault_cnt</tspan>(<tspan class="function">I2C_MASTER_FAUL_CNT</tspan>)]</text><path d="M 91 34 L 54 34 L 54 34 L 31 34" class="transition_handle"></path></g><g><path d="M 91 24 L 54 24 L 54 24 L 31 24" class="transition_line"></path><use href="#arrow" transform="translate(31 24) " class="transition_arrow" display="block"></use><text x="52.5" y="23.6" class="transition_label"><tspan class="function">SIG_I2C_DEFER_QUEUE_OVERFLOW</tspan>/ <tspan class="function">i2c_master_clear_defer_queue()</tspan></text><path d="M 91 24 L 54 24 L 54 24 L 31 24" class="transition_handle"></path></g><g><path d="M 91 26 L 54 26 L 54 26 L 31 26" class="transition_line"></path><use href="#arrow" transform="translate(31 26) " class="transition_arrow" display="block"></use><text x="60" y="25.6" class="transition_label"><tspan class="function">SIG_I2C_QUEUE_OVERFLOW</tspan>/ <tspan class="function">i2c_master_clear_queue()</tspan></text><path d="M 91 26 L 54 26 L 54 26 L 31 26" class="transition_handle"></path></g><g><path d="M 35 100 L 41 100 L 41 102 L 35 102" class="transition_line"></path><use href="#arrow" transform="translate(35 102) " class="transition_arrow" display="block"></use><text x="35.5" y="99.6" class="transition_label">[<tspan class="function">i2c_master_device_addr_max_cnt()</tspan>]</text><path d="M 35 100 L 41 100 L 41 102 L 35 102" class="transition_handle"></path></g><g><path d="M 77 111 L 53 111 L 53 111 L 35 111" class="transition_line"></path><use href="#arrow" transform="translate(35 111) " class="transition_arrow" display="block"></use><text x="38.5" y="110.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_SUCCESS</tspan>/ <tspan class="function">i2c_master_inc_success_dev_addr()</tspan></text><path d="M 77 111 L 53 111 L 53 111 L 35 111" class="transition_handle"></path></g><g><path d="M 73 105 L 51 105 L 51 105 L 35 105" class="transition_line"></path><use href="#arrow" transform="translate(35 105) " class="transition_arrow" display="block"></use><text x="46.5" y="104.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_FAIL</tspan>/ <tspan class="function">i2c_master_inc_dev_addr()</tspan></text><path d="M 73 105 L 51 105 L 51 105 L 35 105" class="transition_handle"></path></g><g><path d="M 29 99 L 29 84 L 29 84 L 29 82" class="transition_line"></path><use href="#arrow" transform="translate(29 82) rotate(90) " class="transition_arrow" display="block"></use><text x="29.5" y="95.99999999999997" class="transition_label"><tspan class="function">SIG_I2C_ADDRS_RELEASE</tspan></text><path d="M 29 99 L 29 84 L 29 84 L 29 82" class="transition_handle"></path></g><g><path d="M 35 108 L 46 108 L 46 108 L 77 108" class="transition_line"></path><use href="#arrow" transform="translate(77 108) rotate(180) " class="transition_arrow" display="block"></use><text x="35.5" y="107.6" class="transition_label"><tspan class="function">SIG_I2C_W_TRANSACTION</tspan></text><path d="M 35 108 L 46 108 L 46 108 L 77 108" class="transition_handle"></path></g><g><path d="M 23 95 L 23 95 L 23 99" class="transition_line"></path><use href="#arrow" transform="translate(23 99) rotate(-90) " class="transition_arrow" display="block"></use><text x="23.5" y="97.1" class="transition_label"></text><path d="M 23 95 L 23 95 L 23 99" class="transition_handle"></path></g><g><path d="M 16 82 L 16 86 L 16 86 L 16 89" class="transition_line"></path><use href="#arrow" transform="translate(16 89) rotate(-90) " class="transition_arrow" display="block"></use><text x="16.5" y="84.19999999999999" class="transition_label"><tspan class="function">SIG_I2C_BUS_SCAN</tspan></text><path d="M 16 82 L 16 86 L 16 86 L 16 89" class="transition_handle"></path></g><g><path d="M 42 -15 L 42 -15 L 42 -12" class="transition_line"></path><use href="#arrow" transform="translate(42 -12) rotate(-90) " class="transition_arrow" display="block"></use><text x="42.5" y="-14.9" class="transition_label"></text><path d="M 42 -15 L 42 -15 L 42 -12" class="transition_handle"></path></g><g><path d="M 104 64 L 104 64 L 104 67" class="transition_line"></path><use href="#arrow" transform="translate(104 67) rotate(-90) " class="transition_arrow" display="block"></use><text x="104.5" y="65.1" class="transition_label"></text><path d="M 104 64 L 104 64 L 104 67" class="transition_handle"></path></g><g><path d="M 91 31 L 37 31 L 37 31 L 31 31" class="transition_line"></path><use href="#arrow" transform="translate(31 31) " class="transition_arrow" display="block"></use><text x="62" y="30.6" class="transition_label"><tspan class="function">SIG_I2C_READ_FAIL</tspan>/ <tspan class="function">i2c_master_send_fail_response()</tspan></text><path d="M 91 31 L 37 31 L 37 31 L 31 31" class="transition_handle"></path></g><g><path d="M 91 29 L 37 29 L 37 29 L 31 29" class="transition_line"></path><use href="#arrow" transform="translate(31 29) " class="transition_arrow" display="block"></use><text x="61" y="28.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_FAIL</tspan>/ <tspan class="function">i2c_master_send_fail_response()</tspan></text><path d="M 91 29 L 37 29 L 37 29 L 31 29" class="transition_handle"></path></g><g><path d="M 96 80 L 41 80 L 41 80 L 31 80" class="transition_line"></path><use href="#arrow" transform="translate(31 80) " class="transition_arrow" display="block"></use><text x="41.5" y="79.6" class="transition_label"><tspan class="function">SIG_I2C_READ_SUCCESS</tspan>/ <tspan class="function">i2c_master_send_success_response()</tspan></text><path d="M 96 80 L 41 80 L 41 80 L 31 80" class="transition_handle"></path></g><g><path d="M 98 73 L 98 74 L 98 74 L 98 77" class="transition_line"></path><use href="#arrow" transform="translate(98 77) rotate(-90) " class="transition_arrow" display="block"></use><text x="98.5" y="75.2" class="transition_label"><tspan class="function">SIG_I2C_WRITE_SUCCESS</tspan></text><path d="M 98 73 L 98 74 L 98 74 L 98 77" class="transition_handle"></path></g><g><path d="M 31 59 L 42 59 L 42 59 L 93 59" class="transition_line"></path><use href="#arrow" transform="translate(93 59) rotate(180) " class="transition_arrow" display="block"></use><text x="35.5" y="58.6" class="transition_label"><tspan class="function">SIG_I2C_WR_TRANSACTION</tspan></text><path d="M 31 59 L 42 59 L 42 59 L 93 59" class="transition_handle"></path></g><g><path d="M 93 52 L 42 52 L 42 52 L 31 52" class="transition_line"></path><use href="#arrow" transform="translate(31 52) " class="transition_arrow" display="block"></use><text x="41" y="51.6" class="transition_label"><tspan class="function">SIG_I2C_READ_SUCCESS</tspan>/ <tspan class="function">i2c_master_send_success_response()</tspan></text><path d="M 93 52 L 42 52 L 42 52 L 31 52" class="transition_handle"></path></g><g><path d="M 31 50 L 42 50 L 42 50 L 93 50" class="transition_line"></path><use href="#arrow" transform="translate(93 50) rotate(180) " class="transition_arrow" display="block"></use><text x="35.5" y="49.6" class="transition_label"><tspan class="function">SIG_I2C_R_TRANSACTION</tspan></text><path d="M 31 50 L 42 50 L 42 50 L 93 50" class="transition_handle"></path></g><g><path d="M 93 43 L 42 43 L 42 43 L 31 43" class="transition_line"></path><use href="#arrow" transform="translate(31 43) " class="transition_arrow" display="block"></use><text x="41" y="42.6" class="transition_label"><tspan class="function">SIG_I2C_WRITE_SUCCESS</tspan>/ <tspan class="function">i2c_master_send_success_response()</tspan></text><path d="M 93 43 L 42 43 L 42 43 L 31 43" class="transition_handle"></path></g><g><path d="M 31 41 L 42 41 L 42 41 L 93 41" class="transition_line"></path><use href="#arrow" transform="translate(93 41) rotate(180) " class="transition_arrow" display="block"></use><text x="35.5" y="40.6" class="transition_label"><tspan class="function">SIG_I2C_W_TRANSACTION</tspan></text><path d="M 31 41 L 42 41 L 42 41 L 93 41" class="transition_handle"></path></g>
+				<g transform="translate(-100000000, -100000000)"><rect x="0" y="0" width="200000000" height="200000000" class="state_body"></rect><line x1="0" y1="2" x2="200000000" y2="2" class="state_separator"></line><line x1="0" y1="2" x2="200000000" y2="2" class="state_separator"></line><line x1="199999999" y1="200000000" x2="200000000" y2="199999999" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">__top__</text><rect x="0" y="0" width="200000000" height="2" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"></text><rect x="0" y="0" width="200000000" height="200000000" class="state_border"></rect><circle cx="199999999.75" cy="199999999.75" class="state_resize_handle"></circle></g><g transform="translate(12, 23)"><rect x="0" y="0" width="19" height="59" class="state_body"></rect><line x1="0" y1="2" x2="19" y2="2" class="state_separator"></line><line x1="0" y1="6" x2="19" y2="6" class="state_separator"></line><line x1="18" y1="59" x2="19" y2="58" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_idle</text><rect x="0" y="0" width="19" height="6" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">init</tspan>/ <tspan class="function">clear_transaction_info()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">chsm_recall</tspan></tspan></text><rect x="0" y="0" width="19" height="59" class="state_border"></rect><circle cx="18.75" cy="58.75" class="state_resize_handle"></circle></g><g transform="translate(91, 20)"><rect x="0" y="0" width="32" height="67" class="state_body"></rect><line x1="0" y1="2" x2="32" y2="2" class="state_separator"></line><line x1="0" y1="12" x2="32" y2="12" class="state_separator"></line><line x1="31" y1="67" x2="32" y2="66" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_busy</text><rect x="0" y="0" width="32" height="12" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">store_transaction_info()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">exit</tspan>/ <tspan class="function">i2c_master_stop()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_I2C_W_TRANSACTION</tspan>/ <tspan class="function">chsm_defer</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_I2C_R_TRANSACTION</tspan>/ <tspan class="function">chsm_defer</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_I2C_WR_TRANSACTION</tspan>/ <tspan class="function">chsm_defer</tspan></tspan></text><rect x="0" y="0" width="32" height="67" class="state_border"></rect><circle cx="31.75" cy="66.75" class="state_resize_handle"></circle></g><g transform="translate(93, 39)"><rect x="0" y="0" width="23" height="7" class="state_body"></rect><line x1="0" y1="2" x2="23" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="23" y2="4" class="state_separator"></line><line x1="22" y1="7" x2="23" y2="6" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_write</text><rect x="0" y="0" width="23" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_tx()</tspan></tspan></text><rect x="0" y="0" width="23" height="7" class="state_border"></rect><circle cx="22.75" cy="6.75" class="state_resize_handle"></circle></g><g transform="translate(93, 48)"><rect x="0" y="0" width="23" height="7" class="state_body"></rect><line x1="0" y1="2" x2="23" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="23" y2="4" class="state_separator"></line><line x1="22" y1="7" x2="23" y2="6" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_read</text><rect x="0" y="0" width="23" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_rx()</tspan></tspan></text><rect x="0" y="0" width="23" height="7" class="state_border"></rect><circle cx="22.75" cy="6.75" class="state_resize_handle"></circle></g><g transform="translate(93, 57)"><rect x="0" y="0" width="28" height="28" class="state_body"></rect><line x1="0" y1="2" x2="28" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="28" y2="4" class="state_separator"></line><line x1="27" y1="28" x2="28" y2="27" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_write_read</text><rect x="0" y="0" width="28" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"></tspan></text><rect x="0" y="0" width="28" height="28" class="state_border"></rect><circle cx="27.75" cy="27.75" class="state_resize_handle"></circle></g><g transform="translate(96, 67)"><rect x="0" y="0" width="17" height="6" class="state_body"></rect><line x1="0" y1="2" x2="17" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="17" y2="4" class="state_separator"></line><line x1="16" y1="6" x2="17" y2="5" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_wr_write</text><rect x="0" y="0" width="17" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_tx()</tspan></tspan></text><rect x="0" y="0" width="17" height="6" class="state_border"></rect><circle cx="16.75" cy="5.75" class="state_resize_handle"></circle></g><g transform="translate(96, 77)"><rect x="0" y="0" width="17" height="6" class="state_body"></rect><line x1="0" y1="2" x2="17" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="17" y2="4" class="state_separator"></line><line x1="16" y1="6" x2="17" y2="5" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_wr_read</text><rect x="0" y="0" width="17" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_start_rx()</tspan></tspan></text><rect x="0" y="0" width="17" height="6" class="state_border"></rect><circle cx="16.75" cy="5.75" class="state_resize_handle"></circle></g><circle cx="104" cy="64" class="initial_state"></circle><g transform="translate(9, -12)"><rect x="0" y="0" width="120" height="132" class="state_body"></rect><line x1="0" y1="2" x2="120" y2="2" class="state_separator"></line><line x1="0" y1="6" x2="120" y2="6" class="state_separator"></line><line x1="119" y1="132" x2="120" y2="131" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_i2c_master</text><rect x="0" y="0" width="120" height="6" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">init</tspan>/ <tspan class="function">i2c_master_init()</tspan></tspan><tspan x="0.6" dy="2"><tspan class="function">SIG_SYS_TICK_1ms</tspan>/ <tspan class="function">i2c_1ms_callback()</tspan></tspan></text><rect x="0" y="0" width="120" height="132" class="state_border"></rect><circle cx="119.75" cy="131.75" class="state_resize_handle"></circle></g><circle cx="42" cy="-15" class="initial_state"></circle><g transform="translate(15, 89)"><rect x="0" y="0" width="88" height="29" class="state_body"></rect><line x1="0" y1="2" x2="88" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="88" y2="4" class="state_separator"></line><line x1="87" y1="29" x2="88" y2="28" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_bus_scan</text><rect x="0" y="0" width="88" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">scan_init()</tspan></tspan></text><rect x="0" y="0" width="88" height="29" class="state_border"></rect><circle cx="87.75" cy="28.75" class="state_resize_handle"></circle></g><circle cx="23" cy="95" class="initial_state"></circle><g transform="translate(17, 99)"><rect x="0" y="0" width="18" height="15" class="state_body"></rect><line x1="0" y1="2" x2="18" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="18" y2="4" class="state_separator"></line><line x1="17" y1="15" x2="18" y2="14" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_scan_idle</text><rect x="0" y="0" width="18" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">chsm_recall</tspan></tspan></text><rect x="0" y="0" width="18" height="15" class="state_border"></rect><circle cx="17.75" cy="14.75" class="state_resize_handle"></circle></g><g transform="translate(77, 102)"><rect x="0" y="0" width="18" height="12" class="state_body"></rect><line x1="0" y1="2" x2="18" y2="2" class="state_separator"></line><line x1="0" y1="6" x2="18" y2="6" class="state_separator"></line><line x1="17" y1="12" x2="18" y2="11" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_scan_write</text><rect x="0" y="0" width="18" height="6" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_scan_start_step()</tspan></tspan><tspan x="0.6" dy="2"></tspan></text><rect x="0" y="0" width="18" height="12" class="state_border"></rect><circle cx="17.75" cy="11.75" class="state_resize_handle"></circle></g><g transform="translate(73, 96)"><rect x="0" y="0" width="27" height="19" class="state_body"></rect><line x1="0" y1="2" x2="27" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="27" y2="4" class="state_separator"></line><line x1="26" y1="19" x2="27" y2="18" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_scan_busy</text><rect x="0" y="0" width="27" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">store_transaction_info()</tspan></tspan></text><rect x="0" y="0" width="27" height="19" class="state_border"></rect><circle cx="26.75" cy="18.75" class="state_resize_handle"></circle></g><circle cx="19" cy="0" class="initial_state"></circle><g transform="translate(12, 5)"><rect x="0" y="0" width="20" height="9" class="state_body"></rect><line x1="0" y1="2" x2="20" y2="2" class="state_separator"></line><line x1="0" y1="4" x2="20" y2="4" class="state_separator"></line><line x1="19" y1="9" x2="20" y2="8" class="state_resize_mark"></line><text x="0.6" y="1.6" class="state_title">s_i2c_bus_reset</text><rect x="0" y="0" width="20" height="4" class="state_drag_handle"></rect><text x="0.6" y="1.6" class="state_text"><tspan x="0.6" dy="2"><tspan class="function">entry</tspan>/ <tspan class="function">i2c_master_bus_reset()</tspan></tspan></text><rect x="0" y="0" width="20" height="9" class="state_border"></rect><circle cx="19.75" cy="8.75" class="state_resize_handle"></circle></g></g>
 			</svg>
 		
     </main>
@@ -314,7 +357,7 @@ svg.addEventListener('wheel', event => {
         "state_0": {
             "pos": [
                 12,
-                4
+                23
             ],
             "size": [
                 19,
@@ -336,10 +379,10 @@ svg.addEventListener('wheel', event => {
                 "conn_13",
                 "conn_26",
                 "conn_29",
-                "conn_1",
                 "conn_39",
                 "conn_41",
-                "conn_43"
+                "conn_43",
+                "conn_45"
             ],
             "parent": "state_7",
             "children": [],
@@ -347,8 +390,8 @@ svg.addEventListener('wheel', event => {
         },
         "state_1": {
             "pos": [
-                76,
-                1
+                91,
+                20
             ],
             "size": [
                 32,
@@ -379,8 +422,8 @@ svg.addEventListener('wheel', event => {
         },
         "state_2": {
             "pos": [
-                78,
-                20
+                93,
+                39
             ],
             "size": [
                 23,
@@ -400,8 +443,8 @@ svg.addEventListener('wheel', event => {
         },
         "state_3": {
             "pos": [
-                78,
-                29
+                93,
+                48
             ],
             "size": [
                 23,
@@ -421,8 +464,8 @@ svg.addEventListener('wheel', event => {
         },
         "state_4": {
             "pos": [
-                78,
-                38
+                93,
+                57
             ],
             "size": [
                 28,
@@ -445,8 +488,8 @@ svg.addEventListener('wheel', event => {
         },
         "state_5": {
             "pos": [
-                81,
-                48
+                96,
+                67
             ],
             "size": [
                 17,
@@ -466,8 +509,8 @@ svg.addEventListener('wheel', event => {
         },
         "state_6": {
             "pos": [
-                81,
-                58
+                96,
+                77
             ],
             "size": [
                 17,
@@ -487,8 +530,8 @@ svg.addEventListener('wheel', event => {
         },
         "istate_1": {
             "pos": [
-                89,
-                45
+                104,
+                64
             ],
             "size": [
                 2,
@@ -512,8 +555,8 @@ svg.addEventListener('wheel', event => {
                 -12
             ],
             "size": [
-                102,
-                115
+                120,
+                132
             ],
             "title": "s_i2c_master",
             "text": [
@@ -528,7 +571,8 @@ svg.addEventListener('wheel', event => {
                 "state_0",
                 "state_1",
                 "state_8",
-                "istate_0"
+                "istate_0",
+                "state_12"
             ],
             "type": "normal"
         },
@@ -556,7 +600,7 @@ svg.addEventListener('wheel', event => {
         "state_8": {
             "pos": [
                 15,
-                71
+                89
             ],
             "size": [
                 88,
@@ -580,7 +624,7 @@ svg.addEventListener('wheel', event => {
         "istate_3": {
             "pos": [
                 23,
-                77
+                95
             ],
             "size": [
                 2,
@@ -601,7 +645,7 @@ svg.addEventListener('wheel', event => {
         "state_9": {
             "pos": [
                 17,
-                81
+                99
             ],
             "size": [
                 18,
@@ -627,7 +671,7 @@ svg.addEventListener('wheel', event => {
         "state_11": {
             "pos": [
                 77,
-                84
+                102
             ],
             "size": [
                 18,
@@ -649,7 +693,7 @@ svg.addEventListener('wheel', event => {
         "state_10": {
             "pos": [
                 73,
-                78
+                96
             ],
             "size": [
                 27,
@@ -688,6 +732,27 @@ svg.addEventListener('wheel', event => {
             "parent": "state_7",
             "children": [],
             "type": "initial"
+        },
+        "state_12": {
+            "pos": [
+                12,
+                5
+            ],
+            "size": [
+                20,
+                9
+            ],
+            "title": "s_i2c_bus_reset",
+            "text": [
+                "entry/ i2c_master_bus_reset()"
+            ],
+            "connectors": [
+                "conn_1",
+                "conn_44"
+            ],
+            "parent": "state_7",
+            "children": [],
+            "type": "normal"
         }
     },
     "connectors": {
@@ -943,20 +1008,6 @@ svg.addEventListener('wheel', event => {
             "dir": "in",
             "transition": "trans_18"
         },
-        "conn_0": {
-            "parent": "istate_0",
-            "offset": 0,
-            "side": "all",
-            "dir": "out",
-            "transition": "trans_0"
-        },
-        "conn_1": {
-            "parent": "state_0",
-            "offset": 7,
-            "side": "top",
-            "dir": "in",
-            "transition": "trans_0"
-        },
         "conn_38": {
             "parent": "state_1",
             "offset": 6,
@@ -998,6 +1049,34 @@ svg.addEventListener('wheel', event => {
             "side": "right",
             "dir": "in",
             "transition": "trans_21"
+        },
+        "conn_0": {
+            "parent": "istate_0",
+            "offset": 0,
+            "side": "all",
+            "dir": "out",
+            "transition": "trans_0"
+        },
+        "conn_1": {
+            "parent": "state_12",
+            "offset": 7,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_0"
+        },
+        "conn_44": {
+            "parent": "state_12",
+            "offset": 7,
+            "side": "bottom",
+            "dir": "out",
+            "transition": "trans_22"
+        },
+        "conn_45": {
+            "parent": "state_0",
+            "offset": 7,
+            "side": "top",
+            "dir": "in",
+            "transition": "trans_22"
         }
     },
     "transitions": {
@@ -1007,30 +1086,30 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     31,
-                    22
+                    41
                 ],
                 [
                     42,
-                    22
+                    41
                 ],
                 [
                     42,
-                    22
+                    41
                 ],
                 [
-                    78,
-                    22
+                    93,
+                    41
                 ]
             ],
             "label": "SIG_I2C_W_TRANSACTION",
             "label_offset": [
-                1.5,
+                4.5,
                 -0.3999999999999986
             ],
             "label_anchor": 0,
             "label_pos": [
-                32.5,
-                21.6
+                35.5,
+                40.6
             ]
         },
         "trans_2": {
@@ -1038,20 +1117,20 @@ svg.addEventListener('wheel', event => {
             "end": "conn_5",
             "vertices": [
                 [
-                    78,
-                    24
+                    93,
+                    43
                 ],
                 [
                     42,
-                    24
+                    43
                 ],
                 [
                     42,
-                    24
+                    43
                 ],
                 [
                     31,
-                    24
+                    43
                 ]
             ],
             "label": "SIG_I2C_WRITE_SUCCESS/ i2c_master_send_success_response()",
@@ -1062,7 +1141,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 2,
             "label_pos": [
                 41,
-                23.6
+                42.6
             ]
         },
         "trans_3": {
@@ -1071,30 +1150,30 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     31,
-                    31
+                    50
                 ],
                 [
                     42,
-                    31
+                    50
                 ],
                 [
                     42,
-                    31
+                    50
                 ],
                 [
-                    78,
-                    31
+                    93,
+                    50
                 ]
             ],
             "label": "SIG_I2C_R_TRANSACTION",
             "label_offset": [
-                1,
+                4.5,
                 -0.3999999999999986
             ],
             "label_anchor": 0,
             "label_pos": [
-                32,
-                30.6
+                35.5,
+                49.6
             ]
         },
         "trans_4": {
@@ -1102,20 +1181,20 @@ svg.addEventListener('wheel', event => {
             "end": "conn_9",
             "vertices": [
                 [
-                    78,
-                    33
+                    93,
+                    52
                 ],
                 [
                     42,
-                    33
+                    52
                 ],
                 [
                     42,
-                    33
+                    52
                 ],
                 [
                     31,
-                    33
+                    52
                 ]
             ],
             "label": "SIG_I2C_READ_SUCCESS/ i2c_master_send_success_response()",
@@ -1126,7 +1205,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 2,
             "label_pos": [
                 41,
-                32.6
+                51.6
             ]
         },
         "trans_7": {
@@ -1135,30 +1214,30 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     31,
-                    40
+                    59
                 ],
                 [
                     42,
-                    40
+                    59
                 ],
                 [
                     42,
-                    40
+                    59
                 ],
                 [
-                    78,
-                    40
+                    93,
+                    59
                 ]
             ],
             "label": "SIG_I2C_WR_TRANSACTION",
             "label_offset": [
-                1,
+                4.5,
                 -0.3999999999999986
             ],
             "label_anchor": 0,
             "label_pos": [
-                32,
-                39.6
+                35.5,
+                58.6
             ]
         },
         "trans_9": {
@@ -1166,20 +1245,20 @@ svg.addEventListener('wheel', event => {
             "end": "conn_19",
             "vertices": [
                 [
-                    83,
-                    54
+                    98,
+                    73
                 ],
                 [
-                    83,
-                    55
+                    98,
+                    74
                 ],
                 [
-                    83,
-                    55
+                    98,
+                    74
                 ],
                 [
-                    83,
-                    58
+                    98,
+                    77
                 ]
             ],
             "label": "SIG_I2C_WRITE_SUCCESS",
@@ -1189,8 +1268,8 @@ svg.addEventListener('wheel', event => {
             ],
             "label_anchor": 2,
             "label_pos": [
-                83.5,
-                56.2
+                98.5,
+                75.2
             ]
         },
         "trans_10": {
@@ -1198,31 +1277,31 @@ svg.addEventListener('wheel', event => {
             "end": "conn_21",
             "vertices": [
                 [
-                    81,
-                    61
+                    96,
+                    80
                 ],
                 [
                     41,
-                    61
+                    80
                 ],
                 [
                     41,
-                    61
+                    80
                 ],
                 [
                     31,
-                    61
+                    80
                 ]
             ],
             "label": "SIG_I2C_READ_SUCCESS/ i2c_master_send_success_response()",
             "label_offset": [
-                -39.5,
-                -0.3999999999999986
+                -54.5,
+                -0.4000000000000057
             ],
             "label_anchor": 0,
             "label_pos": [
                 41.5,
-                60.6
+                79.6
             ]
         },
         "trans_5": {
@@ -1230,31 +1309,31 @@ svg.addEventListener('wheel', event => {
             "end": "conn_11",
             "vertices": [
                 [
-                    76,
-                    10
+                    91,
+                    29
                 ],
                 [
                     37,
-                    10
+                    29
                 ],
                 [
                     37,
-                    10
+                    29
                 ],
                 [
                     31,
-                    10
+                    29
                 ]
             ],
             "label": "SIG_I2C_WRITE_FAIL/ i2c_master_send_fail_response()",
             "label_offset": [
-                -29.5,
-                -0.40000000000000036
+                -30,
+                -0.3999999999999986
             ],
             "label_anchor": 0,
             "label_pos": [
-                46.5,
-                9.6
+                61,
+                28.6
             ]
         },
         "trans_6": {
@@ -1262,31 +1341,31 @@ svg.addEventListener('wheel', event => {
             "end": "conn_13",
             "vertices": [
                 [
-                    76,
-                    12
+                    91,
+                    31
                 ],
                 [
                     37,
-                    12
+                    31
                 ],
                 [
                     37,
-                    12
+                    31
                 ],
                 [
                     31,
-                    12
+                    31
                 ]
             ],
             "label": "SIG_I2C_READ_FAIL/ i2c_master_send_fail_response()",
             "label_offset": [
-                -29.5,
-                -0.40000000000000036
+                -29,
+                -0.3999999999999986
             ],
             "label_anchor": 0,
             "label_pos": [
-                46.5,
-                11.6
+                62,
+                30.6
             ]
         },
         "trans_8": {
@@ -1294,16 +1373,16 @@ svg.addEventListener('wheel', event => {
             "end": "conn_17",
             "vertices": [
                 [
-                    89,
-                    45
+                    104,
+                    64
                 ],
                 [
-                    89,
-                    45
+                    104,
+                    64
                 ],
                 [
-                    89,
-                    48
+                    104,
+                    67
                 ]
             ],
             "label": "",
@@ -1313,8 +1392,8 @@ svg.addEventListener('wheel', event => {
             ],
             "label_anchor": 1,
             "label_pos": [
-                89.5,
-                46.1
+                104.5,
+                65.1
             ]
         },
         "trans_11": {
@@ -1351,19 +1430,19 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     16,
-                    63
+                    82
                 ],
                 [
                     16,
-                    69
+                    86
                 ],
                 [
                     16,
-                    69
+                    86
                 ],
                 [
                     16,
-                    71
+                    89
                 ]
             ],
             "label": "SIG_I2C_BUS_SCAN",
@@ -1374,7 +1453,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 0,
             "label_pos": [
                 16.5,
-                65.19999999999999
+                84.19999999999999
             ]
         },
         "trans_15": {
@@ -1383,15 +1462,15 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     23,
-                    77
+                    95
                 ],
                 [
                     23,
-                    77
+                    95
                 ],
                 [
                     23,
-                    81
+                    99
                 ]
             ],
             "label": "",
@@ -1402,7 +1481,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 1,
             "label_pos": [
                 23.5,
-                79.1
+                97.1
             ]
         },
         "trans_12": {
@@ -1411,19 +1490,19 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     35,
-                    90
+                    108
                 ],
                 [
                     46,
-                    90
+                    108
                 ],
                 [
                     46,
-                    90
+                    108
                 ],
                 [
                     77,
-                    90
+                    108
                 ]
             ],
             "label": "SIG_I2C_W_TRANSACTION",
@@ -1434,7 +1513,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 0,
             "label_pos": [
                 35.5,
-                89.6
+                107.6
             ]
         },
         "trans_14": {
@@ -1443,30 +1522,30 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     29,
-                    81
+                    99
                 ],
                 [
                     29,
-                    74
+                    84
                 ],
                 [
                     29,
-                    74
+                    84
                 ],
                 [
                     29,
-                    63
+                    82
                 ]
             ],
             "label": "SIG_I2C_ADDRS_RELEASE",
             "label_offset": [
                 0.5,
-                -2.8000000000000114
+                -3.0000000000000284
             ],
             "label_anchor": 0,
             "label_pos": [
                 29.5,
-                78.19999999999999
+                95.99999999999997
             ]
         },
         "trans_16": {
@@ -1475,19 +1554,19 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     73,
-                    87
+                    105
                 ],
                 [
                     51,
-                    87
+                    105
                 ],
                 [
                     51,
-                    87
+                    105
                 ],
                 [
                     35,
-                    87
+                    105
                 ]
             ],
             "label": "SIG_I2C_WRITE_FAIL/ i2c_master_inc_dev_addr()",
@@ -1498,7 +1577,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 2,
             "label_pos": [
                 46.5,
-                86.6
+                104.6
             ]
         },
         "trans_17": {
@@ -1507,19 +1586,19 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     77,
-                    93
+                    111
                 ],
                 [
                     53,
-                    93
+                    111
                 ],
                 [
                     53,
-                    93
+                    111
                 ],
                 [
                     35,
-                    93
+                    111
                 ]
             ],
             "label": "SIG_I2C_WRITE_SUCCESS/ i2c_master_inc_success_dev_addr()",
@@ -1530,7 +1609,7 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 2,
             "label_pos": [
                 38.5,
-                92.6
+                110.6
             ]
         },
         "trans_18": {
@@ -1539,19 +1618,19 @@ svg.addEventListener('wheel', event => {
             "vertices": [
                 [
                     35,
-                    82
+                    100
                 ],
                 [
                     41,
-                    82
+                    100
                 ],
                 [
                     41,
-                    84
+                    102
                 ],
                 [
                     35,
-                    84
+                    102
                 ]
             ],
             "label": "[i2c_master_device_addr_max_cnt()]",
@@ -1562,7 +1641,103 @@ svg.addEventListener('wheel', event => {
             "label_anchor": 0,
             "label_pos": [
                 35.5,
-                81.6
+                99.6
+            ]
+        },
+        "trans_19": {
+            "start": "conn_38",
+            "end": "conn_39",
+            "vertices": [
+                [
+                    91,
+                    26
+                ],
+                [
+                    54,
+                    26
+                ],
+                [
+                    54,
+                    26
+                ],
+                [
+                    31,
+                    26
+                ]
+            ],
+            "label": "SIG_I2C_QUEUE_OVERFLOW/ i2c_master_clear_queue()",
+            "label_offset": [
+                -31,
+                -0.3999999999999986
+            ],
+            "label_anchor": 0,
+            "label_pos": [
+                60,
+                25.6
+            ]
+        },
+        "trans_20": {
+            "start": "conn_40",
+            "end": "conn_41",
+            "vertices": [
+                [
+                    91,
+                    24
+                ],
+                [
+                    54,
+                    24
+                ],
+                [
+                    54,
+                    24
+                ],
+                [
+                    31,
+                    24
+                ]
+            ],
+            "label": "SIG_I2C_DEFER_QUEUE_OVERFLOW/ i2c_master_clear_defer_queue()",
+            "label_offset": [
+                -1.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 2,
+            "label_pos": [
+                52.5,
+                23.6
+            ]
+        },
+        "trans_21": {
+            "start": "conn_42",
+            "end": "conn_43",
+            "vertices": [
+                [
+                    91,
+                    34
+                ],
+                [
+                    54,
+                    34
+                ],
+                [
+                    54,
+                    34
+                ],
+                [
+                    31,
+                    34
+                ]
+            ],
+            "label": "[i2c_master_fault_cnt(I2C_MASTER_FAUL_CNT)]",
+            "label_offset": [
+                -4.5,
+                -0.3999999999999986
+            ],
+            "label_anchor": 2,
+            "label_pos": [
+                49.5,
+                33.6
             ]
         },
         "trans_0": {
@@ -1579,114 +1754,50 @@ svg.addEventListener('wheel', event => {
                 ],
                 [
                     19,
-                    4
+                    5
                 ]
             ],
             "label": "",
             "label_offset": [
                 0.5,
-                0.6
+                1.6
             ],
             "label_anchor": 1,
             "label_pos": [
                 19.5,
-                0.6
+                1.6
             ]
         },
-        "trans_19": {
-            "start": "conn_38",
-            "end": "conn_39",
+        "trans_22": {
+            "start": "conn_44",
+            "end": "conn_45",
             "vertices": [
                 [
-                    76,
-                    7
+                    19,
+                    14
                 ],
                 [
-                    54,
-                    7
+                    19,
+                    19
                 ],
                 [
-                    54,
-                    7
+                    19,
+                    19
                 ],
                 [
-                    31,
-                    7
+                    19,
+                    23
                 ]
             ],
-            "label": "SIG_I2C_QUEUE_OVERFLOW/ i2c_master_clear_queue()",
+            "label": "",
             "label_offset": [
-                -9.5,
-                -0.40000000000000036
+                0.5,
+                4.100000000000001
             ],
-            "label_anchor": 2,
+            "label_anchor": 0,
             "label_pos": [
-                44.5,
-                6.6
-            ]
-        },
-        "trans_20": {
-            "start": "conn_40",
-            "end": "conn_41",
-            "vertices": [
-                [
-                    76,
-                    5
-                ],
-                [
-                    54,
-                    5
-                ],
-                [
-                    54,
-                    5
-                ],
-                [
-                    31,
-                    5
-                ]
-            ],
-            "label": "SIG_I2C_DEFER_QUEUE_OVERFLOW/ i2c_master_clear_defer_queue()",
-            "label_offset": [
-                -17,
-                -0.40000000000000036
-            ],
-            "label_anchor": 2,
-            "label_pos": [
-                37,
-                4.6
-            ]
-        },
-        "trans_21": {
-            "start": "conn_42",
-            "end": "conn_43",
-            "vertices": [
-                [
-                    76,
-                    15
-                ],
-                [
-                    54,
-                    15
-                ],
-                [
-                    54,
-                    15
-                ],
-                [
-                    31,
-                    15
-                ]
-            ],
-            "label": "[i2c_master_fault_cnt(I2C_MASTER_FAUL_CNT)]",
-            "label_offset": [
-                -4.5,
-                -0.40000000000000036
-            ],
-            "label_anchor": 2,
-            "label_pos": [
-                49.5,
-                14.6
+                19.5,
+                18.1
             ]
         }
     },
@@ -1715,14 +1826,16 @@ svg.addEventListener('wheel', event => {
         "SIG_SYS_TICK_1ms": "",
         "SIG_I2C_QUEUE_OVERFLOW": "",
         "SIG_I2C_DEFER_QUEUE_OVERFLOW": "",
-        "i2c_master_fault_cnt": ""
+        "i2c_master_fault_cnt": "",
+        "i2c_master_clear_defer_queue()": "",
+        "i2c_master_clear_queue()": ""
     },
     "view": {
         "translate": [
-            151.5,
-            146
+            93.5,
+            165.5
         ],
-        "scale": 8.5
+        "scale": 6
     }
 }
         </pre>

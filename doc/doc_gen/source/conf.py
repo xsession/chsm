@@ -1,6 +1,16 @@
 import sys
 import os
 import shutil
+from pathlib import Path
+
+# Get the absolute path of the directory containing conf.py
+dir_path = Path(__file__).parent.absolute()
+
+# Combine this with the relative path to get the absolute path to plantuml.jar
+plantuml_jar_path = dir_path / 'plantuml.jar'
+
+plantuml = f'java -jar {plantuml_jar_path}'
+
 
 # Protocols
 sys.path.insert(0, os.path.abspath('../../../languages/c/modules/protocols/i2c_master/doc'))
@@ -37,11 +47,10 @@ release = '1.0.0.'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['m2r',]
+extensions = ['m2r','sphinx_rtd_dark_mode','sphinxcontrib.plantuml']
 
 templates_path = ['_templates']
 exclude_patterns = []
-
 
 
 # -- Options for HTML output -------------------------------------------------
