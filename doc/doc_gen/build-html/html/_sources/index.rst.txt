@@ -2,8 +2,6 @@
 Welcome CHSM
 ============
 
-.. mdinclude:: ../../../README.md
-   
 .. toctree::
    :maxdepth: 1
 
@@ -11,4 +9,7 @@ Welcome CHSM
    development/index
    modules/index
    examples/index
-   faq
+
+.. mdinclude:: ../../../README.md
+   
+.. include:: faq.rst

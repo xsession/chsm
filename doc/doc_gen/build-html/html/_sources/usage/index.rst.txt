@@ -1,11 +1,8 @@
 ============
-First Steps
+Usage
 ============
 
-.. toctree::
-   :maxdepth: 1
-
-   installation
-   configuration
-   quickstart
-   theming
+.. include:: ./installation.rst
+.. include:: ./configuration.rst
+.. include:: ./quickstart.rst
+.. include:: ./theming.rst
