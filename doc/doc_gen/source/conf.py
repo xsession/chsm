@@ -47,7 +47,11 @@ release = '1.0.0.'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['m2r','sphinx_rtd_dark_mode','sphinxcontrib.plantuml']
+extensions = ['m2r',
+              'sphinx_rtd_dark_mode',
+              'sphinxcontrib.plantuml',
+              'sphinxcontrib.datatemplates',
+              'sphinxcontrib.drawio']
 
 templates_path = ['_templates']
 exclude_patterns = []
