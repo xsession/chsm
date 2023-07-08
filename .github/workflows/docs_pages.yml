@@ -40,7 +40,7 @@ jobs:
       run: |
           pwd
           ls -lah
-          cd build/html/
+          cd doc/doc_gen/build/html/
           git init
           touch .nojekyll
           git add -A
@@ -54,4 +54,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           force: true
-          directory: ./
+          directory: ./doc/doc_gen/build/html
