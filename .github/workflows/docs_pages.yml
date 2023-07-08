@@ -31,22 +31,10 @@ jobs:
     
     - name: Build documentation
       run: |
-        cd doc/doc_gen
-        make html
-        ls -lah
-        tree
+          sphinx-build -b html doc/doc_gen/build/html
 
-  pages:
-    runs-on: ubuntu-20.04
-    environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-        pages: write
-        id-token: write
-    steps:
-    - id: deployment
-      uses: sphinx-notes/pages@v3
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        publish_dir: doc/doc_gen/build/html/
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: doc/doc_gen/build/html
