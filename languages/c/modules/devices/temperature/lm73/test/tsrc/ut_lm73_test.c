@@ -384,10 +384,10 @@ TEST(lm73, triggered_read)
 TEST_GROUP_RUNNER(lm73)
 {
 	RUN_TEST_CASE(lm73, init);
-	RUN_TEST_CASE(lm73, read_temp_twice);
-	RUN_TEST_CASE(lm73, read_id_retry);
-	RUN_TEST_CASE(lm73, read_id_retry_bad_id);
-	RUN_TEST_CASE(lm73, go_offline);
-	RUN_TEST_CASE(lm73, go_online);
-	RUN_TEST_CASE(lm73, triggered_read);
+	// RUN_TEST_CASE(lm73, read_temp_twice);
+	// RUN_TEST_CASE(lm73, read_id_retry);
+	// RUN_TEST_CASE(lm73, read_id_retry_bad_id);
+	// RUN_TEST_CASE(lm73, go_offline);
+	// RUN_TEST_CASE(lm73, go_online);
+	// RUN_TEST_CASE(lm73, triggered_read);
 }

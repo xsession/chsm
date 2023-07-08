@@ -144,6 +144,8 @@ struct i2c_master_tst
 
 chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst);
 
+bool i2c_master_fault_cnt(chsm_tst *_self, const cevent_tst *e_pst, uint8_t fault_cnt_u8);
+
 #define I2C_MASTER_FAUL_CNT 10U
 
 #endif

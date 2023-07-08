@@ -1,9 +1,11 @@
-================
+.. sectnum::
+   :start: 3
+
 Modules
-================
++++++++++
 
 i2c_master
------------
+===========
 
 .. raw:: html
 
@@ -19,7 +21,7 @@ i2c_master
     </script>
 
 spi_master
------------
+===========
 
 .. raw:: html
 
@@ -27,7 +29,7 @@ spi_master
 
 
 canopen
------------
+=========
 
 .. raw:: html
 
@@ -35,7 +37,7 @@ canopen
 
 
 lm73
------------
+=======
 
 .. raw:: html
 

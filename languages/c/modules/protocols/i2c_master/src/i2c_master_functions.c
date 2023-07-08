@@ -1,6 +1,7 @@
 #include "crf.h"
 #include "cevent.h"
 #include "i2c_master.h"
+#include "i2c_master_functions.h"
 #include <stdio.h>
 
 
@@ -22,7 +23,6 @@ void i2c_master_init(chsm_tst *_self, const cevent_tst *e_pst)
 
     self->config_st.driver_pst->q_pst = (cqueue_tst *)self;
 }
-
 
 void store_transaction_info(chsm_tst *_self, const cevent_tst *e_pst)
 {
@@ -202,7 +202,7 @@ void i2c_master_clear_queue(chsm_tst *_self, const cevent_tst *e_pst)
     self->super.event_q_st.fault_cnt = 0;
 }
 
-bool i2c_master_fault_cnt(chsm_tst *_self, const cevent_tst *e_pst)
+bool i2c_master_fault_cnt(chsm_tst *_self, const cevent_tst *e_pst, uint8_t fault_cnt_u8)
 {
     i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
     i2c_master_tst *self = (i2c_master_tst *)_self;

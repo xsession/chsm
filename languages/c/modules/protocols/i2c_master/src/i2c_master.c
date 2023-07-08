@@ -1,8 +1,9 @@
-/*Generated with CHSM v0.0.0 at 2023.06.28 10.26.33*/
+/*Generated with CHSM v0.0.0 at 2023.07.08 09.06.53*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
 #include "i2c_master_functions.h"
+#include <string.h>
 
 
 static chsm_result_ten s_i2c_bus_reset(chsm_tst *self, const cevent_tst  *e_pst);

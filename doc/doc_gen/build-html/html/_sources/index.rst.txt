@@ -1,15 +1,32 @@
-============
-Welcome CHSM
-============
+
+CHSM
+++++++
+
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :hidden:
+   :caption: Introduction
 
    usage/index.rst
-   development/index
-   modules/index
-   examples/index
 
-.. mdinclude:: ../../../README.md
-   
-.. include:: ./faq.rst
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Usage
+
+   development/index
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Modules
+
+   modules/index
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Exaples
+
+   examples/index
