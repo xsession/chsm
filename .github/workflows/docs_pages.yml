@@ -37,7 +37,5 @@ jobs:
         tree
 
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.5
-      with:
-        branch: gh-pages  # This is the branch the action should deploy to.
-        folder: build/html/html  # This is the folder the action should deploy.
+      run: |
+        ghp-import -n -p -f build/html
