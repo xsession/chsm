@@ -38,6 +38,8 @@ jobs:
 
     - name: Init new repo in dist folder and commit generated files
       run: |
+          pwd
+          ls -lah
           cd build/html/
           git init
           touch .nojekyll
