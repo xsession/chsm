@@ -65,3 +65,4 @@ html_static_path = ['_static']
 html_css_files = [
     'decorator.css',
 ]
+html_output_folder = '.'
