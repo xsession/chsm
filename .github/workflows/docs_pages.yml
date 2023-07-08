@@ -31,7 +31,10 @@ jobs:
     
     - name: Build documentation
       run: |
-          sphinx-build -b html doc/doc_gen/build/html
+        cd doc/doc_gen
+        make html
+        ls -lah
+        tree
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
