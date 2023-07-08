@@ -48,19 +48,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html"><span class="sectnum">1 </span>Usage</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../development/index.html"><span class="sectnum">1 </span>Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html"><span class="sectnum">2 </span>Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../modules/index.html"><span class="sectnum">1 </span>Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/index.html"><span class="sectnum">3 </span>Modules</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Exaples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../examples/index.html"><span class="sectnum">1 </span>Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html"><span class="sectnum">4 </span>Examples</a></li>
 </ul>
 
         </div>
@@ -89,16 +89,26 @@
              
   <section id="installing-for-chsm">
 <h1>Installing for CHSM<a class="headerlink" href="#installing-for-chsm" title="Permalink to this heading"></a></h1>
-<nav class="contents local" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p></li>
-</ul>
-</nav>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
-<p>Sphinx is written in <a class="reference external" href="https://docs.python-guide.org/">Python</a> and supports Python 3.8+. It builds upon the
-shoulders of many third-party libraries such as <a class="reference external" href="https://docutils.sourceforge.io/">Docutils</a> and <a class="reference external" href="https://jinja.palletsprojects.com/">Jinja</a>,
-which are installed when Sphinx is installed.</p>
+<section id="of-the-gui-and-code-generation">
+<h2>Of the GUI and code generation<a class="headerlink" href="#of-the-gui-and-code-generation" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Chrome. Theoretically other browsers can be used, but only Chrome was tested.</p></li>
+<li><p>Python 3.7+</p></li>
+<li><p>You can install the packages like this:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3<span class="w"> </span>install<span class="w"> </span>eel<span class="w"> </span>docopt
+</pre></div>
+</div>
+</section>
+<section id="of-the-c-unit-tests">
+<h2>Of the C unit tests<a class="headerlink" href="#of-the-c-unit-tests" title="Permalink to this heading"></a></h2>
+<p>The C code uses the Unity unit testing framework for running the tests. The
+CMake script that builds the tests assumes that the Unity and the CHSM repos
+are in the same directory.</p>
+<p>Cloning:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ThrowTheSwitch/Unity.git
+</pre></div>
+</div>
 </section>
 </section>
 

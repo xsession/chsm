@@ -2,7 +2,6 @@
 CHSM
 ++++++
 
-
 .. toctree::
    :maxdepth: 2
    :hidden:
@@ -13,7 +12,7 @@ CHSM
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Usage
+   :caption: Development
 
    development/index
 
@@ -30,3 +29,7 @@ CHSM
    :caption: Exaples
 
    examples/index
+
+.. image:: ./_static/first_view.png
+
+.. mdinclude:: ../../../README.md

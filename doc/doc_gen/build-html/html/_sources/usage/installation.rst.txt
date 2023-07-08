@@ -2,22 +2,25 @@
 Installing for CHSM
 ====================
 
-.. contents::
-   :depth: 1
-   :local:
-   :backlinks: none
+Of the GUI and code generation
+-------------------------------
 
-.. highlight:: console
+#. Chrome. Theoretically other browsers can be used, but only Chrome was tested.
+#. Python 3.7+
+#. You can install the packages like this:
 
-Overview
----------
+.. code-block:: bash
 
-Sphinx is written in `Python`__ and supports Python 3.8+. It builds upon the
-shoulders of many third-party libraries such as `Docutils`__ and `Jinja`__,
-which are installed when Sphinx is installed.
+   pip3 install eel docopt
 
-__ https://docs.python-guide.org/
-__ https://docutils.sourceforge.io/
-__ https://jinja.palletsprojects.com/
+Of the C unit tests
+--------------------
+The C code uses the Unity unit testing framework for running the tests. The
+CMake script that builds the tests assumes that the Unity and the CHSM repos
+are in the same directory.
 
+Cloning:
 
+.. code-block:: bash
+
+   git clone https://github.com/ThrowTheSwitch/Unity.git
