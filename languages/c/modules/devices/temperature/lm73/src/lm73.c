@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.06.28 10.25.06*/
+/*Generated with CHSM v0.0.0 at 2023.07.03 08.13.31*/
 #include "cevent.h"
 #include "chsm.h"
 #include "lm73.h"
@@ -69,7 +69,6 @@ static chsm_result_ten s_unplugged(chsm_tst *self, const cevent_tst  *e_pst)
     if(lm73_timeout(self, e_pst, LM73_UNPLUGGED_TIMEOUT))
     {
         lm73_reset_timer(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -119,7 +118,6 @@ static chsm_result_ten s_set_resolution(chsm_tst *self, const cevent_tst  *e_pst
     {
         lm73_reset_timer(self, e_pst);
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -170,7 +168,6 @@ static chsm_result_ten s_reset_ptr_reg(chsm_tst *self, const cevent_tst  *e_pst)
     {
         lm73_reset_timer(self, e_pst);
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -204,7 +201,6 @@ static chsm_result_ten s_idle(chsm_tst *self, const cevent_tst  *e_pst)
     {
         send_offline_event(self, e_pst);
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -221,6 +217,7 @@ static chsm_result_ten s_reading(chsm_tst *self, const cevent_tst  *e_pst)
             lm73_inc_error_counter(self, e_pst);
             lm73_reset_timer(self, e_pst);
             lm73_reset_timer(self, e_pst);
+            lm73_reset_timer(self, e_pst);
             return chsm_transition(self, s_idle);
 
         case SIG_I2C_RESULT_DATA_NACK:
@@ -228,11 +225,13 @@ static chsm_result_ten s_reading(chsm_tst *self, const cevent_tst  *e_pst)
             lm73_inc_error_counter(self, e_pst);
             lm73_reset_timer(self, e_pst);
             lm73_reset_timer(self, e_pst);
+            lm73_reset_timer(self, e_pst);
             return chsm_transition(self, s_idle);
 
         case SIG_I2C_RESULT_SUCCESS:
             lm73_debug_log_func(self, e_pst, "SIG_I2C_RESULT_SUCCESS", __FUNCTION__);
             lm73_update_temp(self, e_pst);
+            lm73_reset_timer(self, e_pst);
             lm73_reset_timer(self, e_pst);
             lm73_reset_timer(self, e_pst);
             return chsm_transition(self, s_idle);
@@ -248,6 +247,7 @@ static chsm_result_ten s_reading(chsm_tst *self, const cevent_tst  *e_pst)
         lm73_inc_error_counter(self, e_pst);
         lm73_reset_timer(self, e_pst);
         lm73_reset_timer(self, e_pst);
+        lm73_reset_timer(self, e_pst);
         return chsm_transition(self, s_idle);
     }
 
@@ -256,7 +256,6 @@ static chsm_result_ten s_reading(chsm_tst *self, const cevent_tst  *e_pst)
         lm73_reset_timer(self, e_pst);
         send_offline_event(self, e_pst);
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -306,7 +305,6 @@ static chsm_result_ten s_power_down(chsm_tst *self, const cevent_tst  *e_pst)
     {
         lm73_reset_timer(self, e_pst);
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -356,7 +354,6 @@ static chsm_result_ten s_power_up(chsm_tst *self, const cevent_tst  *e_pst)
     {
         lm73_reset_timer(self, e_pst);
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -383,7 +380,6 @@ static chsm_result_ten s_wait_power_down(chsm_tst *self, const cevent_tst  *e_ps
     if(lm73_error_count(self, e_pst, LM73_MAX_ERROR_COUNT))
     {
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -410,7 +406,6 @@ static chsm_result_ten s_wait_power_up(chsm_tst *self, const cevent_tst  *e_pst)
     if(lm73_error_count(self, e_pst, LM73_MAX_ERROR_COUNT))
     {
         lm73_reset_error_cnt(self, e_pst);
-        lm73_reset_timer(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -426,7 +421,6 @@ chsm_result_ten lm73_top(chsm_tst *self, const cevent_tst  *e_pst)
             lm73_debug_log_func(self, e_pst, "C_SIG_INIT", __FUNCTION__);
             lm73_init(self, e_pst);
             lm73_reset_error_cnt(self, e_pst);
-            lm73_reset_timer(self, e_pst);
             lm73_read_id(self, e_pst);
             return chsm_transition(self, s_read_id_reg);
     }

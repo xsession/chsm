@@ -138,6 +138,7 @@ bool i2c_master_device_addr_max_cnt(chsm_tst *_self, const cevent_tst *e_pst)
     }
 
     CRF_POST_TO_SELF(&sig_addr_release_st);
+    CRF_EMIT(&sig_addr_release_st);
     return false;
 }
 

@@ -5,11 +5,11 @@ Welcome CHSM
 .. toctree::
    :maxdepth: 1
 
-   usage/index
+   usage/index.rst
    development/index
    modules/index
    examples/index
 
 .. mdinclude:: ../../../README.md
    
-.. include:: faq.rst
+.. include:: ./faq.rst
