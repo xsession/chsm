@@ -24,7 +24,9 @@ jobs:
         pip install Sphinx m2r sphinxcontrib-plantuml sphinx-rtd-dark-mode sphinxcontrib-datatemplates sphinxcontrib-drawio
 
     - name: Install Draw.io
-      uses: severgroup-tt/actions-drawio-cli@v1.0.0
+      run: |
+        wget https://github.com/jgraph/drawio-desktop/releases/download/v21.6.1/drawio-x86_64-21.6.1.AppImage
+        chmod +x drawio-x86_64-21.6.1.AppImage
     
     - name: Build documentation
       run: |
