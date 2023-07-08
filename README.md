@@ -52,7 +52,7 @@ Cloning: `git clone https://github.com/ThrowTheSwitch/Unity.git`
 1. Clone the repo
 2. Checkout the **master** branch
 3. Navigate into the **chsm** folder, open a command prompt and run this command:
-   **python3 cgen/chsm_backend.py**
+**python3 cgen/chsm_backend.py**
 
 The result should be a new window with a simple state machine already in it.
 

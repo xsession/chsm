@@ -6,6 +6,13 @@ Development
 Hierarchical overview
 ---------------------------
 
+
+
+.. drawio-image:: ../_static/crf_SwAD.drawio
+   :format: svg
+   :page-index: 0
+
+
 .. uml::
 
    Alice -> Bob: Hi!

@@ -1,7 +1,7 @@
 #ifndef VCNL4040_FUNCTIONS_H
 #define VCNL4040_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.03.19 10.43.58*/
+/*Generated with CHSM v0.0.0 at 2023.07.02 22.34.14*/
 
 #include "vcnl4040.h"
 #include "chsm.h"
@@ -29,6 +29,8 @@ void vcnl4040_start_read(chsm_tst *self, const cevent_tst *e_pst);
 
 void vcnl4040_update_data(chsm_tst *self, const cevent_tst *e_pst);
 
+void vcnl4040_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);
+extern char vcnl4040_debug_state_ac[20];
 
 typedef enum vcnl4040_state_id_ten
 {
