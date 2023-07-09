@@ -1,5 +1,5 @@
-[submodule "doc/modules"]
-	path = doc/modules
+[submodule "docs/modules"]
+	path = docs/modules
 	url = https://github.com/xsession/chsm-docs.git
 [submodule "languages/c/cmake_utils"]
 	path = languages/c/cmake_utils
