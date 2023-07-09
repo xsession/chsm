@@ -31,7 +31,7 @@ jobs:
     
     - name: Build documentation
       run: |
-        cd doc/doc_gen
+        cd docs/doc_gen
         make html
         ls -lah
         tree
@@ -40,4 +40,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: doc/doc_gen/build/html
+          publish_dir: docs/doc_gen/build/html
