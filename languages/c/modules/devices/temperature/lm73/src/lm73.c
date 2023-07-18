@@ -3,6 +3,7 @@
 #include "chsm.h"
 #include "lm73.h"
 #include "lm73_functions.h"
+#include <string.h>
 
 
 static chsm_result_ten s_wait_power_up(chsm_tst *self, const cevent_tst  *e_pst);

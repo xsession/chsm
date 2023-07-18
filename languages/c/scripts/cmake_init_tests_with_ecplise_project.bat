@@ -14,5 +14,5 @@ if exist "%~dp0/../build-%cpu_architecture%-test" (
     cd build-%cpu_architecture%-test
 )
 
-cmake -G "Eclipse CDT4 - MinGW Makefiles" -DCMAKE_DEBUG_MSG=ON -DCHSM_BUILD_TESTS=ON ../
+cmake -G "Eclipse CDT4 - MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEBUG_MSG=ON -DCHSM_BUILD_TESTS=ON ../
 
