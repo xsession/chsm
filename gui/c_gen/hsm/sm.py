@@ -473,6 +473,7 @@ class StateMachine:
         ast.nodes.insert(0, Blank())
         ast.nodes.insert(0, Include(self.funcs_h))
         ast.nodes.insert(0, Include(self.machine_h))
+        ast.nodes.insert(0, f'#include <string.h>\n')
         for i in self.templates['c_include_list']:
             ast.nodes.insert(0, Include(i))
 

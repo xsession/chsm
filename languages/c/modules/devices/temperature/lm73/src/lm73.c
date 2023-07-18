@@ -1,6 +1,7 @@
-/*Generated with CHSM v0.0.0 at 2023.07.18 09.40.18*/
+/*Generated with CHSM v0.0.0 at 2023.07.18 10.07.52*/
 #include "cevent.h"
 #include "chsm.h"
+#include <string.h>
 #include "lm73.h"
 #include "lm73_functions.h"
 

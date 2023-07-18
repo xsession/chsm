@@ -1,7 +1,7 @@
 #ifndef I2C_MASTER_FUNCTIONS_H
 #define I2C_MASTER_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.07.18 09.39.54*/
+/*Generated with CHSM v0.0.0 at 2023.07.18 10.07.17*/
 
 #include "i2c_master.h"
 #include "chsm.h"

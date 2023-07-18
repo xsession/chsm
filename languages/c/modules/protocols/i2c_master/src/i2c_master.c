@@ -1,6 +1,7 @@
-/*Generated with CHSM v0.0.0 at 2023.07.18 09.39.54*/
+/*Generated with CHSM v0.0.0 at 2023.07.18 10.07.17*/
 #include "cevent.h"
 #include "chsm.h"
+#include <string.h>
 #include "i2c_master.h"
 #include "i2c_master_functions.h"
 
