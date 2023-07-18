@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "i2c_master_test (gdb) Launch",
+            "name": "i2c_master_test_debug",
             "type": "cppdbg",
             "request": "launch",
+            // "preLaunchTask": "build_i2c_master_test",
             "program": "${workspaceFolder}/languages/c/build-mingw-test/bin/i2c_master_test.exe",
             "args": [],
             "stopAtEntry": false,
@@ -28,7 +29,59 @@
                     "ignoreFailures": true
                 }
             ]
-        }
+        },
+        {
+            "name": "lm73_test_debug",
+            "type": "cppdbg",
+            "request": "launch",
+            // "preLaunchTask": "build_lm73_test",
+            "program": "${workspaceFolder}/languages/c/build-mingw-test/bin/lm73_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "sht30_test_debug",
+            "type": "cppdbg",
+            "request": "launch",
+            // "preLaunchTask": "build_sht30_test",
+            "program": "${workspaceFolder}/languages/c/build-mingw-test/bin/sht30_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
 
     ]
 }

@@ -1,9 +1,8 @@
-/*Generated with CHSM v0.0.0 at 2023.07.03 08.13.31*/
+/*Generated with CHSM v0.0.0 at 2023.07.18 09.40.18*/
 #include "cevent.h"
 #include "chsm.h"
 #include "lm73.h"
 #include "lm73_functions.h"
-#include <string.h>
 
 
 static chsm_result_ten s_wait_power_up(chsm_tst *self, const cevent_tst  *e_pst);
@@ -24,11 +23,13 @@ static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst)
     {
         case SIG_I2C_RESULT_ADDR_NACK:
             lm73_debug_log_func(self, e_pst, "SIG_I2C_RESULT_ADDR_NACK", __FUNCTION__);
+            lm73_inc_error_counter(self, e_pst);
             lm73_reset_timer(self, e_pst);
             return chsm_transition(self, s_unplugged);
 
         case SIG_I2C_RESULT_DATA_NACK:
             lm73_debug_log_func(self, e_pst, "SIG_I2C_RESULT_DATA_NACK", __FUNCTION__);
+            lm73_inc_error_counter(self, e_pst);
             lm73_reset_timer(self, e_pst);
             return chsm_transition(self, s_unplugged);
 
@@ -50,8 +51,16 @@ static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst)
 
     if(lm73_timeout(self, e_pst, LM73_RETRY_TIMEOUT))
     {
+        lm73_inc_error_counter(self, e_pst);
         lm73_reset_timer(self, e_pst);
         return chsm_transition(self, s_unplugged);
+    }
+
+    if(lm73_error_count(self, e_pst, LM73_MAX_ERROR_COUNT))
+    {
+        lm73_reset_error_cnt(self, e_pst);
+        lm73_read_id(self, e_pst);
+        return chsm_transition(self, s_read_id_reg);
     }
 
     return chsm_ignored(self);
@@ -70,6 +79,13 @@ static chsm_result_ten s_unplugged(chsm_tst *self, const cevent_tst  *e_pst)
     if(lm73_timeout(self, e_pst, LM73_UNPLUGGED_TIMEOUT))
     {
         lm73_reset_timer(self, e_pst);
+        lm73_read_id(self, e_pst);
+        return chsm_transition(self, s_read_id_reg);
+    }
+
+    if(lm73_error_count(self, e_pst, LM73_MAX_ERROR_COUNT))
+    {
+        lm73_reset_error_cnt(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -438,7 +454,8 @@ void lm73_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_n
 		CRF_UNUSED(est); 
 		CRF_UNUSED(trans_name); 
 		CRF_UNUSED(state_func); 
-		memcpy(lm73_debug_state_ac, 0, 20); 
-		memcpy(lm73_debug_state_ac, state_func, 20); 
+		memset(lm73_debug_state_ac, 0, 20); 
+		strncpy(lm73_debug_state_ac, state_func, 19); 
+		lm73_debug_state_ac[19] = '\0'; 
 	#endif 
 }  

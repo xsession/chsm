@@ -1,9 +1,8 @@
-/*Generated with CHSM v0.0.0 at 2023.07.08 09.06.53*/
+/*Generated with CHSM v0.0.0 at 2023.07.18 09.39.54*/
 #include "cevent.h"
 #include "chsm.h"
 #include "i2c_master.h"
 #include "i2c_master_functions.h"
-#include <string.h>
 
 
 static chsm_result_ten s_i2c_bus_reset(chsm_tst *self, const cevent_tst  *e_pst);
@@ -450,7 +449,8 @@ void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *t
 		CRF_UNUSED(est); 
 		CRF_UNUSED(trans_name); 
 		CRF_UNUSED(state_func); 
-		memcpy(i2c_master_debug_state_ac, 0, 20); 
-		memcpy(i2c_master_debug_state_ac, state_func, 20); 
+		memset(i2c_master_debug_state_ac, 0, 20); 
+		strncpy(i2c_master_debug_state_ac, state_func, 19); 
+		i2c_master_debug_state_ac[19] = '\0'; 
 	#endif 
 }  
