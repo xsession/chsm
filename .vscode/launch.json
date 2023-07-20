@@ -27,6 +27,11 @@
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "Display numbers in hex",
+                    "text": "set output-radix 16",
+                    "ignoreFailures": true
                 }
             ]
         },
@@ -53,6 +58,11 @@
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "Display numbers in hex",
+                    "text": "set output-radix 16",
+                    "ignoreFailures": true
                 }
             ]
         },
@@ -78,6 +88,11 @@
                 {
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Display numbers in hex",
+                    "text": "set output-radix 16",
                     "ignoreFailures": true
                 }
             ]

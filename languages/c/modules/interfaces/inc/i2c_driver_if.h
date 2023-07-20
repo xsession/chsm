@@ -36,13 +36,16 @@ typedef struct i2c_driver_if_tst i2c_driver_if_tst;
 
 struct i2c_driver_if_tst
 {
-    void                    (*start_tx)(i2c_driver_if_tst *self, uint8_t slave_addr_u8, uint8_t *data_pu8, uint16_t len_u16);
-    void                    (*start_rx)(i2c_driver_if_tst *self, uint8_t slave_addr_u8, uint8_t *data_pu8, uint16_t len_u16);
-    void                    (*stop)(i2c_driver_if_tst* self);
-
     cqueue_tst*             q_pst;
-    
     i2c_driver_status_tun   status_un;
+    
+    void (*start_tx)(i2c_driver_if_tst *self, uint8_t slave_addr_u8, uint8_t *data_pu8, uint16_t len_u16);
+    void (*start_rx)(i2c_driver_if_tst *self, uint8_t slave_addr_u8, uint8_t *data_pu8, uint16_t len_u16);
+    void (*stop)(i2c_driver_if_tst* self);
+    void (*init)(i2c_driver_if_tst* self);
+    void (*deinit)(i2c_driver_if_tst* self);
+    void (*reset_slave_comm)(i2c_driver_if_tst* self);
+    void (*reset_periph)(i2c_driver_if_tst* self);
 };
 
 /*
