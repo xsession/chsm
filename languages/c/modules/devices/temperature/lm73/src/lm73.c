@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.07.18 10.07.52*/
+/*Generated with CHSM v0.0.0 at 2023.07.25 20.49.39*/
 #include "cevent.h"
 #include "chsm.h"
 #include <string.h>
@@ -57,13 +57,6 @@ static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst)
         return chsm_transition(self, s_unplugged);
     }
 
-    if(lm73_error_count(self, e_pst, LM73_MAX_ERROR_COUNT))
-    {
-        lm73_reset_error_cnt(self, e_pst);
-        lm73_read_id(self, e_pst);
-        return chsm_transition(self, s_read_id_reg);
-    }
-
     return chsm_ignored(self);
 }
 
@@ -80,13 +73,6 @@ static chsm_result_ten s_unplugged(chsm_tst *self, const cevent_tst  *e_pst)
     if(lm73_timeout(self, e_pst, LM73_UNPLUGGED_TIMEOUT))
     {
         lm73_reset_timer(self, e_pst);
-        lm73_read_id(self, e_pst);
-        return chsm_transition(self, s_read_id_reg);
-    }
-
-    if(lm73_error_count(self, e_pst, LM73_MAX_ERROR_COUNT))
-    {
-        lm73_reset_error_cnt(self, e_pst);
         lm73_read_id(self, e_pst);
         return chsm_transition(self, s_read_id_reg);
     }
@@ -448,7 +434,7 @@ chsm_result_ten lm73_top(chsm_tst *self, const cevent_tst  *e_pst)
 
 void lm73_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) 
 {
-	#ifdef CHSM_BUILD_TESTS 
+	#ifndef CHSM_BUILD_TESTS 
 		printf("lm73_%s --%s-->\n", state_func, trans_name); 
 	#else 
 		CRF_UNUSED(self); 

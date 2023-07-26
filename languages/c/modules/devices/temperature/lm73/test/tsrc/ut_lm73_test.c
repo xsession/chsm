@@ -16,6 +16,7 @@
 #include "ut_i2c_driver_mock.h"
 #include "i2c_master.h"
 #include "lm73.h"
+#include "lm73_regs.h"
 #include "cevent.h"
 #include "sys_if.h"
 
@@ -59,7 +60,7 @@ static void tick_ms(uint32_t tick_cnt_u32)
 
 		while(CRF_STEP())
 		{
-			printf("|");
+			printf("| ");
 		}
 	}
 }
@@ -105,7 +106,7 @@ TEST_SETUP(lm73)
 	chsm_ctor(&lm73_st.super, lm73_top, lm73_events_apst, 8, 0);
 	
 	lm73_st.config_st = (lm73_cfg_tst){
-		.address_u8 = 			0x12,
+		.address_u8 = 			LM73_0_I2C_FLOAT,
 		.id_u16 = 				0xabcd,
 		.period_ms_u16 = 		LM73_READ_PERIOD_VALUE,
 		.max_error_cnt_u16 = 	LM73_MAX_ERROR_COUNT_VALUE
@@ -176,38 +177,38 @@ TEST(lm73, init)
 /* read_id_retry:
  * Check that a failed ID read will be repeated after the configured time.
  */
-// TEST(lm73, read_id_retry)
-// {
-// 	printf("\n%s\n", __FUNCTION__);
+TEST(lm73, read_id)
+{
+	printf("\n%s\n", __FUNCTION__);
 
-// 	    i2c_mock_slave_device_tst dev_st = {
-//         .address_u8 = 0x13,
-//         .nack_idx_u16 = 20,
-// 		.tx_data_au8 = {0x01, 0x90, 0xf3, 0x80, 0x0c, 0x80}
-//     };
+	    i2c_mock_slave_device_tst dev_st = {
+        .address_u8 = LM73_0_I2C_FLOAT,
+        .nack_idx_u16 = 20,
+		.tx_data_au8 = {0x01, 0x90, 0xf3, 0x80, 0x0c, 0x80}
+    };
 
-// 	const lm73_status_tst* s_pst;
+	const lm73_status_tst* s_pst;
 
-//     drv_mock_st.slave_pst = &dev_st;
+    drv_mock_st.slave_pst = &dev_st;
 
-// 	tick_ms(10);
+	tick_ms(10);
 
-// 	s_pst = (lm73_status_tst*)q_st.get(&q_st);
-// 	TEST_ASSERT_NULL(s_pst);
+	s_pst = (lm73_status_tst*)q_st.get(&q_st);
+	TEST_ASSERT_NULL(s_pst);
 
-// 	dev_st.address_u8 = 0x12;
+	// dev_st.address_u8 = 0x12;
 	
-// 	tick_ms(LM73_RETRY_TIMEOUT-10);
+	// tick_ms(LM73_RETRY_TIMEOUT-10);
 	
-// 	s_pst = (lm73_status_tst*)q_st.get(&q_st);
-// 	TEST_ASSERT_NULL(s_pst);
+	// s_pst = (lm73_status_tst*)q_st.get(&q_st);
+	// TEST_ASSERT_NULL(s_pst);
 	
-// 	tick_ms(10);
+	// tick_ms(10);
 	
-// 	s_pst = (lm73_status_tst*)q_st.get(&q_st);
-// 	TEST_ASSERT_NOT_NULL(s_pst);
-// 	TEST_ASSERT_EQUAL(SIG_LM73_ONLINE, s_pst->super.sig);
-// }
+	// s_pst = (lm73_status_tst*)q_st.get(&q_st);
+	// TEST_ASSERT_NOT_NULL(s_pst);
+	// TEST_ASSERT_EQUAL(SIG_LM73_ONLINE, s_pst->super.sig);
+}
 
 // /* read_id_retry_bad_id:
 //  * Check that a failed ID read will be repeated after the configured time if the data sent back
@@ -386,6 +387,7 @@ TEST(lm73, init)
 TEST_GROUP_RUNNER(lm73)
 {
 	RUN_TEST_CASE(lm73, init);
+	RUN_TEST_CASE(lm73, read_id);
 	// RUN_TEST_CASE(lm73, read_temp_twice);
 	// RUN_TEST_CASE(lm73, read_id_retry);
 	// RUN_TEST_CASE(lm73, read_id_retry_bad_id);
