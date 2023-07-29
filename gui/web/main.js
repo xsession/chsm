@@ -350,11 +350,13 @@ class App {
 						break;
 						
 					case 'KeyD':
+					case 'Delete':
 						this.clear_sidebar();
 						this.start_delete_state_or_transition();
                         this.state = this.delete_st_or_tr_state;
 						this.model.transitions().map(t => this.gui.redraw_path_change_line_color(t, true));
 						break;
+				
 
 					case 'KeyZ':
 						if (data.ctrlKey)
