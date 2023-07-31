@@ -24,20 +24,21 @@ static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst)
     {
         case SIG_I2C_RESULT_ADDR_NACK:
             lm73_debug_log_func(self, e_pst, "SIG_I2C_RESULT_ADDR_NACK", __FUNCTION__);
-            lm73_inc_error_counter(self, e_pst);
             lm73_reset_timer(self, e_pst);
+            lm73_unplugged(self, e_pst);
             return chsm_transition(self, s_unplugged);
 
         case SIG_I2C_RESULT_DATA_NACK:
             lm73_debug_log_func(self, e_pst, "SIG_I2C_RESULT_DATA_NACK", __FUNCTION__);
-            lm73_inc_error_counter(self, e_pst);
             lm73_reset_timer(self, e_pst);
+            lm73_unplugged(self, e_pst);
             return chsm_transition(self, s_unplugged);
 
         case SIG_I2C_RESULT_SUCCESS:
             lm73_debug_log_func(self, e_pst, "SIG_I2C_RESULT_SUCCESS", __FUNCTION__);
             if(lm73_id_match(self, e_pst))
             {
+                lm73_reset_timer(self, e_pst);
                 lm73_reset_timer(self, e_pst);
                 lm73_set_full_powerdown(self, e_pst);
                 return chsm_transition(self, s_power_down);
@@ -52,8 +53,8 @@ static chsm_result_ten s_read_id_reg(chsm_tst *self, const cevent_tst  *e_pst)
 
     if(lm73_timeout(self, e_pst, LM73_RETRY_TIMEOUT))
     {
-        lm73_inc_error_counter(self, e_pst);
         lm73_reset_timer(self, e_pst);
+        lm73_unplugged(self, e_pst);
         return chsm_transition(self, s_unplugged);
     }
 

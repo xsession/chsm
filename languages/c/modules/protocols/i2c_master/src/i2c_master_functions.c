@@ -142,13 +142,6 @@ bool i2c_master_device_addr_max_cnt(chsm_tst *_self, const cevent_tst *e_pst)
     return false;
 }
 
-//void i2c_master_addr_release(chsm_tst *_self, const cevent_tst *e_pst)
-//{
-//    i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
-//    i2c_master_tst *self = (i2c_master_tst *)_self;
-//    CRF_EMIT(&sig_addr_release_st);
-//}
-
 void i2c_1ms_callback(chsm_tst *_self, const cevent_tst *e_pst)
 {
     i2c_master_debug_log_func(_self,e_pst,"",__FUNCTION__);
@@ -217,7 +210,17 @@ bool i2c_master_fault_cnt(chsm_tst *_self, const cevent_tst *e_pst, uint8_t faul
     return false;
 }
 
-void i2c_master_bus_reset(chsm_tst *self, const cevent_tst *e_pst)
+void i2c_master_reset_slave_comm(chsm_tst *_self, const cevent_tst *e_pst)
 {
+    i2c_master_tst *self = (i2c_master_tst *)_self;
 
+    self->config_st.driver_pst->reset_slave_comm(self->config_st.driver_pst);
 }
+
+void i2c_master_reset_periph(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    i2c_master_tst *self = (i2c_master_tst *)_self;
+
+    self->config_st.driver_pst->reset_periph(self->config_st.driver_pst);
+}
+

@@ -1,7 +1,7 @@
 #ifndef I2C_MASTER_FUNCTIONS_H
 #define I2C_MASTER_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.07.18 10.07.17*/
+/*Generated with CHSM v0.0.0 at 2023.07.25 07.32.03*/
 
 #include "i2c_master.h"
 #include "chsm.h"
@@ -13,8 +13,6 @@ void clear_transaction_info(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_1ms_callback(chsm_tst *self, const cevent_tst *e_pst);
 
-void i2c_master_bus_reset(chsm_tst *self, const cevent_tst *e_pst);
-
 void i2c_master_clear_defer_queue(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_master_clear_queue(chsm_tst *self, const cevent_tst *e_pst);
@@ -24,6 +22,10 @@ void i2c_master_inc_dev_addr(chsm_tst *self, const cevent_tst *e_pst);
 void i2c_master_inc_success_dev_addr(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_master_init(chsm_tst *self, const cevent_tst *e_pst);
+
+void i2c_master_reset_periph(chsm_tst *self, const cevent_tst *e_pst);
+
+void i2c_master_reset_slave_comm(chsm_tst *self, const cevent_tst *e_pst);
 
 void i2c_master_send_fail_response(chsm_tst *self, const cevent_tst *e_pst);
 
@@ -55,7 +57,8 @@ typedef enum i2c_master_state_id_ten
     S_WR_READ = 6,
     S_SCAN_IDLE = 9,
     S_SCAN_WRITE = 11,
-    S_I2C_BUS_RESET = 12,
+    S_I2C_MASTER_RESET_SLAVE_COMM = 12,
+    S_RESET_PERIPH = 13,
 } i2c_master_state_id_ten;
 
 
@@ -67,6 +70,8 @@ Signals:
     SIG_I2C_QUEUE_OVERFLOW       
     SIG_I2C_READ_FAIL            
     SIG_I2C_READ_SUCCESS         
+    SIG_I2C_RESET_PERIPH         
+    SIG_I2C_RESET_SLAVE_COMM     
     SIG_I2C_R_TRANSACTION        
     SIG_I2C_WRITE_FAIL           
     SIG_I2C_WRITE_SUCCESS        

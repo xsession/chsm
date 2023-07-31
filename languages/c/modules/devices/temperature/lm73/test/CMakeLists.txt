@@ -13,6 +13,7 @@ add_module_test(
         lm73
     DEFINES
         NDEBUG 
+        CHSM_BUILD_TESTS
     STANDARD
         11
 ) 

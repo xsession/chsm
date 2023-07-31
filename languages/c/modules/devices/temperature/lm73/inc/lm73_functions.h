@@ -1,7 +1,7 @@
 #ifndef LM73_FUNCTIONS_H
 #define LM73_FUNCTIONS_H
 
-/*Generated with CHSM v0.0.0 at 2023.07.25 20.49.39*/
+/*Generated with CHSM v0.0.0 at 2023.07.25 10.48.28*/
 
 #include "lm73.h"
 #include "chsm.h"
@@ -32,6 +32,8 @@ void lm73_set_full_powerup(chsm_tst *self, const cevent_tst *e_pst);
 void lm73_set_resolution(chsm_tst *self, const cevent_tst *e_pst);
 
 void lm73_start_read(chsm_tst *self, const cevent_tst *e_pst);
+
+void lm73_unplugged(chsm_tst *self, const cevent_tst *e_pst);
 
 void lm73_update_temp(chsm_tst *self, const cevent_tst *e_pst);
 

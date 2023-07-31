@@ -131,48 +131,68 @@ TEST(lm73, init)
 	printf("\n%s\n", __FUNCTION__);
 }
 
+TEST(lm73, read_id)
+{
+	printf("\n%s\n", __FUNCTION__);
+
+	i2c_mock_slave_device_tst dev_st = {
+        .address_u8 = LM73_0_I2C_FLOAT,
+        .nack_idx_u16 = 20,
+		.tx_data_au8 = {0x01, 0x90, // sensor id
+						0xf3, 0x80, // -25° measured value
+						0x0c, 0x80  // +25° measured value
+						}
+    };
+
+	drv_mock_st.slave_pst = &dev_st;
+
+	tick_ms(10);
+
+
+}
+
 /* read_temp_twice:
  * Setup the mock device to send the id bytes and two temperature reading (-25 and 25) to the master.
  * Check, that two temperature events were sent
  */
-// TEST(lm73, read_temp_twice)
-// {
-// 	printf("\n%s\n", __FUNCTION__);
-// 	    i2c_mock_slave_device_tst dev_st = {
-//         .address_u8 = 0x12,
-//         .nack_idx_u16 = 20,
-// 		.tx_data_au8 = {0x01, 0x90, 0xf3, 0x80, 0x0c, 0x80}
-//     };
+TEST(lm73, read_temp_twice)
+{
+	printf("\n%s\n", __FUNCTION__);
+	    i2c_mock_slave_device_tst dev_st = {
+        .address_u8 = 0x12,
+        .nack_idx_u16 = 20,
+		.tx_data_au8 = {0x01, 0x90, 0xf3, 0x80, 0x0c, 0x80}
+    };
 
 	
-// 	const lm73_temp_tst* e_pst;
-// 	const lm73_status_tst* s_pst;
+	const lm73_temp_tst* e_pst;
+	const lm73_status_tst* s_pst;
 
-//     drv_mock_st.slave_pst = &dev_st;
+    drv_mock_st.slave_pst = &dev_st;
 
-// 	tick_ms(10);
+	tick_ms(10);
 
-// 	s_pst = (lm73_status_tst*)q_st.get(&q_st);
-// 	TEST_ASSERT(s_pst);
-// 	TEST_ASSERT_EQUAL(SIG_LM73_ONLINE, s_pst->super.sig);
+	s_pst = (lm73_status_tst*)q_st.get(&q_st);
+	TEST_ASSERT(s_pst);
+	TEST_ASSERT_EQUAL(SIG_LM73_ONLINE, s_pst->super.sig);
 
-// 	e_pst = (lm73_temp_tst*)q_st.get(&q_st);
-// 	TEST_ASSERT(e_pst);
-// 	TEST_ASSERT_EQUAL(SIG_LM73_TEMP, e_pst->super.sig);
-// 	TEST_ASSERT_EQUAL(-25, e_pst->temp_C_i32);
+	e_pst = (lm73_temp_tst*)q_st.get(&q_st);
+	TEST_ASSERT(e_pst);
+	TEST_ASSERT_EQUAL(SIG_LM73_TEMP, e_pst->super.sig);
+	TEST_ASSERT_EQUAL(-25, e_pst->temp_C_i32);
 
-// 	tick_ms((LM73_READ_PERIOD/10)+1);
+	tick_ms((LM73_READ_PERIOD/10)+1);
 
-// 	uint8_t expected_au8[4] = {7, 0, 0, 0};
-//     TEST_ASSERT_EQUAL_HEX8_ARRAY(expected_au8, dev_st.rx_data_au8, 4);
-// 	TEST_ASSERT_EQUAL(2, dev_st.rx_idx_u16);
-// 	TEST_ASSERT_EQUAL(6, dev_st.tx_idx_u16);
+	uint8_t expected_au8[4] = {7, 0, 0, 0};
+    TEST_ASSERT_EQUAL_HEX8_ARRAY(expected_au8, dev_st.rx_data_au8, 4);
+	TEST_ASSERT_EQUAL(2, dev_st.rx_idx_u16);
+	TEST_ASSERT_EQUAL(6, dev_st.tx_idx_u16);
 
-// 	e_pst = (lm73_temp_tst*)q_st.get(&q_st);
-// 	TEST_ASSERT(e_pst);
-// 	TEST_ASSERT_EQUAL(SIG_LM73_TEMP, e_pst->super.sig);
-// 	TEST_ASSERT_EQUAL(25, e_pst->temp_C_i32);
-// }
+	e_pst = (lm73_temp_tst*)q_st.get(&q_st);
+	TEST_ASSERT(e_pst);
+	TEST_ASSERT_EQUAL(SIG_LM73_TEMP, e_pst->super.sig);
+	TEST_ASSERT_EQUAL(25, e_pst->temp_C_i32);
+}
 
 /* read_id_retry:
  * Check that a failed ID read will be repeated after the configured time.

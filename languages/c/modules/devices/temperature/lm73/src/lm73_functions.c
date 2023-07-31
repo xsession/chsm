@@ -1,7 +1,12 @@
 #include "lm73.h"
 #include "lm73_regs.h"
 #include "lm73_functions.h"
+#include "crf.h"
+#include "cevent.h"
 #include <stdio.h>
+
+static const cevent_tst sig_reset_slave_comm_st = {.sig = SIG_I2C_RESET_SLAVE_COMM};
+static const cevent_tst sig_reset_periph_st = {.sig = SIG_I2C_RESET_SLAVE_COMM};
 
 void lm73_init(chsm_tst *_self, const cevent_tst *e_pst)
 {
@@ -300,3 +305,13 @@ bool lm73_timeout(chsm_tst *_self, const cevent_tst *e_pst, uint32_t timeout_u32
 
     return self->counter_u32 >= timeout_u32;
 }
+
+void lm73_unplugged(chsm_tst *_self, const cevent_tst *e_pst)
+{
+    lm73_debug_log_func(_self,e_pst,"",__FUNCTION__);
+
+    lm73_tst*   self = (lm73_tst *)_self;
+
+    CRF_EMIT(&sig_reset_slave_comm_st);
+}
+

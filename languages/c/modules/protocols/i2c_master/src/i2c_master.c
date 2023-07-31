@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.07.18 10.07.17*/
+/*Generated with CHSM v0.0.0 at 2023.07.25 07.32.03*/
 #include "cevent.h"
 #include "chsm.h"
 #include <string.h>
@@ -6,7 +6,8 @@
 #include "i2c_master_functions.h"
 
 
-static chsm_result_ten s_i2c_bus_reset(chsm_tst *self, const cevent_tst  *e_pst);
+static chsm_result_ten s_reset_periph(chsm_tst *self, const cevent_tst  *e_pst);
+static chsm_result_ten s_i2c_master_reset_slave_comm(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_scan_idle(chsm_tst *self, const cevent_tst  *e_pst);
 static chsm_result_ten s_wr_read(chsm_tst *self, const cevent_tst  *e_pst);
@@ -43,6 +44,16 @@ static chsm_result_ten s_idle(chsm_tst *self, const cevent_tst  *e_pst)
             scan_init(self, e_pst);
             chsm_recall(self, e_pst);
             return chsm_transition(self, s_scan_idle);
+
+        case SIG_I2C_RESET_SLAVE_COMM:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_RESET_SLAVE_COMM", __FUNCTION__);
+            i2c_master_reset_slave_comm(self, e_pst);
+            return chsm_transition(self, s_i2c_master_reset_slave_comm);
+
+        case SIG_I2C_RESET_PERIPH:
+            i2c_master_debug_log_func(self, e_pst, "SIG_I2C_RESET_PERIPH", __FUNCTION__);
+            i2c_master_reset_periph(self, e_pst);
+            return chsm_transition(self, s_reset_periph);
 
         case SIG_SYS_TICK_1ms:
             i2c_master_debug_log_func(self, e_pst, "SIG_SYS_TICK_1ms", __FUNCTION__);
@@ -410,7 +421,24 @@ static chsm_result_ten s_scan_write(chsm_tst *self, const cevent_tst  *e_pst)
     return chsm_ignored(self);
 }
 
-static chsm_result_ten s_i2c_bus_reset(chsm_tst *self, const cevent_tst  *e_pst)
+static chsm_result_ten s_i2c_master_reset_slave_comm(chsm_tst *self, const cevent_tst  *e_pst)
+{
+    switch(e_pst->sig)
+    {
+        case SIG_SYS_TICK_1ms:
+            i2c_master_debug_log_func(self, e_pst, "SIG_SYS_TICK_1ms", __FUNCTION__);
+            i2c_1ms_callback(self, e_pst);
+            break;
+    }
+
+    chsm_recall(self, e_pst);
+    clear_transaction_info(self, e_pst);
+    return chsm_transition(self, s_idle);
+
+    return chsm_ignored(self);
+}
+
+static chsm_result_ten s_reset_periph(chsm_tst *self, const cevent_tst  *e_pst)
 {
     switch(e_pst->sig)
     {
@@ -434,8 +462,8 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
         case C_SIG_INIT:
             i2c_master_debug_log_func(self, e_pst, "C_SIG_INIT", __FUNCTION__);
             i2c_master_init(self, e_pst);
-            i2c_master_bus_reset(self, e_pst);
-            return chsm_transition(self, s_i2c_bus_reset);
+            i2c_master_reset_slave_comm(self, e_pst);
+            return chsm_transition(self, s_i2c_master_reset_slave_comm);
     }
 
     return chsm_ignored(self);
@@ -443,7 +471,7 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
 
 void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) 
 {
-	#ifndef CHSM_BUILD_TESTS 
+	#ifdef CHSM_BUILD_TESTS
 		printf("i2c_master_%s --%s-->\n", state_func, trans_name); 
 	#else 
 		CRF_UNUSED(self); 
