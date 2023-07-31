@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.07.25 20.49.39*/
+/*Generated with CHSM v0.0.0 at 2023.07.31 10.25.58*/
 #include "cevent.h"
 #include "chsm.h"
 #include <string.h>
@@ -435,7 +435,7 @@ chsm_result_ten lm73_top(chsm_tst *self, const cevent_tst  *e_pst)
 
 void lm73_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) 
 {
-	#ifndef CHSM_BUILD_TESTS 
+	#ifdef CHSM_BUILD_TESTS 
 		printf("lm73_%s --%s-->\n", state_func, trans_name); 
 	#else 
 		CRF_UNUSED(self); 

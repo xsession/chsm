@@ -1,4 +1,4 @@
-/*Generated with CHSM v0.0.0 at 2023.07.25 07.32.03*/
+/*Generated with CHSM v0.0.0 at 2023.07.31 09.44.02*/
 #include "cevent.h"
 #include "chsm.h"
 #include <string.h>
@@ -462,8 +462,9 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
         case C_SIG_INIT:
             i2c_master_debug_log_func(self, e_pst, "C_SIG_INIT", __FUNCTION__);
             i2c_master_init(self, e_pst);
-            i2c_master_reset_slave_comm(self, e_pst);
-            return chsm_transition(self, s_i2c_master_reset_slave_comm);
+            chsm_recall(self, e_pst);
+            clear_transaction_info(self, e_pst);
+            return chsm_transition(self, s_idle);
     }
 
     return chsm_ignored(self);
@@ -471,7 +472,7 @@ chsm_result_ten i2c_master_top(chsm_tst *self, const cevent_tst  *e_pst)
 
 void i2c_master_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) 
 {
-	#ifdef CHSM_BUILD_TESTS
+	#ifdef CHSM_BUILD_TESTS 
 		printf("i2c_master_%s --%s-->\n", state_func, trans_name); 
 	#else 
 		CRF_UNUSED(self); 
