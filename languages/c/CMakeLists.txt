@@ -1,3 +1,5 @@
+if(NOT DEFINED CHSM_INCLUDED)
+
 cmake_minimum_required(VERSION 3.19)
 
 project(chsm 
@@ -54,3 +56,6 @@ endif()
 add_subdirectory(modules)
 add_subdirectory(c_rf)
     
+set(CHSM_INCLUDED TRUE)
+
+endif()
