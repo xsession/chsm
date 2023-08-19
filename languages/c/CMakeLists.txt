@@ -9,7 +9,7 @@ DESCRIPTION "CHSM - Hierarchical State Machine (HSM) Framework for C The project
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
     message(STATUS "This CHSM is the top-level project.")
-
+        
     list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_utils")
     include(cmake_utils)
 
