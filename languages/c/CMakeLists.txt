@@ -17,6 +17,13 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
     option(BUILD_TESTS ON)
 else()
     message(STATUS "This CHSM is NOT the top-level project.")
+    if(NOT DEFINED CMAKE_UTILS_INCLUDED)
+        list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_utils")
+        include(cmake_utils)
+    
+        set(DEBUG ON)
+        option(BUILD_TESTS ON)
+    endif()
 endif()
 
 ########################  Global settings  ############################ 
