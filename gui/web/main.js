@@ -4,8 +4,7 @@ import { state_machine } from './data.js';
 
 
 class App {
-	constructor(model)
-	{
+	constructor(model) {
 		this.model = new Model(state_machine);
 		this.gui = new Gui();
 		this.drawing = null;
@@ -23,7 +22,7 @@ class App {
 		this.file_name = '';
 		this.filepath = null;
 		this.is_opened_statemachine = null;
-		
+
 		this.model.states().map(s => this.render_state(s), this);
 		this.model.transitions().map(t => this.render_transiton(t), this);
 
@@ -31,7 +30,7 @@ class App {
 		this.main = document.querySelector('main');
 
 		this.title = document.querySelector('#title');
-		
+
 		this.body.addEventListener("keydown", event => {
 			if (!this.enable_keys) return;
 			if (event.isComposing || event.keyCode === 229) {
@@ -71,7 +70,7 @@ class App {
 
 		this.new_btn = document.querySelector('#btn-new');
 		this.new_btn.addEventListener('click', e => this.dispatch('NEW', e));
-		
+
 		this.new_btn = document.querySelector('#btn-new-window');
 		this.new_btn.addEventListener('click', e => this.dispatch('NEW_WINDOW', e));
 
@@ -86,12 +85,12 @@ class App {
 
 		this.codegen_btn = document.querySelector('#btn-codegen');
 		this.codegen_btn.addEventListener('click', e => this.dispatch('CODE_GEN', e));
-		
+
 		this.auto_save_cb = document.getElementById("cb-auto_save");
 
 		this.dark_mode_select = document.querySelector('#theme-selector');
 		this.dark_mode_select.addEventListener('change', e => {
-			if(this.dark_mode_select.value == true){
+			if (this.dark_mode_select.value == true) {
 				this.dispatch('DARK_MODE', e)
 			}
 		});
@@ -106,19 +105,50 @@ class App {
 		});
 
 		this.gui.svg.addEventListener('mousedown', event => {
-			if (event.ctrlKey)
-			{
+			if (event.ctrlKey) {
 				this.dispatch('DRAWING_CTRL_MDOWN', event);
 			}
-			else
-			{
+			else {
 				this.dispatch('DRAWING_MDOWN', event);
 			}
 		});
+		// -----------------------------------------------------------------------------
 
-		this.body.addEventListener('touchmove', event => {});
-		this.body.addEventListener('touchend', event => {});
-		this.gui.svg.addEventListener('touchstart', event => {});
+		let initialDistance = null;
+
+		window.addEventListener('touchstart', function (e) {
+			if (e.touches.length == 2) { // ensure two fingers are used
+				// calculate the distance between two fingers
+				initialDistance = getDistanceBetweenTouches(e);
+			}
+		}, false);
+
+		window.addEventListener('touchmove', function (e) {
+			if (e.touches.length == 2) { // ensure two fingers are used
+				// calculate the distance between two fingers
+				const distance = getDistanceBetweenTouches(e);
+				// calculate the zoom level (distance / initialDistance)
+				const zoom = distance / initialDistance;
+				// apply the zoom to the element
+				handleZoom(zoom);
+				// update initialDistance for the next move
+				initialDistance = distance;
+			}
+		}, false);
+
+		// helper function to calculate the distance between two fingers
+		function getDistanceBetweenTouches(e) {
+			const [touch1, touch2] = e.touches;
+			return Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+		}
+
+		// helper function to apply the zoom to the element
+		function handleZoom(zoom) {
+			const element = document.querySelector('#element-to-zoom');
+			element.style.transform = `scale(${zoom})`;
+		}
+
+		// -------------------------------------------------------------------------------------
 
 		this.inputElement = document.getElementById('input-to-update');
 		this.activeTextElement = null;
@@ -127,19 +157,19 @@ class App {
 
 		this.inputElement.addEventListener('keydown', function (event) {
 			if (event.key === 'Enter') {
-			  // Update the text element and hide the input
-			  if (this.activeTextElement) {
-				this.activeTextElement.textContent = this.inputElement.value;
-				this.activeTextElement = null;
-			  }
-			  this.inputElement.style.display = 'none';
+				// Update the text element and hide the input
+				if (this.activeTextElement) {
+					this.activeTextElement.textContent = this.inputElement.value;
+					this.activeTextElement = null;
+				}
+				this.inputElement.style.display = 'none';
 			}
-		  });
-	  
-		  // Hide the input when it loses focus
-		  this.inputElement.addEventListener('blur', function () {
+		});
+
+		// Hide the input when it loses focus
+		this.inputElement.addEventListener('blur', function () {
 			this.inputElement.style.display = 'none';
-		  });
+		});
 
 
 		this.gui.svg.addEventListener('click', event => {
@@ -147,16 +177,13 @@ class App {
 		});
 
 		this.gui.svg.addEventListener('wheel', event => {
-			if (event.ctrlKey)
-			{
+			if (event.ctrlKey) {
 				this.dispatch('DRAWING_CTRL_WHEEL', event);
 			}
-			else if (event.shiftKey)
-			{
+			else if (event.shiftKey) {
 				this.dispatch('DRAWING_SHIFT_WHEEL', event);
 			}
-			else
-			{
+			else {
 				this.dispatch('DRAWING_WHEEL', event);
 			}
 		});
@@ -166,8 +193,7 @@ class App {
 		eel.startup()
 	}
 
-	showInput(element) 
-	{
+	showInput(element) {
 		console.log("Enter into dblclick callback");
 		// Set input value to the current text and show the input
 		this.inputElement.value = element.textContent;
@@ -185,20 +211,18 @@ class App {
 		// Store a reference to the active text element
 		this.activeTextElement = element;
 	}
-	
-	get_state_text_elements() 
-	{
+
+	get_state_text_elements() {
 		const stateTitleElements = document.querySelectorAll('svg g .state_title, .state_text .function');
 		// const stateTitleElements = document.querySelectorAll('.state_drag_handle');
 		// Add the event listeners to each element
 		stateTitleElements.forEach((element) => {
 			// element.addEventListener('dblclick', this.showInput);
-			element.addEventListener('dblclick', e => function(){console.log({element});});
+			element.addEventListener('dblclick', e => function () { console.log({ element }); });
 		});
 	}
 
-	load_model(data, fname, fpath)
-	{
+	load_model(data, fname, fpath) {
 		this.gui.clear();
 
 		this.model = new Model(JSON.parse(data));
@@ -211,22 +235,20 @@ class App {
 		this.filepath = fpath;
 		this.title.textContent = this.file_name;
 		document.title = this.file_name;
-		
+
 		this.prop_editor = {
 			obj_id: null,
 			obj_type: null
 		};
 	}
 
-	push_transition_changes_to_gui()
-	{
+	push_transition_changes_to_gui() {
 		this.model.changes.trans_new.map(d => this.render_transiton(...d), this);
 
-		this.model.changes.trans_redraw.map(d =>
-			{
-				const [tr_id, tr] = d;
-				this.gui.redraw_path_with_arrow(tr_id, tr.vertices, tr.label, tr.label_pos);
-			}, this);
+		this.model.changes.trans_redraw.map(d => {
+			const [tr_id, tr] = d;
+			this.gui.redraw_path_with_arrow(tr_id, tr.vertices, tr.label, tr.label_pos);
+		}, this);
 
 		this.model.changes.trans_set_label.map(d => this.gui.paths[d[0]].set_label(this.model.chop_text(d[1].label)), this);
 
@@ -235,8 +257,7 @@ class App {
 		this.model.changes.trans_set_label_pos.map(d => this.gui.paths[d[0]].set_label_pos(d[1]), this);
 	}
 
-	push_state_changes_to_gui()
-	{
+	push_state_changes_to_gui() {
 		this.model.changes.state_new.map(d => this.render_state(...d), this);
 		this.model.changes.state_del.map(d => this.gui.delete_state(d[0]), this);
 		this.model.changes.state_move.map(d => this.gui.states[d[0]].move(d[1].pos), this);
@@ -245,35 +266,30 @@ class App {
 		this.model.changes.state_set_title.map(d => this.gui.states[d[0]].set_title(d[1].title), this);
 	}
 
-	push_model_changes_to_gui()
-	{
+	push_model_changes_to_gui() {
 		this.push_transition_changes_to_gui();
 		this.push_state_changes_to_gui();
 
 		this.model.ack_changes();
 	}
 
-	dispatch(event, data)
-	{
+	dispatch(event, data) {
 		const start_state = this.state;
 
 		this.state(event, data);
 
 		this.push_model_changes_to_gui();
 
-		if ((this.state === this.idle_state) && (this.state !== start_state))
-		{
+		if ((this.state === this.idle_state) && (this.state !== start_state)) {
 			this.save_state();
 		}
 	}
 
-	undo()
-	{
+	undo() {
 		const view = this.model.undo();
 		this.gui.clear();
-		
-		if (view !== null)
-		{
+
+		if (view !== null) {
 			this.gui.set_view(view);
 		}
 
@@ -281,13 +297,11 @@ class App {
 		this.model.transitions().map(t => this.render_transiton(t), this);
 	}
 
-	redo()
-	{
+	redo() {
 		const view = this.model.redo();
 		this.gui.clear();
 
-		if (view !== null)
-		{
+		if (view !== null) {
 			this.gui.set_view(view);
 		}
 
@@ -295,43 +309,38 @@ class App {
 		this.model.transitions().map(t => this.render_transiton(t), this);
 	}
 
-	save_state()
-	{
-		if (this.model.save_state(this.gui.get_view()))
-		{
+	save_state() {
+		if (this.model.save_state(this.gui.get_view())) {
 			this.title.textContent = '*' + this.file_name;
 		}
 	}
 
-	idle_state(event, data)
-	{
+	idle_state(event, data) {
 		//console.log('idle', event);
-		switch(event)
-		{
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'KeyS':
-						if(data.ctrlKey){
+						if (data.ctrlKey) {
 							data.stopPropagation();
 							data.preventDefault();
 							this.model.set_view(this.gui.get_view());
 							eel.save_state_machine(this.main.innerHTML, this.model.get_data_string(), this.filepath);
 						}
-						else{
+						else {
 							this.create_state(this.mouse_pos);
 							this.save_state();
 						}
 						break;
-						
-						case 'KeyG':
-							if(data.ctrlKey){
-								data.stopPropagation();
-								data.preventDefault();
-								this.model.set_view(this.gui.get_view());
-								eel.save_state_machine(this.main.innerHTML, this.model.get_data_string(), this.filepath);
-								eel.genereate_code();
-							}
+
+					case 'KeyG':
+						if (data.ctrlKey) {
+							data.stopPropagation();
+							data.preventDefault();
+							this.model.set_view(this.gui.get_view());
+							eel.save_state_machine(this.main.innerHTML, this.model.get_data_string(), this.filepath);
+							eel.genereate_code();
+						}
 						break;
 
 					case 'KeyI':
@@ -348,30 +357,28 @@ class App {
 						data.preventDefault();
 						this.toggle_sidebar();
 						break;
-						
+
 					case 'KeyD':
 					case 'Delete':
 						this.clear_sidebar();
 						this.start_delete_state_or_transition();
-                        this.state = this.delete_st_or_tr_state;
+						this.state = this.delete_st_or_tr_state;
 						this.model.transitions().map(t => this.gui.redraw_path_change_line_color(t, true));
 						break;
-				
+
 
 					case 'KeyZ':
-						if (data.ctrlKey)
-						{
+						if (data.ctrlKey) {
 							this.undo();
 						}
 						break;
 
 					case 'KeyY':
-						if (data.ctrlKey)
-						{
+						if (data.ctrlKey) {
 							this.redo();
 						}
 						break;
-	
+
 
 					case 'KeyU':
 						this.undo();
@@ -467,8 +474,7 @@ class App {
 
 			case 'STATE_HEADER_CLICK':
 				data.event.stopPropagation();
-				if (!this.model.selection.has(data.id))
-				{
+				if (!this.model.selection.has(data.id)) {
 					this.dim_object();
 				}
 				this.drop_selection();
@@ -522,12 +528,10 @@ class App {
 					data.stopPropagation();
 					data.preventDefault();
 					const p = this.gui.get_absolute_pos(data);
-					if (data.deltaY < 0)
-					{
+					if (data.deltaY < 0) {
 						this.gui.zoom_in(p);
 					}
-					else
-					{
+					else {
 						this.gui.zoom_out(p);
 					}
 				}
@@ -537,12 +541,10 @@ class App {
 				{
 					data.stopPropagation();
 					data.preventDefault();
-					if (data.deltaY < 0)
-					{
+					if (data.deltaY < 0) {
 						this.gui.pan_up();
 					}
-					else
-					{
+					else {
 						this.gui.pan_down();
 					}
 				}
@@ -552,12 +554,10 @@ class App {
 				{
 					data.stopPropagation();
 					data.preventDefault();
-					if (data.deltaY < 0)
-					{
+					if (data.deltaY < 0) {
 						this.gui.pan_right();
 					}
-					else
-					{
+					else {
 						this.gui.pan_left();
 					}
 				}
@@ -571,7 +571,7 @@ class App {
 			case 'NEW':
 				eel.create_project();
 				break;
-			
+
 			case 'NEW_WINDOW':
 				eel.open_window();
 				break;
@@ -585,7 +585,7 @@ class App {
 				this.model.set_view(this.gui.get_view());
 				eel.save_state_machine(this.main.innerHTML, this.model.get_data_string(), this.filepath);
 				break;
-			
+
 			case 'AUTO_SAVE':
 				this.model.set_view(this.gui.get_view());
 				eel.save_state_machine(this.main.innerHTML, this.model.get_data_string(), this.filepath);
@@ -603,8 +603,7 @@ class App {
 
 			case 'EXIT':
 				window.close();
-				if(this.is_opened_statemachine)
-				{
+				if (this.is_opened_statemachine) {
 					this.model.set_view(this.gui.get_view());
 					eel.save_state_machine(this.main.innerHTML, this.model.get_data_string(), this.filepath);
 				}
@@ -624,8 +623,7 @@ class App {
 		}
 	}
 
-	clear_sidebar()
-	{
+	clear_sidebar() {
 		this.dim_object();
 		this.cache_text_changes();
 		this.clear_text_inputs();
@@ -633,20 +631,16 @@ class App {
 		this.prop_editor.obj_type = null;
 	}
 
-	toggle_sidebar()
-	{
+	toggle_sidebar() {
 		this.sidebar.hidden = !this.sidebar.hidden;
 		this.sidebar_handle_text.textContent = this.sidebar.hidden ? '>' : '<';
 	}
 
-	sidebar_resizing_state(event, data)
-	{
+	sidebar_resizing_state(event, data) {
 		//console.log('resize', event);
-		switch(event)
-		{
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.gui.set_cursor('auto');
 						this.state = this.idle_state;
@@ -657,8 +651,7 @@ class App {
 			case 'MOUSEMOVE':
 				data.preventDefault();
 				data.stopPropagation();
-				if (!this.sidebar.hidden)
-				{
+				if (!this.sidebar.hidden) {
 					this.sidebar.style.flex = `0 0 ${(data.x - this.sidebar.getBoundingClientRect().left - 10)}px`;
 				}
 				break
@@ -670,93 +663,75 @@ class App {
 		}
 	}
 
-	highlight_state(state_id)
-	{
+	highlight_state(state_id) {
 		this.gui.states[state_id].add_border_class('state_border_highlight');
 	}
 
-	dim_state(state_id)
-	{
+	dim_state(state_id) {
 		this.gui.states[state_id].remove_border_class('state_border_highlight');
 	}
 
-	drop_selection()
-	{
-		for (let state_id of this.model.selection)
-		{
+	drop_selection() {
+		for (let state_id of this.model.selection) {
 			this.dim_state(state_id);
 		}
 		this.model.drop_selection();
 	}
 
-	select_state(state_id)
-	{
-		for (let state_id of this.model.selection)
-		{
+	select_state(state_id) {
+		for (let state_id of this.model.selection) {
 			this.dim_state(state_id);
 		}
 
 		this.model.select_state(state_id);
 
-		for (let state_id of this.model.selection)
-		{
+		for (let state_id of this.model.selection) {
 			this.highlight_state(state_id);
 		}
 	}
 
-	highlight_object()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	highlight_object() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		if (obj_type === 'state')
-		{
+		if (obj_type === 'state') {
 			this.highlight_state(obj_id);
 			this.sidebar.style.background = '(--color-bg-highlight))';
 		}
-		else if (obj_type === 'transition')
-		{
+		else if (obj_type === 'transition') {
 			this.gui.paths[obj_id].add_handle_class('transition_handle_highlight_edit');
 			this.sidebar.style.background = '(--color-bg-highlight))';
 		}
 	}
 
-	dim_object()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	dim_object() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		if ((obj_type === 'state') && (obj_id in this.gui.states))
-		{
+		if ((obj_type === 'state') && (obj_id in this.gui.states)) {
 			this.dim_state(obj_id);
 		}
-		else if ((obj_type === 'transition') && (obj_id in this.gui.paths))
-		{
+		else if ((obj_type === 'transition') && (obj_id in this.gui.paths)) {
 			this.gui.paths[obj_id].remove_handle_class('transition_handle_highlight_edit');
 		}
-		
+
 		this.sidebar.style.background = '(--color-bg))';
 	}
 
-	reset_title()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	reset_title() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		if (obj_type === 'state')
-		{
+		if (obj_type === 'state') {
 			const text = this.model.reset_state_title(obj_id);
 			this.title_input.value = text.title;
 		}
-		else if (obj_type === 'transition')
-		{
+		else if (obj_type === 'transition') {
 			this.title_input.value = this.model.reset_transition_label(obj_id);
 		}
 	}
 
-	apply_title()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	apply_title() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		switch (obj_type)
-		{
+		switch (obj_type) {
 			case 'state':
 				this.model.apply_state_title(obj_id, this.title_input.value);
 				break;
@@ -767,37 +742,31 @@ class App {
 		}
 	}
 
-	reset_text()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	reset_text() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		if (obj_type === 'state')
-		{
+		if (obj_type === 'state') {
 			const text = this.model.reset_state_text(obj_id);
 			this.text_area.value = text.text;
 		}
 	}
 
-	apply_text()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	apply_text() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		switch (obj_type)
-		{
+		switch (obj_type) {
 			case 'state':
 				this.model.apply_state_text(obj_id, this.text_area.value);
 				break;
 		}
 	}
 
-	cache_text_changes()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	cache_text_changes() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		switch (obj_type)
-		{
+		switch (obj_type) {
 			case 'state':
-				const state_text = {title: this.title_input.value, text: this.text_area.value};
+				const state_text = { title: this.title_input.value, text: this.text_area.value };
 				this.model.cache_state_text(obj_id, state_text);
 				break;
 
@@ -811,8 +780,7 @@ class App {
 		}
 	}
 
-	show_state_text(state_id)
-	{
+	show_state_text(state_id) {
 		const text = this.model.get_state_text(state_id);
 
 		this.title_input.disabled = false;
@@ -821,36 +789,31 @@ class App {
 		this.text_area.value = text.text;
 	}
 
-	show_transition_text(tr_id)
-	{
+	show_transition_text(tr_id) {
 		this.title_input.disabled = false;
 		this.title_input.value = this.model.get_transition_text(tr_id);
 		this.text_area.value = '';
 		this.text_area.disabled = true;
 	}
 
-	show_note_text(obj_id)
-	{
+	show_note_text(obj_id) {
 		this.title_input.disabled = true;
 		this.title_input.value = obj_id;
 		this.text_area.disabled = false;
 		this.text_area.value = this.model.get_note_text(obj_id);
 	}
 
-	clear_text_inputs()
-	{
+	clear_text_inputs() {
 		this.title_input.disabled = false;
 		this.title_input.value = '';
 		this.text_area.disabled = false;
 		this.text_area.value = '';
 	}
 
-	show_obj_text()
-	{
-		const {obj_id, obj_type} = this.prop_editor;
+	show_obj_text() {
+		const { obj_id, obj_type } = this.prop_editor;
 
-		switch (obj_type)
-		{
+		switch (obj_type) {
 			case 'state':
 				this.show_state_text(obj_id);
 				break;
@@ -865,23 +828,18 @@ class App {
 		}
 	}
 
-	start_transition()
-	{
-		this.gui.set_cursor('crosshair');
-	}
-	
-	start_delete_state_or_transition()
-	{
+	start_transition() {
 		this.gui.set_cursor('crosshair');
 	}
 
-	select_tr_start_state(event, data)
-	{
-		switch(event)
-		{
+	start_delete_state_or_transition() {
+		this.gui.set_cursor('crosshair');
+	}
+
+	select_tr_start_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.gui.set_cursor('auto');
 						this.state = this.idle_state;
@@ -893,8 +851,7 @@ class App {
 				data.event.stopPropagation();
 				const pos = this.gui.get_state_rel_pos(data.event, data.id);
 				const tr_id = this.model.set_transition_start(data.id, pos);
-				if (tr_id !== '')
-				{
+				if (tr_id !== '') {
 					this.tr_draw_data.trans_id = tr_id;
 					this.render_transiton(tr_id);
 					this.state = this.transition_drawing_state;
@@ -903,20 +860,17 @@ class App {
 				break;
 		}
 	}
-	
-	delete_st_or_tr_state(event, data)
-	{
-		switch(event)
-		{
+
+	delete_st_or_tr_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.leave_delete_state();
 						break;
 				}
 				break;
-			
+
 			case 'TR_M_DOWN':								//deleting a transition
 				this.model.delete_transition(data.id);
 				this.leave_delete_state();
@@ -937,20 +891,16 @@ class App {
 		}
 	}
 
-	leave_delete_state()
-	{
+	leave_delete_state() {
 		this.gui.set_cursor('auto');
 		this.state = this.idle_state;
 		this.model.transitions().map(t => this.gui.redraw_path_change_line_color(t, false));
 	}
 
-	transition_drawing_state(event, data)
-	{
-		switch(event)
-		{
+	transition_drawing_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.model.delete_transition(this.tr_draw_data.trans_id);
 						this.gui.set_cursor('auto');
@@ -975,12 +925,11 @@ class App {
 			case 'CLICK':
 				this.model.add_transition_vertex(this.tr_draw_data.trans_id);
 				break;
-			
+
 			case 'STATE_BORDER_CLICK':
 				data.event.stopPropagation();
 				const pos = this.gui.get_state_rel_pos(data.event, data.id);
-				if (this.model.set_transition_end(this.tr_draw_data.trans_id, data.id, pos))
-				{
+				if (this.model.set_transition_end(this.tr_draw_data.trans_id, data.id, pos)) {
 					this.gui.set_cursor('auto');
 					this.state = this.idle_state;
 					this.gui.paths[this.tr_draw_data.trans_id].remove_handle_class('transition_handle_highlight_draw');
@@ -989,13 +938,10 @@ class App {
 		}
 	}
 
-	transition_dragging_state(event, data)
-	{
-		switch(event)
-		{
+	transition_dragging_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.gui.set_cursor('auto');
 						this.state = this.idle_state;
@@ -1014,13 +960,10 @@ class App {
 		}
 	}
 
-	transition_label_dragging_state(event, data)
-	{
-		switch(event)
-		{
+	transition_label_dragging_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.gui.set_cursor('auto');
 						this.state = this.idle_state;
@@ -1039,13 +982,10 @@ class App {
 		}
 	}
 
-	state_resizing_state(event, data)
-	{
-		switch(event)
-		{
+	state_resizing_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.gui.set_cursor('auto');
 						this.state = this.idle_state;
@@ -1064,20 +1004,17 @@ class App {
 		}
 	}
 
-	state_dragging_state(event, data)
-	{
-		switch(event)
-		{
+	state_dragging_state(event, data) {
+		switch (event) {
 			case 'KEYDOWN':
-				switch(data.code)
-				{
+				switch (data.code) {
 					case 'Escape':
 						this.gui.set_cursor('auto');
 						this.state = this.idle_state;
 						break;
 				}
 				break;
-				
+
 			case 'MOUSEMOVE':
 				this.state_drag(data);
 				break
@@ -1089,113 +1026,98 @@ class App {
 		}
 	}
 
-	set_state_text(state_id, text)
-	{
+	set_state_text(state_id, text) {
 		this.model.set_state_text(state_id, text);
 		this.push_model_changes_to_gui();
 	}
 
-	create_state(pos)
-	{
+	create_state(pos) {
 		this.model.make_new_state(pos);
 	}
 
-	create_initial_state(pos)
-	{
+	create_initial_state(pos) {
 		this.model.make_new_initial_state(pos);
 	}
 
-	state_drag_start(evt, state_id, drag_substates)
-	{
+	state_drag_start(evt, state_id, drag_substates) {
 		evt.preventDefault();
 		const [ex, ey] = this.gui.get_absolute_pos(evt);
 		const [sx, sy] = this.model.get_state(state_id).pos;
-		this.drag_data.offset = [ex-sx, ey-sy];
+		this.drag_data.offset = [ex - sx, ey - sy];
 		this.drag_data.state_id = state_id;
 		this.drag_data.drag_substates = drag_substates;
 	}
-	
-	state_resize_start(evt, state_id)
-	{
+
+	state_resize_start(evt, state_id) {
 		evt.preventDefault();
 
 		this.resize_data.transitions = this.model.state_transitions(state_id);
 		this.resize_data.state_id = state_id;
 	}
-	
-	state_resize(evt)
-	{
+
+	state_resize(evt) {
 		evt.preventDefault();
 		const state_id = this.resize_data.state_id;
 		const size = this.gui.get_state_rel_pos(evt, state_id);
 		this.model.resize_state(state_id, size);
 	}
 
-	state_resize_end(evt)
-	{
+	state_resize_end(evt) {
 		evt.preventDefault();
 	}
 
-	state_drag(evt)
-	{
+	state_drag(evt) {
 		evt.preventDefault();
 		const [ex, ey] = this.gui.get_absolute_pos(evt);
 		const [ox, oy] = this.drag_data.offset;
-		const pos = [ex-ox, ey-oy];
+		const pos = [ex - ox, ey - oy];
 		const state_id = this.drag_data.state_id;
 		this.model.move_state(state_id, pos, this.drag_data.drag_substates);
 	}
 
-	state_drag_end(evt)
-	{
+	state_drag_end(evt) {
 		evt.preventDefault();
 		this.model.update_parents();
 	}
 
-	render_state(state_id, state_data=null)
-	{
+	render_state(state_id, state_data = null) {
 		const state = state_data !== null ? state_data : this.model.get_state(state_id);
 
 		const params = {
-			id: 					state_id,
-			title: 					state.title,
-			pos: 					state.pos,
-			size:					state.size,
-			strings:				state.text.map(this.model.chop_text, this.model),
-			type:					state.type,
-			text_height:			this.model.options.text_height,
-			on_header_mouse_down:	evt => {
-				if (evt.shiftKey)
-				{
-					this.dispatch('STATE_HEADER_SHIFT_M_DOWN', {event: evt, id: state_id});
+			id: state_id,
+			title: state.title,
+			pos: state.pos,
+			size: state.size,
+			strings: state.text.map(this.model.chop_text, this.model),
+			type: state.type,
+			text_height: this.model.options.text_height,
+			on_header_mouse_down: evt => {
+				if (evt.shiftKey) {
+					this.dispatch('STATE_HEADER_SHIFT_M_DOWN', { event: evt, id: state_id });
 				}
-				else
-				{
-					this.dispatch('STATE_HEADER_M_DOWN', {event: evt, id: state_id});
+				else {
+					this.dispatch('STATE_HEADER_M_DOWN', { event: evt, id: state_id });
 				}
 			},
-			on_header_click:		evt => {
-				if (evt.ctrlKey)
-				{
-					this.dispatch('STATE_HEADER_CTRL_CLICK', {event: evt, id: state_id})
+			on_header_click: evt => {
+				if (evt.ctrlKey) {
+					this.dispatch('STATE_HEADER_CTRL_CLICK', { event: evt, id: state_id })
 				}
-				else
-				{
-					this.dispatch('STATE_HEADER_CLICK', {event: evt, id: state_id})
+				else {
+					this.dispatch('STATE_HEADER_CLICK', { event: evt, id: state_id })
 				}
 			},
-			on_corner_mouse_down:	evt => this.dispatch('STATE_RESIZE', {event: evt, id: state_id}),
-			on_border_click:		evt => this.dispatch('STATE_BORDER_CLICK', {event: evt, id: state_id}),
-			on_header_mouse_over:	evt => this.dispatch('STATE_HEADER_M_OVER', {event: evt, id: state_id}),
-			on_header_mouse_leave:	evt => this.dispatch('STATE_HEADER_M_LEAVE', {event: evt, id: state_id}),
-			on_txt_click:			evt => this.dispatch('TXT_CLICK', {event: evt}),
+			on_corner_mouse_down: evt => this.dispatch('STATE_RESIZE', { event: evt, id: state_id }),
+			on_border_click: evt => this.dispatch('STATE_BORDER_CLICK', { event: evt, id: state_id }),
+			on_header_mouse_over: evt => this.dispatch('STATE_HEADER_M_OVER', { event: evt, id: state_id }),
+			on_header_mouse_leave: evt => this.dispatch('STATE_HEADER_M_LEAVE', { event: evt, id: state_id }),
+			on_txt_click: evt => this.dispatch('TXT_CLICK', { event: evt }),
 		};
 
 		this.gui.render_state(params);
 	}
 
-	trans_drag_start(evt, trans_id)
-	{
+	trans_drag_start(evt, trans_id) {
 		evt.preventDefault();
 
 		const p = this.gui.get_absolute_pos(evt);
@@ -1208,16 +1130,14 @@ class App {
 		this.gui.set_cursor('grab');
 	}
 
-	trans_split(evt, trans_id)
-	{
+	trans_split(evt, trans_id) {
 		evt.preventDefault();
 
 		const p = this.gui.get_absolute_pos(evt);
 		this.model.transition_split(trans_id, p);
 	}
 
-	trans_drag(evt)
-	{
+	trans_drag(evt) {
 		evt.preventDefault();
 
 		const p = this.gui.get_absolute_pos(evt);
@@ -1226,72 +1146,65 @@ class App {
 		this.model.transition_drag(trans_id, line, p, this.drag_data.label_width);
 	}
 
-	trans_drag_end(evt)
-	{
+	trans_drag_end(evt) {
 		evt.preventDefault();
 		this.model.simplify_tr_path(this.drag_data.trans_id);
 		this.gui.paths[this.drag_data.trans_id].remove_handle_class('transition_handle_highlight_drag');
 		this.gui.set_cursor('auto');
 	}
 
-	trans_label_drag_start(evt, trans_id)
-	{
+	trans_label_drag_start(evt, trans_id) {
 		evt.preventDefault();
 
 		const [ex, ey] = this.gui.get_absolute_pos(evt);
 		const [sx, sy] = this.model.get_transition(trans_id).label_pos;
-		this.drag_data.offset = [ex-sx, ey-sy];
+		this.drag_data.offset = [ex - sx, ey - sy];
 		this.drag_data.trans_id = trans_id;
 		this.gui.set_cursor('grab');
 	}
 
-	trans_label_drag(evt)
-	{
+	trans_label_drag(evt) {
 		evt.preventDefault();
 		const [ex, ey] = this.gui.get_absolute_pos(evt);
 		const [ox, oy] = this.drag_data.offset;
-		const pos = [ex-ox, ey-oy];
+		const pos = [ex - ox, ey - oy];
 
 		const trans_id = this.drag_data.trans_id;
 		this.model.transition_label_drag(trans_id, pos);
 	}
 
-	trans_label_drag_end(evt)
-	{
+	trans_label_drag_end(evt) {
 		evt.preventDefault();
 		this.gui.set_cursor('auto');
 	}
 
-	render_transiton(trans_id, tr_data=null)
-	{
+	render_transiton(trans_id, tr_data = null) {
 		const tr = tr_data !== null ? tr_data : this.model.get_transition(trans_id);
 
 		const params = {
-			id:			trans_id,
-			vertices:	tr.vertices,
-			label:		this.model.chop_text(tr.label),
-			label_pos:	tr.label_pos,
-			on_mousedown:	evt => this.dispatch('TR_M_DOWN', {event: evt, id: trans_id}),
-			on_dblclick:	evt => this.dispatch('TR_DBLCLICK', {event: evt, id: trans_id}),
-			on_click:		evt => {
-										if (evt.shiftKey)
-										{
-											this.dispatch('TR_SHIFT_CLICK', {event: evt, id: trans_id});
-										}
-										else
-										{
-											this.dispatch('TR_CLICK', {event: evt, id: trans_id});
-										}
-									},
-			on_label_mousedown: evt => this.dispatch('TR_LABEL_M_DOWN', {event: evt, id: trans_id}),
-			on_txt_click:		evt => this.dispatch('TXT_CLICK', {event: evt})
+			id: trans_id,
+			vertices: tr.vertices,
+			label: this.model.chop_text(tr.label),
+			label_pos: tr.label_pos,
+			on_mousedown: evt => this.dispatch('TR_M_DOWN', { event: evt, id: trans_id }),
+			on_dblclick: evt => this.dispatch('TR_DBLCLICK', { event: evt, id: trans_id }),
+			on_click: evt => {
+				if (evt.shiftKey) {
+					this.dispatch('TR_SHIFT_CLICK', { event: evt, id: trans_id });
+				}
+				else {
+					this.dispatch('TR_CLICK', { event: evt, id: trans_id });
+				}
+			},
+			on_label_mousedown: evt => this.dispatch('TR_LABEL_M_DOWN', { event: evt, id: trans_id }),
+			on_txt_click: evt => this.dispatch('TXT_CLICK', { event: evt })
 		};
 
 		this.gui.render_transition(params);
 	}
 }
 
-window.addEventListener('DOMContentLoaded', event => {window.app = new App(state_machine)});
+window.addEventListener('DOMContentLoaded', event => { window.app = new App(state_machine) });
 
 eel.expose(load_json); // Expose this function to Python
 function load_json(data, filename, filepath) {
@@ -1300,7 +1213,6 @@ function load_json(data, filename, filepath) {
 }
 
 eel.expose(send_event);
-function send_event(event, data)
-{
+function send_event(event, data) {
 	window.app.dispatch(event, data);
 }

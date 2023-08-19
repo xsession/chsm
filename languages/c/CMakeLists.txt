@@ -7,10 +7,19 @@ DESCRIPTION "CHSM - Hierarchical State Machine (HSM) Framework for C The project
 
 ########################  External .cmake files includes  ############################ 
 
-include(cmake_utils/cmake_utils.cmake)
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
+    message(STATUS "This CHSM is the top-level project.")
+
+    list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_utils")
+    include(cmake_utils)
+
+    set(DEBUG ON)
+    option(BUILD_TESTS ON)
+else()
+    message(STATUS "This CHSM is NOT the top-level project.")
+endif()
 
 ########################  Global settings  ############################ 
-set(DEBUG ON)
 option(CHSM_BUILD_TESTS ON)
 set(OUTSIDE_PYTHON_PATH ${$ENV{PYTHON_PATH}})
 
