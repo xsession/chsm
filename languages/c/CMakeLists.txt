@@ -1,3 +1,8 @@
+if(NOT TARGET crf AND DEFINED CHSM_INCLUDED)
+    message(STATUS "crf not exists.")
+    unset(CHSM_INCLUDED CACHE)
+endif()
+
 if(NOT DEFINED CHSM_INCLUDED)
 
 cmake_minimum_required(VERSION 3.19)
@@ -56,6 +61,7 @@ endif()
 add_subdirectory(modules)
 add_subdirectory(c_rf)
     
-set(CHSM_INCLUDED TRUE)
+set(CHSM_INCLUDED TRUE CACHE INTERNAL "Set CHSM_INCLUDED flag which is a sign that ones is already included.")
 
 endif()
+
