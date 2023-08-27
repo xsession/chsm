@@ -15,13 +15,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/dark_mode_js/default_dark.js"></script>
-        <script src="_static/dark_mode_js/theme_switcher.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=58f5e731"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js?v=a2af87b2"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -91,7 +91,7 @@
            <div itemprop="articleBody">
              
   <section id="chsm">
-<h1>CHSM<a class="headerlink" href="#chsm" title="Permalink to this heading"></a></h1>
+<h1>CHSM<a class="headerlink" href="#chsm" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -104,7 +104,7 @@
 <a class="reference external image-reference" href="https://github.com/xsession/chsm/actions"><img alt="Actions Status" src="https://github.com/xsession/chsm/workflows/chsm_crf_ci/badge.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/xsession/chsm/actions"><img alt="Actions Status" src="https://github.com/xsession/chsm/workflows/chsm_modules_ci/badge.svg" /></a>
 <section id="chsm-hierarchical-state-machine-hsm-framework-for-c">
-<h2>CHSM - Hierarchical State Machine (HSM) Framework for C<a class="headerlink" href="#chsm-hierarchical-state-machine-hsm-framework-for-c" title="Permalink to this heading"></a></h2>
+<h2>CHSM - Hierarchical State Machine (HSM) Framework for C<a class="headerlink" href="#chsm-hierarchical-state-machine-hsm-framework-for-c" title="Link to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">warning<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>Experimental code, expect breaking changes.</strong></p>
@@ -135,9 +135,9 @@
 <li><p>Unit tests (using the Unity framework).</p></li>
 </ul>
 <section id="dependencies">
-<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h3>
 <section id="of-the-gui-and-code-generation">
-<h4>Of the GUI and code generation<a class="headerlink" href="#of-the-gui-and-code-generation" title="Permalink to this heading"></a></h4>
+<h4>Of the GUI and code generation<a class="headerlink" href="#of-the-gui-and-code-generation" title="Link to this heading"></a></h4>
 <p>#. Chrome. Theoretically other browsers can be used, but only Chrome was tested.
 #.</p>
 <blockquote>
@@ -152,7 +152,7 @@ The following packages are required:</p>
 </div></blockquote>
 </section>
 <section id="of-the-c-unit-tests">
-<h4>Of the C unit tests<a class="headerlink" href="#of-the-c-unit-tests" title="Permalink to this heading"></a></h4>
+<h4>Of the C unit tests<a class="headerlink" href="#of-the-c-unit-tests" title="Link to this heading"></a></h4>
 <p>The C code uses the Unity unit testing framework for running the tests. The
 CMake script that builds the tests assumes that the Unity and the CHSM repos
 are in the same directory.</p>
@@ -160,7 +160,7 @@ are in the same directory.</p>
 </section>
 </section>
 <section id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h3>
+<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Clone the repo</p></li>
 <li><p>Checkout the <strong>master</strong> branch</p></li>
@@ -170,23 +170,23 @@ are in the same directory.</p>
 <p>The result should be a new window with a simple state machine already in it.</p>
 </section>
 <section id="compile-modules">
-<h3>Compile modules<a class="headerlink" href="#compile-modules" title="Permalink to this heading"></a></h3>
+<h3>Compile modules<a class="headerlink" href="#compile-modules" title="Link to this heading"></a></h3>
 <section id="to-run-one-individual-test-build-and-run-it">
-<h4>To run one individual test, build and run it<a class="headerlink" href="#to-run-one-individual-test-build-and-run-it" title="Permalink to this heading"></a></h4>
+<h4>To run one individual test, build and run it<a class="headerlink" href="#to-run-one-individual-test-build-and-run-it" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">build</span>
 <span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">-</span><span class="n">t</span> <span class="n">lm73_test</span><span class="p">;</span> <span class="n">ctest</span> <span class="o">-</span><span class="n">VV</span> <span class="o">-</span><span class="n">R</span> <span class="n">lm73_test</span>
 </pre></div>
 </div>
 </section>
 <section id="build-and-run-all-tests-with-one-command">
-<h4>Build and run all tests with one command<a class="headerlink" href="#build-and-run-all-tests-with-one-command" title="Permalink to this heading"></a></h4>
+<h4>Build and run all tests with one command<a class="headerlink" href="#build-and-run-all-tests-with-one-command" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">build</span>
 <span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">-</span><span class="n">t</span> <span class="p">;</span> <span class="n">ctest</span> <span class="o">-</span><span class="n">VV</span> <span class="o">-</span><span class="n">R</span>
 </pre></div>
 </div>
 </section>
 <section id="to-listout-all-target">
-<h4>To listout all target<a class="headerlink" href="#to-listout-all-target" title="Permalink to this heading"></a></h4>
+<h4>To listout all target<a class="headerlink" href="#to-listout-all-target" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">build</span>
 <span class="n">make</span> <span class="n">help</span>
 </pre></div>
