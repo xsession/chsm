@@ -5,6 +5,7 @@ from datetime import datetime
 from .ast import Func, If, Switch, Case, Call, Break, Return, Blank, Expr, Ast, FuncDeclaration, Include, Ifndef, Define, Endif, Comment, Decl, Assignment, Enum
 import pprint
 from copy import deepcopy
+from .parser import Parser, ParserException
 
 # TODO: make sure, that there is only one exit function and it has no parameters
 
@@ -17,8 +18,10 @@ from copy import deepcopy
 #   [guard()]
 EVENT_PATTERN = r'^(\s*(?P<signal>\w+)\s*)*(\[(?P<guard>\w+)\((?P<gparams>[\w,\s]*)\)\])*(\s*/\s*(?P<function>\w+)(?P<parens>\((?P<fparams>[\w,\s]*)\))*\s*)*'
 
+VERSION_STRING = 'Generated with CHSM v0.0.2'
+
 class StateMachine:
-    def __init__(self, data, h_file, funcs_h_file, templates, file_config,):
+    def __init__(self, data, h_file, funcs_h_file, templates, file_config):
         self.templates = templates
         self.file_config = file_config
         self.machine_h = h_file.name
@@ -35,8 +38,8 @@ class StateMachine:
         self.add_parent_signals(self.states)
         self.process_transitions(self.states)               # Calculate transition exit and entry paths and the exact end state
 
-        # with open("states.txt", 'w') as f:
-        #     pprint.pprint(self.states, f, indent=4)
+        with open("states.txt", 'w') as f:
+            pprint.pprint(self.states, f, indent=4)
         
         self.delete_non_leaf_states(self.states)
 
@@ -66,6 +69,7 @@ class StateMachine:
         with open(hpath, 'r') as h_file:
             h_data = h_file.read()
 
+            logging.info(f'Top func template: {self.templates["top_state_name"]}')
             m = re.search(self.templates['top_state_name'], h_data)
             if m:
                 top_func = m.group('top_func')
@@ -83,7 +87,7 @@ class StateMachine:
         ast.nodes.append(Define(symbol))
         ast.nodes.append(Blank())
 
-        ast.nodes.append(Comment(f'Generated with CHSM v0.0.0 at {datetime.strftime(datetime.now(), "%Y.%m.%d %H.%M.%S")}'))
+        ast.nodes.append(Comment(VERSION_STRING))
         ast.nodes.append(Blank())
         ast.nodes.append(Blank())
 
@@ -219,6 +223,10 @@ class StateMachine:
 
             parent_id = states[parent_id]['parent']
     
+
+
+
+
     def str_to_signal(self, line, target=None, target_title=None, initial=False, lca=None):
         signal = None
         guard = None
@@ -320,9 +328,20 @@ class StateMachine:
             if s_id.startswith('state_'):
                 state['num'] = int(re.findall(r'\d+', s_id)[0])
 
-            for line in s['text']:
-                s = self.str_to_signal(line)
-                self.add_signal_to_state(state, s)
+            txt = '\n'.join(s['text'])
+            p = Parser()
+            try:
+                sigs = p.parse(txt)
+            except ParserException as e:
+                logging.info(f'Exception {str(e)} in state "{s["title"]}". Text:\n{txt}')
+
+            for sig in sigs:
+                self.add_signal_to_state(state, sig)
+
+            self.user_inc_funcs.update(p.funcs_w_args)
+            self.user_funcs.update(p.funcs_wo_args)
+            self.user_signals.update(p.user_signals)
+            self.user_guards.update(p.guards_wo_args)
 
             states[s_id] = state
 
@@ -359,15 +378,26 @@ class StateMachine:
             else:
                 lca = None
 
+            p = Parser()
+
             if states[start]['type'] == 'initial':
                 start = states[start]['parent']
                 states[start]['initial'] = target
 
-                signal = self.str_to_signal(label, target=target, target_title=states[target]['title'], initial=True)
+                signals = p.parse(label, target=target, target_title=states[target]['title'], initial=True)
             else:
-                signal = self.str_to_signal(label, target, target_title=states[target]['title'], initial=False, lca=lca)
+                signals = p.parse(label, target, target_title=states[target]['title'], initial=False, lca=lca)
 
-            self.add_signal_to_state(states[start], signal)
+            try:
+                self.add_signal_to_state(states[start], signals[0])
+            except:
+                print(signals)
+                raise
+
+            self.user_inc_funcs.update(p.funcs_w_args)
+            self.user_funcs.update(p.funcs_wo_args)
+            self.user_signals.update(p.user_signals)
+            self.user_guards.update(p.guards_wo_args)
 
     def make_call(self, func, params, standalone=False):
         fparams = f', {params}' if params else ''
@@ -479,7 +509,7 @@ class StateMachine:
 
         
         ast.nodes.insert(0, Blank())
-        ast.nodes.insert(0, Comment(f'Generated with CHSM v0.0.0 at {datetime.strftime(datetime.now(), "%Y.%m.%d %H.%M.%S")}'))
+        ast.nodes.insert(0, Comment(VERSION_STRING))
 
         return ast
 

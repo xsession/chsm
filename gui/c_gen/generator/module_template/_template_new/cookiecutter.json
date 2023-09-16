@@ -1,0 +1,15 @@
+{
+    "module_name": "name",
+    "version": "",
+    "description": "",
+    "module_location": "",
+    "module_linked_libs": "",
+    "module_package_name": "",
+    "module_functions": "",
+    "module_includes": "",
+    "comm_periph": "i2c",
+    "address":"0x00",
+    "author":"author",
+    "full_name":"name_full",
+    "licence":"MIT"
+}

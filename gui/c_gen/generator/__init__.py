@@ -1,0 +1,1 @@
+from generator.new_module_generator import *

@@ -1,0 +1,26 @@
+{
+    "src_dir":      			"../src",
+    "doc_dir":					"../doc",
+
+    "templates": {
+		"init_signal":			"PCA9554_SIG_INIT",
+		"signal_prefix":		"PCA9554_SIG_",
+		"func_args":        	"self",
+		"func_params":      	"pca9554_tst *self",
+		"user_func_args_t":   	"self",
+		"user_func_params_t": 	"pca9554_tst *self",
+		"func_return_type": 	"void",
+		"guard_return_type":	"uint16_t",
+		"switch_variable":  	"self->signal_en",
+		"trans_result":     	"pca9554_set_state(self, {target})",
+		"ignored_result":   	"",
+		"c_include_list":		[],
+		"h_include_list":		["<stdbool.h>"],
+		"top_state_name": 		"void\\s+(?P<top_func>\\w+)\\(void\\s+\\*self,\\s+uint32_t\\s+e_u32\\)\\s*;",
+		"set_state_id":			""
+	},
+	
+	"pca9554.h": {
+		"top_func":				"pca9554_top"
+	}
+}

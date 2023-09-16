@@ -24,7 +24,7 @@ import subprocess
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from c_gen import StateMachine
-import c_gen.generators
+import c_gen.generator
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -283,7 +283,7 @@ def open_window():
     python_path = os.environ['PYTHON_PATH']
     print("Python environment variable:")
     print(python_path)
-    subprocess.Popen([ python_path + "/python.exe","./gui/chsm_backend.py"], shell=True)
+    subprocess.Popen([ python_path + "/python.exe","./gui/chsm_backend2.py"], shell=True)
 
 @eel.expose
 def open_file():
