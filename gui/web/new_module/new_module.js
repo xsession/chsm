@@ -4,12 +4,18 @@ export class New_module{
         // New module
         this.name = document.getElementById("module_name");
         this.version = document.getElementById("module_version");
+        this.author_nick_name = document.getElementById("author_nick_name");
+        this.author_full_name = document.getElementById("author_full_name");
         this.description = document.getElementById("module_description");
+        this.device_address = document.getElementById("device_address");
+        this.comm_selector = document.getElementById("comm-selector");
+        this.licence_selector = document.getElementById("licence-selector");
         this.module_location = document.getElementById("module_location");
         this.browse_btn = document.getElementById("btn-new-module-loc-browse");
         this.browse_btn.addEventListener("click" , e => this.state_select("MODULE_BROWSE"));
         // CMake
-        this.cmake_target_selector = document.getElementById("target-type-selector");
+        this.package_name = document.getElementById("package_name");
+        this.linked_libs = document.getElementById("linked_libs");
         // Buttons
         this.cancel_btn = document.getElementById("btn-cancel");
         this.cancel_btn.addEventListener("click" , e => this.state_select("CANCEL")); 
@@ -43,11 +49,11 @@ export class New_module{
                                     this.module_location.value, 
                                     this.linked_libs.value,
                                     this.package_name.value,
-                                    this.cmake_target_selector.value,
+                                    this.comm_selector.value,
                                     this.device_address.value,
-                                    this.author.value,
-                                    this.full_name.value,
-                                    this.licence.value
+                                    this.author_nick_name.value,
+                                    this.author_full_name.value,
+                                    this.licence_selector.value
                                     );
                 console.log(this);
                 break;  
@@ -69,10 +75,6 @@ function set_choosen_path_to_input_text(path)
     {
         case "MODULE_BROWSE":
             nm.module_location.value = path;
-            if(nm.batch_default_loc_cb.checked)
-                nm.batch_location.value = path;
-            if(nm.cmake_default_loc_cb.checked)
-                nm.cmake_location.value = path;
             break;
     }
 }

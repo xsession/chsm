@@ -1,1 +1,1 @@
-from generator.new_module_generator import *
+from .new_module_generator import *

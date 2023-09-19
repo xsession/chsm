@@ -4,7 +4,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
 from pathlib import Path
 from docopt import docopt
 import logging
-import cookiecutter
+from cookiecutter.main import cookiecutter
 
 @eel.expose
 def generate_module(name : str, 
@@ -22,7 +22,7 @@ def generate_module(name : str,
     print("Generate module!")
     print(name)
     print(module_location)
-    template_path = (Path(__file__).parent / 'module_template' / '_template_new').absolute().resolve() 
+    template_path = str((Path(__file__).parent / 'module_template' / '_template_new').absolute().resolve()) 
     cookiecutter( template_path, 
                  extra_context={
                         "module_name": name,
@@ -39,7 +39,8 @@ def generate_module(name : str,
                         "full_name": full_name,
                         "licence": licence
                  },
-                 output_dir=module_location
+                 output_dir=str(module_location),
+                 no_input=True
                  )
     eel.successful_generate()
 
