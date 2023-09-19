@@ -27,6 +27,14 @@
                                 <td><input id="module_version" type="text" value="0.0.0."></td>
                             </tr>
                             <tr>
+                                <td><label for="author_nick_name">Author Nick Name</label></td>
+                                <td><input id="author_nick_name" type="text" value="nick2"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="author_full_name">Author Full Name</label></td>
+                                <td><input id="author_full_name" type="text" value="Nick Smith"></td>
+                            </tr>
+                            <tr>
                                 <td><label for="module_description">Module description</label></td>
                                 <td><textarea id="module_description"></textarea></td>
                             </tr>
@@ -35,9 +43,21 @@
                                 <td><input id="module_location" type="url"></td>
                                 <td><div id='btn-new-module-loc-browse' class='button' alt='Borwse for module location.'>Browse</div></td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <label for="licence-selector">Select licence option</label>
+                                    <select name="licence-selector" id="licence-selector">
+                                        <option value="mit_opt">MIT</option>
+                                        <option value="bsd_3_opt">BSD-3</option>
+                                        <option value="gpl_3_opt">GNU GPL v3.0</option>
+                                        <option value="apache_2_opt">Apache Software Licence 2.0</option>
+                                        <option value="mpl_2_opt">Mozilla Public Licence 2.0</option>
+                                    </select>
+                                </td>
+                            </tr>
                         </table>
 
-            </fieldset>
+                    </fieldset>
             <br>
             <fieldset id="cmake_gen_fs">
                 <legend>CMake generation</legend>
@@ -46,14 +66,27 @@
                         <li>
                             <table>
                                 <tr class="checkbox-lable">
-                                    <label for="target-type-selector">Select comm_periph </label>
-                                    <select name="target-type-selector" id="target-type-selector">
+                                    <label for="comm-selector">Select comm_periph </label>
+                                    <select name="comm-selector" id="comm-selector">
                                         <option value="i2c_opt">I2C</option>
                                         <option value="spi_opt">SPI</option>
                                         <option value="can_opt">CAN</option>
                                     </select>
                                 </tr>
+                                <tr>
+                                    <td><label for="package_name">Package Name</label></td>
+                                    <td><input id="package_name" type="text" value="chsm"></td>
+                                </tr>
                                 <br>
+                                <tr>
+                                    <td><label for="linked_libs">Linked Libs</label></td>
+                                    <td><textarea id="linked_libs" type="text" value="linked libs"></textarea></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><label for="device_address">Device Address</label></td>
+                                    <td><input id="device_address" type="text" value="0x3F"></td>
+                                </tr>
                         </table>
                     </li>
                 </div>
@@ -67,15 +100,6 @@
         </fieldset>
         </form>
         <script>
-                // fetch("../main.html")
-                // .then(response => response.text())
-                // .then(html => {
-                //     let parser = new DOMParser();
-                //     let doc = parser.parseFromString(html, 'text/html');
-                //     let element = doc.getElementById('theme-selector');
-                //     console.log(element.value);
-                // })
-
                 function init_theme_selector()
                 {
                     const theme_sheet = document.getElementById("new_module_theme_sheet");
