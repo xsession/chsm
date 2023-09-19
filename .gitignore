@@ -7,3 +7,5 @@
 build-mingw-test/
 
 build-mingw/
+
+.vscode/settings.json
