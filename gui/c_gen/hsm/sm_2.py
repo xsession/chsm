@@ -6,6 +6,7 @@ from .ast import Func, If, Switch, Case, Call, Break, Return, Blank, Expr, Ast, 
 import pprint
 from copy import deepcopy
 from .parser import Parser, ParserException
+from cookiecutter.main import cookiecutter
 
 # TODO: make sure, that there is only one exit function and it has no parameters
 
