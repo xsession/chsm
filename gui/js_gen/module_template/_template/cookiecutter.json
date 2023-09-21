@@ -1,0 +1,8 @@
+{
+    "module_name": "template",
+    "comm_periph": "i2c",
+    "address":"0x00",
+    "author":"xsession",
+    "full_name":"Laszlo Ivanyi",
+    "licence":"MIT"
+}

@@ -1,2 +1,2 @@
 from .hsm import StateMachine
-from .generator import *
+from .module_generator import *
