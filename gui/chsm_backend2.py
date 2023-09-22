@@ -25,6 +25,8 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from c_gen import StateMachine
 import c_gen.generator
+import random
+import threading
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -319,6 +321,16 @@ def exit_program():
 def startup():
     if project:
         eel.load_json(json.dumps(project.model), Path(args['FILE']).name, args['FILE'])
+        
+def monitor_power_events_windows(port_num):
+    import win32api
+    import win32con
+
+    def on_power_broadcast(hwnd, msg, wparam, lparam):
+        if wparam == win32con.PBT_APMRESUMEAUTOMATIC:  # System wakes up from sleep
+            eel.start('main.html', port=port_num, mode='None')
+
+    win32api.SetConsoleCtrlHandler(on_power_broadcast, 1)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(filename)-20s:%(lineno)-4s %(message)s')
@@ -337,10 +349,14 @@ if __name__ == '__main__':
                 quit()
 
     eel.init((Path(__file__).parent / 'web').absolute().resolve())
+    
+    random_port = random.randint(1,65635)
 
     if args['--server-only']:
-        eel.start('main.html', mode=None, port=0)
+        eel.start('main.html', mode=None, port=random_port)
     else:
         # eel.start('main.html', port=0)
-        eel.start('main.html', port=0, mode='None')
+        t = threading.Thread(target=eel.start('main.html', port=random_port, mode='None'))
+        
+    monitor_power_events_windows(random_port)
 
