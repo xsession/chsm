@@ -24,7 +24,7 @@ import subprocess
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from c_gen import StateMachine
-import c_gen.generator
+import module_generator
 import random
 import threading
 
@@ -350,13 +350,14 @@ if __name__ == '__main__':
 
     eel.init((Path(__file__).parent / 'web').absolute().resolve())
     
-    random_port = random.randint(1,65635)
+    random_port = random.randint(1,65535)
 
     if args['--server-only']:
         eel.start('main.html', mode=None, port=random_port)
     else:
-        # eel.start('main.html', port=0)
         t = threading.Thread(target=eel.start('main.html', port=random_port, mode='None'))
+
+    t.start()
         
     monitor_power_events_windows(random_port)
 
