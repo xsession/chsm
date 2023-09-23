@@ -110,6 +110,8 @@ class StateMachine:
         ast.nodes.append(f'void {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);')
         ast.nodes.append(Blank())
 
+        ast.nodes.append(f'extern char {self.prefix}_debug_state_ac[20];')
+
         for g in sorted(guards):
             ast.nodes.append(Blank())
             comment = self.notes.get(f'{g}()', '')
@@ -425,8 +427,8 @@ class StateMachine:
         return nodes
 
     def build_debug_func(self, landing_state = None):
-        printf_str = 'printf("%s --%s-->\\n", state_func, trans_name);'
-        return f'\nvoid {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tCRF_UNUSED(self); \n\t\tCRF_UNUSED(est); \n\t\tCRF_UNUSED(trans_name); \n\t\tCRF_UNUSED(state_func); \n\t#endif \n}}  '
+        printf_str = f'printf("{self.prefix}_%s --%s-->\\n", state_func, trans_name);'
+        return f'\nvoid {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tCRF_UNUSED(self); \n\t\tCRF_UNUSED(est); \n\t\tCRF_UNUSED(trans_name); \n\t\tCRF_UNUSED(state_func); \n\t\tmemset({self.prefix}_debug_state_ac, 0, 20); \n\t\tstrncpy({self.prefix}_debug_state_ac, state_func, 19); \n\t\t{self.prefix}_debug_state_ac[19] = \'\\0\'; \n\t#endif \n}}  '
 
     def build_case_from_signal(self, signal):
         name = signal['name']
@@ -480,6 +482,9 @@ class StateMachine:
     def build_ast(self, states):
         ast = Ast()
         ast.nodes.append(Blank())
+        ast.nodes.append(f"char {self.prefix}_debug_state_ac[20];")
+        ast.nodes.append(Blank())
+
         for s_id, s in states.items():
             if s['type'] != 'normal':
                 continue
@@ -494,9 +499,12 @@ class StateMachine:
         ast.nodes.append(top_func)
         ast.nodes.append(debug_func)
 
+        ast.nodes.append(Blank())
+
         ast.nodes.insert(0, Blank())
         ast.nodes.insert(0, Include(self.funcs_h))
         ast.nodes.insert(0, Include(self.machine_h))
+        ast.nodes.insert(0, f'#include <string.h>\n')
         for i in self.templates['c_include_list']:
             ast.nodes.insert(0, Include(i))
 

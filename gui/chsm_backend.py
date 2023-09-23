@@ -53,6 +53,8 @@ def save_html(html_fname: Path, drawing: str, json_data: str):
         drawing_js =       template_dir / 'wheel.js'
         web_dir =          (backend_path / 'web').absolute().resolve()
         drawing_css =      web_dir / 'drawing.css'
+        theme_css =      web_dir / 'themes' / 'default.css'
+
 
         if not template_html.exists():
             logging.error(f'File not found: {template_html}')
@@ -80,15 +82,26 @@ def save_html(html_fname: Path, drawing: str, json_data: str):
                 'message': f'File not found: {drawing_css}',
                 })
             return
+        
+        if not theme_css.exists():
+            logging.error(f'File not found: {theme_css}')
+            eel.send_event('SAVE_RESULT', {
+                'result': False,
+                'file': f'{theme_css}',
+                'message': f'File not found: {theme_css}',
+                })
+            return
 
         with open(template_html, 'r') as tmp_html, \
-             open(drawing_css, 'r') as drw_css, \
-             open(drawing_js, 'r') as drw_js, \
-             open(html_fname, 'w') as html:
+            open(drawing_css, 'r') as drw_css, \
+            open(theme_css, 'r') as theme_css_, \
+            open(drawing_js, 'r') as drw_js, \
+            open(html_fname, 'w') as html:
             template = tmp_html.read()
             css = drw_css.read()
             js = drw_js.read()
-            output = template.format(style=css, drawing=drawing, json_data=json_data, script=js)
+            theme_style = theme_css_.read()
+            output = template.format(style=css, theme_style=theme_style ,drawing=drawing, json_data=json_data, script=js)
             html.write(output)
             logging.info(f'Saved drawing in {html_fname}')
             eel.send_event('SAVE_RESULT', {
