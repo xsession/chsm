@@ -24,7 +24,9 @@ import subprocess
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from c_gen import StateMachine
-import c_gen.generators
+import module_generator
+import random
+import threading
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -51,7 +53,6 @@ def save_html(html_fname: Path, drawing: str, json_data: str):
         drawing_js =       template_dir / 'wheel.js'
         web_dir =          (backend_path / 'web').absolute().resolve()
         drawing_css =      web_dir / 'drawing.css'
-        theme_css =      web_dir / 'themes' / 'default.css'
 
         if not template_html.exists():
             logging.error(f'File not found: {template_html}')
@@ -80,25 +81,14 @@ def save_html(html_fname: Path, drawing: str, json_data: str):
                 })
             return
 
-        if not theme_css.exists():
-            logging.error(f'File not found: {theme_css}')
-            eel.send_event('SAVE_RESULT', {
-                'result': False,
-                'file': f'{theme_css}',
-                'message': f'File not found: {theme_css}',
-                })
-            return
-
         with open(template_html, 'r') as tmp_html, \
              open(drawing_css, 'r') as drw_css, \
-             open(theme_css, 'r') as theme_css_, \
              open(drawing_js, 'r') as drw_js, \
              open(html_fname, 'w') as html:
             template = tmp_html.read()
             css = drw_css.read()
             js = drw_js.read()
-            theme_style = theme_css_.read()
-            output = template.format(style=css, theme_style=theme_style ,drawing=drawing, json_data=json_data, script=js)
+            output = template.format(style=css, drawing=drawing, json_data=json_data, script=js)
             html.write(output)
             logging.info(f'Saved drawing in {html_fname}')
             eel.send_event('SAVE_RESULT', {
@@ -331,6 +321,16 @@ def exit_program():
 def startup():
     if project:
         eel.load_json(json.dumps(project.model), Path(args['FILE']).name, args['FILE'])
+        
+def monitor_power_events_windows(port_num):
+    import win32api
+    import win32con
+
+    def on_power_broadcast(hwnd, msg, wparam, lparam):
+        if wparam == win32con.PBT_APMRESUMEAUTOMATIC:  # System wakes up from sleep
+            eel.start('main.html', port=port_num, mode='None')
+
+    win32api.SetConsoleCtrlHandler(on_power_broadcast, 1)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(filename)-20s:%(lineno)-4s %(message)s')
@@ -349,10 +349,15 @@ if __name__ == '__main__':
                 quit()
 
     eel.init((Path(__file__).parent / 'web').absolute().resolve())
+    
+    random_port = random.randint(1,65535)
 
     if args['--server-only']:
-        eel.start('main.html', mode=None, port=0)
+        eel.start('main.html', mode=None, port=random_port)
     else:
-        # eel.start('main.html', port=0)
-        eel.start('main.html', port=0, mode='None')
+        t = threading.Thread(target=eel.start('main.html', port=random_port, mode='None'))
+
+    t.start()
+        
+    monitor_power_events_windows(random_port)
 
