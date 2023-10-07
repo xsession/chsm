@@ -27,6 +27,7 @@ from c_gen import StateMachine
 import module_generator
 import random
 import threading
+import gevent
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -42,7 +43,7 @@ class HtmlException(Exception):
     pass
 
 TOP_STATE_NAME = r'chsm_result_ten\s+(?P<top_func>\w+)\(chsm_tst\s+\*self,\s+const\s+cevent_tst\s+\*e_pst)\s*;'
-
+random_port = random.randint(1,65535)
 class ChsmException(Exception):
     pass
 
@@ -334,17 +335,22 @@ def exit_program():
 def startup():
     if project:
         eel.load_json(json.dumps(project.model), Path(args['FILE']).name, args['FILE'])
-        
-def monitor_power_events_windows(port_num):
+ 
+def exit_program_(page, sockets):
+    print('exit_program') 
+    eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
+
+def monitor_power_events_windows(port_number):
     import win32api
     import win32con
 
     def on_power_broadcast(hwnd, msg, wparam, lparam):
         if wparam == win32con.PBT_APMRESUMEAUTOMATIC:  # System wakes up from sleep
-            eel.start('main.html', port=port_num, mode='None')
+            eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
 
     win32api.SetConsoleCtrlHandler(on_power_broadcast, 1)
-
+   
+        
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(filename)-20s:%(lineno)-4s %(message)s')
     args = docopt(__doc__)
@@ -363,14 +369,16 @@ if __name__ == '__main__':
 
     eel.init((Path(__file__).parent / 'web').absolute().resolve())
     
-    random_port = random.randint(1,65535)
-
     if args['--server-only']:
         eel.start('main.html', mode=None, port=random_port)
     else:
-        t = threading.Thread(target=eel.start('main.html', port=random_port, mode='None'))
-
-    t.start()
-        
-    monitor_power_events_windows(random_port)
+        eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
+        gevent.get_hub().join()
+    try:
+        while True:
+            print("Waiting for power event")
+            monitor_power_events_windows(random_port)
+            eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
+    except KeyboardInterrupt:
+        print('KeyboardInterrupt')
 
