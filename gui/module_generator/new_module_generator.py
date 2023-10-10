@@ -22,7 +22,8 @@ def generate_module(name : str,
     print("Generate module!")
     print(name)
     print(module_location)
-    template_path = str((Path(__file__).parent / 'module_template' / '_template_new').absolute().resolve()) 
+    template_path = str((Path(__file__).parent / '..' / 'c_gen' / 'module_template' / '_template_new').absolute().resolve()) 
+    print(template_path)
     cookiecutter( template_path, 
                  extra_context={
                         "module_name": name,
