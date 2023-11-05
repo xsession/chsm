@@ -372,13 +372,14 @@ if __name__ == '__main__':
     if args['--server-only']:
         eel.start('main.html', mode=None, port=random_port)
     else:
-        eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
-        gevent.get_hub().join()
-    try:
-        while True:
-            print("Waiting for power event")
-            monitor_power_events_windows(random_port)
-            eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
-    except KeyboardInterrupt:
-        print('KeyboardInterrupt')
+        eel.start('main.html', port=random_port, mode='None')
+        # eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
+        # gevent.get_hub().join()
+    # try:
+    #     while True:
+    #         print("Waiting for power event")
+    #         monitor_power_events_windows(random_port)
+    #         eel.start('main.html', port=random_port, mode='None', block=False, close_callback=exit_program_)
+    # except KeyboardInterrupt:
+    #     print('KeyboardInterrupt')
 
