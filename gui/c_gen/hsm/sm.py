@@ -107,7 +107,7 @@ class StateMachine:
 
         ast.nodes.append(Blank())
         ast.nodes.append(Blank())
-        ast.nodes.append(f'void {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func);')
+        ast.nodes.append(f'void {self.prefix}_debug_log_func(uint8_t *trans_name, const char *state_func);')
         ast.nodes.append(Blank())
 
         ast.nodes.append(f'extern char {self.prefix}_debug_state_ac[20];')
@@ -428,7 +428,7 @@ class StateMachine:
 
     def build_debug_func(self, landing_state = None):
         printf_str = f'printf("{self.prefix}_%s --%s-->\\n", state_func, trans_name);'
-        return f'\nvoid {self.prefix}_debug_log_func(chsm_tst *self, const cevent_tst *est, uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tCRF_UNUSED(self); \n\t\tCRF_UNUSED(est); \n\t\tCRF_UNUSED(trans_name); \n\t\tCRF_UNUSED(state_func); \n\t\tmemset({self.prefix}_debug_state_ac, 0, 20); \n\t\tstrncpy({self.prefix}_debug_state_ac, state_func, 19); \n\t\t{self.prefix}_debug_state_ac[19] = \'\\0\'; \n\t#endif \n}}  '
+        return f'\nvoid {self.prefix}_debug_log_func(uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tmemset({self.prefix}_debug_state_ac, 0, 20); \n\t\tstrncpy({self.prefix}_debug_state_ac, state_func, 19); \n\t\t{self.prefix}_debug_state_ac[19] = \'\\0\'; \n\t#endif \n}}  '
 
     def build_case_from_signal(self, signal):
         name = signal['name']
@@ -438,7 +438,7 @@ class StateMachine:
         else:
             name = f'{self.templates["signal_prefix"]}{name}'
 
-        c = Case(name,debug=f'{self.prefix}_debug_log_func(self, e_pst, "{name}", __FUNCTION__);')
+        c = Case(name,debug=f'{self.prefix}_debug_log_func("{name}", __FUNCTION__);')
 
         for guard in signal['guards'].values():
             nodes = self.guard_to_ast(guard)
