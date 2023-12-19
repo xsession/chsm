@@ -1,7 +1,7 @@
 
 add_module_test(
     NAME
-        canopen_test 
+        canopen_crf_test 
     SOURCE 
         tsrc/main.c
         tsrc/co_nmt_exp_sdo_test.c
@@ -11,7 +11,7 @@ add_module_test(
         tinc
     LINK 
         unity
-        canopen
+        canopen_crf
     DEFINES
         NDEBUG 
     STANDARD

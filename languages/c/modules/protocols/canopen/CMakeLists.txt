@@ -1,7 +1,7 @@
 
 add_module_lib(
         NAME 
-                canopen
+                canopen_crf
         PACKAGE
                 chsm
         SOURCE

@@ -58,6 +58,12 @@ if(CHSM_BUILD_TESTS)
     add_subdirectory(unity)
 endif()
 
+if(HW_TESTS)
+    set(UNITY_EXTENSION_FIXTURE ON CACHE INTERNAL "Set UNITY_EXTENSION_FIXTURE CACHE INTERNAL.")
+    set(UNITY_EXTENSION_MEMORY ON CACHE INTERNAL "Set UNITY_EXTENSION_MEMORY CACHE INTERNAL.")
+    add_subdirectory(unity)
+endif()
+
 add_subdirectory(modules)
 add_subdirectory(c_rf)
     
