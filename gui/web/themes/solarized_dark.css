@@ -46,6 +46,9 @@
     --transition-arrow-color: var(--blue);
     --transition-text-color: var(--text-color);
 
+    /* debug */
+    --debug-active-state-color: var(--orange);
+
     /* main.css */
     --sidebar-handle-border-left-color: var(--border-color);
     --sidebar-handle-hover-border-left-color: var(--border-color);

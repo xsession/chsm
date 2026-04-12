@@ -3,11 +3,19 @@ import re
 class ParserException(Exception):
     pass
 
+# Sentinel constants
+NOSIG = None         # No signal (signalless guard/transition)
+NOFUNC = (None, None)    # No function call
+NOPARAM = None       # No parameter
+NOGUARD = ''         # Empty string key for unguarded entries
+NULLFUNC = (None, None)  # Null function tuple (filtered out in path_to_funcs)
+
 class Parser:
     def __init__(self):
         self.funcs_w_args = set()
         self.funcs_wo_args = set()
         self.guards_wo_args = set()
+        self.guards_w_args = set()
         self.user_signals = set()
 
     def get_func(self, data):
@@ -83,7 +91,9 @@ class Parser:
 
     def parse_one(self, data, target=None, target_title=None, initial=False, lca=None):
         signal = None
-        guard = (None, None)
+        guard_func = ''
+        guard_param = ''
+        guard_key = ''
         funcs = []
 
 
@@ -95,18 +105,20 @@ class Parser:
         # If there is a guard, read it
         data = data.lstrip()
         if len(data) and data[0] == '[':
-            guard_func, guard_params, data = self.get_func(data[1:])
-            guard = (guard_func, guard_params)
+            gf, gp, data = self.get_func(data[1:])
+            guard_func = gf
+            guard_param = gp if gp else ''
+            if gp:
+                guard_key = f'{gf}({gp})'
+                self.guards_w_args.add(f'{gf}({gp})')
+            else:
+                guard_key = f'{gf}()'
+                self.guards_wo_args.add(gf)
             data = data.lstrip()
             if not len(data) or data[0] != ']':
-                p = guard_params if guard_params else ''
-                raise ParserException(f'Expected "]" after "{guard_func}({p})..."')
+                p = gp if gp else ''
+                raise ParserException(f'Expected "]" after "{gf}({p})..."')
             data = data[1:]
-
-            if guard_params:
-                self.funcs_w_args.add(guard_func)
-            else:
-                self.guards_wo_args.add(guard_func)
 
         # Find the slash character
         data = data.lstrip()
@@ -115,9 +127,9 @@ class Parser:
 
         if len(data):
             data = data[1:]
-            data = data.lstrip(' \t')
+            data = data.lstrip()
 
-            if len(data) and data[0] != '\n':
+            if len(data):
                 if data[0] == '{':
                     funcs, data = self.get_funcs(data[1:])
                 else:
@@ -130,10 +142,13 @@ class Parser:
 
         if initial:
             signal = 'init'
-            guard = (None, None)
+            guard_func = ''
+            guard_param = ''
+            guard_key = ''
 
         g = {   
-            'guard': guard,
+            'guard_func': guard_func,
+            'guard_param': guard_param,
             'funcs': funcs,
             'target': target,
             'target_title': target_title,
@@ -143,7 +158,7 @@ class Parser:
         s = {
             'name': signal,
             'guards': {
-                g['guard']: g
+                guard_key: g
             }
         }
 
@@ -156,7 +171,8 @@ class Parser:
             signal = 'init'
 
         g = {
-            'guard': (None, None),
+            'guard_func': '',
+            'guard_param': '',
             'funcs': [(None, None)],
             'target': target,
             'target_title': target_title,
@@ -166,7 +182,7 @@ class Parser:
         s = {
             'name': signal,
             'guards': {
-                g['guard']: g
+                '': g
             }
         }
 

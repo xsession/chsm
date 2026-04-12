@@ -27,6 +27,8 @@ from c_gen import StateMachine
 import module_generator
 import random
 import threading
+import socket
+import select
 import gevent
 
 def resource_path(relative_path):
@@ -279,6 +281,157 @@ class Project:
         print('Last commit for repository is {}.'.format(str(repo.head.commit.hexsha)))
         print('pickpack version name : {}'.format(repo.active_branch).format(str(repo.head.commit.hexsha)))
 project = None
+
+# ---------------------------------------------------------------------------
+# Debug channel – TCP server that accepts JSON-line messages from a running
+# state machine and forwards them to the GUI via Eel.
+#
+# Protocol (one JSON object per line, terminated with \n):
+#   {"type": "state",     "active": ["state_title_1", "state_title_2"]}
+#   {"type": "variables", "vars": {"counter": 5, "flag": true}}
+#   {"type": "event",     "name": "EVT_START", "data": "optional payload"}
+#   {"type": "reset"}
+# ---------------------------------------------------------------------------
+
+class DebugServer:
+    def __init__(self):
+        self._server_socket = None
+        self._client = None
+        self._thread = None
+        self._running = False
+        self.port = 0
+        self.log = []          # last N events for the event-log panel
+        self.MAX_LOG = 200
+
+    @property
+    def connected(self):
+        return self._client is not None
+
+    def start(self, port):
+        if self._running:
+            self.stop()
+
+        self.port = port
+        self._running = True
+        self._thread = threading.Thread(target=self._serve, daemon=True)
+        self._thread.start()
+        logging.info(f'Debug server started on port {self.port}')
+
+    def stop(self):
+        self._running = False
+        if self._client:
+            try:
+                self._client.close()
+            except Exception:
+                pass
+            self._client = None
+        if self._server_socket:
+            try:
+                self._server_socket.close()
+            except Exception:
+                pass
+            self._server_socket = None
+        logging.info('Debug server stopped')
+
+    def _serve(self):
+        try:
+            self._server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self._server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self._server_socket.bind(('127.0.0.1', self.port))
+            self._server_socket.listen(1)
+            self._server_socket.settimeout(1.0)
+        except OSError as e:
+            logging.error(f'Debug server bind failed: {e}')
+            eel.send_event('DEBUG_STATUS', {'connected': False, 'error': str(e)})
+            self._running = False
+            return
+
+        eel.send_event('DEBUG_STATUS', {'connected': False, 'listening': True, 'port': self.port})
+
+        while self._running:
+            # Accept loop
+            try:
+                ready, _, _ = select.select([self._server_socket], [], [], 1.0)
+                if not ready:
+                    continue
+                client, addr = self._server_socket.accept()
+            except (OSError, socket.timeout):
+                continue
+
+            self._client = client
+            self._client.settimeout(1.0)
+            logging.info(f'Debug client connected from {addr}')
+            eel.send_event('DEBUG_STATUS', {'connected': True, 'port': self.port})
+
+            buf = ''
+            while self._running and self._client:
+                try:
+                    data = self._client.recv(4096)
+                    if not data:
+                        break
+                    buf += data.decode('utf-8', errors='replace')
+                    while '\n' in buf:
+                        line, buf = buf.split('\n', 1)
+                        line = line.strip()
+                        if not line:
+                            continue
+                        try:
+                            msg = json.loads(line)
+                            self._handle_message(msg)
+                        except json.JSONDecodeError as e:
+                            logging.warning(f'Debug bad JSON: {e}')
+                except socket.timeout:
+                    continue
+                except (ConnectionResetError, OSError):
+                    break
+
+            self._client = None
+            logging.info('Debug client disconnected')
+            eel.send_event('DEBUG_STATUS', {'connected': False, 'listening': True, 'port': self.port})
+            eel.send_event('DEBUG_UPDATE', {'type': 'reset'})
+
+    def _handle_message(self, msg):
+        msg_type = msg.get('type', '')
+
+        if msg_type == 'event':
+            if len(self.log) >= self.MAX_LOG:
+                self.log.pop(0)
+            self.log.append(msg)
+
+        eel.send_event('DEBUG_UPDATE', msg)
+
+    def send_to_target(self, msg):
+        if self._client:
+            try:
+                self._client.sendall((json.dumps(msg) + '\n').encode('utf-8'))
+            except (OSError, BrokenPipeError) as e:
+                logging.warning(f'Debug send failed: {e}')
+
+
+debug_server = DebugServer()
+
+
+@eel.expose
+def debug_start(port):
+    """Start the debug TCP server on the given port."""
+    try:
+        port = int(port)
+    except (ValueError, TypeError):
+        port = 9999
+    debug_server.start(port)
+
+
+@eel.expose
+def debug_stop():
+    """Stop the debug TCP server."""
+    debug_server.stop()
+    eel.send_event('DEBUG_STATUS', {'connected': False, 'listening': False})
+
+
+@eel.expose
+def debug_send(msg):
+    """Send a JSON command to the connected target (e.g. step, continue)."""
+    debug_server.send_to_target(msg)
 
 @eel.expose
 def save_state_machine(drawing: str, json_data: str, filepath: str):

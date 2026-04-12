@@ -21,6 +21,9 @@
     --transition-line-color: rgb(70, 130, 180);
     --transition-arrow-color: rgb(70, 130, 180);
 
+    /* debug */
+    --debug-active-state-color: rgb(255, 140, 0);
+
     /* main.css */
     --sidebar-handle-border-left-color: rgb(221, 221, 221);
     --sidebar-handle-hover-border-left-color: rgb(170, 170, 170);

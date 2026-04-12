@@ -23,6 +23,9 @@ class App {
 		this.filepath = null;
 		this.is_opened_statemachine = null;
 
+		// Debug state
+		this.debug_active_states = [];  // state titles currently active
+
 		this.model.states().map(s => this.render_state(s), this);
 		this.model.transitions().map(t => this.render_transiton(t), this);
 
@@ -93,6 +96,29 @@ class App {
 			if (this.dark_mode_select.value == true) {
 				this.dispatch('DARK_MODE', e)
 			}
+		});
+
+		// Debug panel elements
+		this.debug_port_input = document.getElementById('debug-port');
+		this.debug_connect_btn = document.getElementById('btn-debug-connect');
+		this.debug_disconnect_btn = document.getElementById('btn-debug-disconnect');
+		this.debug_status_el = document.getElementById('debug-status');
+		this.debug_active_list = document.getElementById('debug-active-states');
+		this.debug_var_table = document.getElementById('debug-variables');
+		this.debug_event_log = document.getElementById('debug-event-log');
+
+		this.debug_connect_btn.addEventListener('click', () => {
+			const port = parseInt(this.debug_port_input.value) || 9999;
+			eel.debug_start(port);
+			this.debug_connect_btn.style.display = 'none';
+			this.debug_disconnect_btn.style.display = '';
+		});
+
+		this.debug_disconnect_btn.addEventListener('click', () => {
+			eel.debug_stop();
+			this.debug_connect_btn.style.display = '';
+			this.debug_disconnect_btn.style.display = 'none';
+			this._debug_clear();
 		});
 
 		this.body.addEventListener('mousemove', event => {
@@ -224,6 +250,7 @@ class App {
 
 	load_model(data, fname, fpath) {
 		this.gui.clear();
+		this.debug_active_states = [];  // clear debug highlights on model reload
 
 		this.model = new Model(JSON.parse(data));
 		this.model.states().map(s => this.render_state(s), this);
@@ -619,6 +646,14 @@ class App {
 
 			case 'CODEGEN_RESULT':
 				console.log(data);
+				break;
+
+			case 'DEBUG_STATUS':
+				this._debug_update_status(data);
+				break;
+
+			case 'DEBUG_UPDATE':
+				this._debug_handle_message(data);
 				break;
 		}
 	}
@@ -1025,6 +1060,118 @@ class App {
 				break;
 		}
 	}
+
+	// ---- Debug channel methods ----
+
+	_debug_find_state_id_by_title(title) {
+		for (const [id, s] of Object.entries(this.model.data.states)) {
+			if (s.title === title) return id;
+		}
+		return null;
+	}
+
+	_debug_clear_active_highlights() {
+		for (const title of this.debug_active_states) {
+			const id = this._debug_find_state_id_by_title(title);
+			if (id && id in this.gui.states) {
+				this.gui.states[id].remove_border_class('state_border_debug_active');
+			}
+		}
+		this.debug_active_states = [];
+	}
+
+	_debug_set_active_states(titles) {
+		this._debug_clear_active_highlights();
+		this.debug_active_states = titles || [];
+
+		for (const title of this.debug_active_states) {
+			const id = this._debug_find_state_id_by_title(title);
+			if (id && id in this.gui.states) {
+				this.gui.states[id].add_border_class('state_border_debug_active');
+			}
+		}
+
+		// Update sidebar list
+		this.debug_active_list.innerHTML = '';
+		for (const title of this.debug_active_states) {
+			const li = document.createElement('li');
+			li.classList.add('debug-active-item');
+			li.textContent = title;
+			this.debug_active_list.appendChild(li);
+		}
+	}
+
+	_debug_set_variables(vars) {
+		// Keep header row, replace body
+		while (this.debug_var_table.rows.length > 1) {
+			this.debug_var_table.deleteRow(1);
+		}
+		for (const [name, value] of Object.entries(vars || {})) {
+			const row = this.debug_var_table.insertRow();
+			row.insertCell().textContent = name;
+			row.insertCell().textContent = JSON.stringify(value);
+		}
+	}
+
+	_debug_add_event_log(msg) {
+		const li = document.createElement('li');
+		const name = msg.name || '?';
+		const payload = msg.data ? ` ${msg.data}` : '';
+		li.textContent = `${name}${payload}`;
+		this.debug_event_log.appendChild(li);
+		// auto-scroll
+		this.debug_event_log.scrollTop = this.debug_event_log.scrollHeight;
+		// cap entries
+		while (this.debug_event_log.children.length > 200) {
+			this.debug_event_log.removeChild(this.debug_event_log.firstChild);
+		}
+	}
+
+	_debug_handle_message(msg) {
+		if (!msg || !msg.type) return;
+
+		switch (msg.type) {
+			case 'state':
+				this._debug_set_active_states(msg.active);
+				break;
+			case 'variables':
+				this._debug_set_variables(msg.vars);
+				break;
+			case 'event':
+				this._debug_add_event_log(msg);
+				break;
+			case 'reset':
+				this._debug_clear();
+				break;
+		}
+	}
+
+	_debug_update_status(data) {
+		if (data.connected) {
+			this.debug_status_el.textContent = 'Connected';
+			this.debug_status_el.className = 'debug-status-on';
+		} else if (data.listening) {
+			this.debug_status_el.textContent = `Listening on :${data.port}...`;
+			this.debug_status_el.className = 'debug-status-listening';
+		} else {
+			this.debug_status_el.textContent = 'Disconnected';
+			this.debug_status_el.className = 'debug-status-off';
+			if (data.error) {
+				this.debug_status_el.textContent = `Error: ${data.error}`;
+			}
+		}
+	}
+
+	_debug_clear() {
+		this._debug_clear_active_highlights();
+		this.debug_active_list.innerHTML = '';
+		while (this.debug_var_table.rows.length > 1) {
+			this.debug_var_table.deleteRow(1);
+		}
+		this.debug_event_log.innerHTML = '';
+	}
+
+	// ---- End debug methods ----
 
 	set_state_text(state_id, text) {
 		this.model.set_state_text(state_id, text);

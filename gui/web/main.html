@@ -156,6 +156,38 @@
                         </li>
                     </fieldset>
                 </details>
+                <li>&nbsp</li>
+                <details id="debug-panel">
+                    <summary>Debug</summary>
+                    <fieldset id="debug_details">
+                        <li class="row">
+                            <label for="debug-port">Port</label>
+                            <input type="number" id="debug-port" value="9999" style="width:60px">
+                            <div id="btn-debug-connect" class="button-inline">Connect</div>
+                            <div id="btn-debug-disconnect" class="button-inline" style="display:none">Stop</div>
+                        </li>
+                        <li>
+                            <span id="debug-status" class="debug-status-off">Disconnected</span>
+                        </li>
+                        <li>&nbsp</li>
+                        <li><strong>Active States</strong></li>
+                        <li>
+                            <ul id="debug-active-states" class="debug-list"></ul>
+                        </li>
+                        <li>&nbsp</li>
+                        <li><strong>Variables</strong></li>
+                        <li>
+                            <table id="debug-variables" class="debug-var-table">
+                                <tr><th>Name</th><th>Value</th></tr>
+                            </table>
+                        </li>
+                        <li>&nbsp</li>
+                        <li><strong>Event Log</strong></li>
+                        <li>
+                            <ul id="debug-event-log" class="debug-list debug-event-log"></ul>
+                        </li>
+                    </fieldset>
+                </details>
             </ul>
         </nav>
         <div id='sidebar-handle'><span id='sidebar-handle-text'>&lt<span></div>

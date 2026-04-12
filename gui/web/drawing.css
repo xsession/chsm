@@ -152,3 +152,70 @@
     stroke: none;
     stroke-width: 0.0;
 }
+
+/* Debug: active state highlight */
+.state_border_debug_active {
+    stroke: var(--debug-active-state-color, #ff8c00);
+    stroke-width: 1.0;
+    opacity: 0.7;
+    stroke-dasharray: 1 0.5;
+}
+
+/* Debug panel styles */
+.debug-status-on {
+    color: #22c55e;
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+.debug-status-listening {
+    color: #f59e0b;
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+.debug-status-off {
+    color: #888;
+    font-size: 0.85em;
+}
+
+.debug-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85em;
+}
+
+.debug-list li {
+    padding: 1px 4px;
+    border-bottom: 1px solid rgba(128,128,128,0.2);
+}
+
+.debug-list li.debug-active-item {
+    color: var(--debug-active-state-color, #ff8c00);
+    font-weight: bold;
+}
+
+.debug-var-table {
+    width: 100%;
+    font-size: 0.85em;
+    border-collapse: collapse;
+}
+
+.debug-var-table th,
+.debug-var-table td {
+    text-align: left;
+    padding: 1px 4px;
+    border-bottom: 1px solid rgba(128,128,128,0.2);
+}
+
+.debug-var-table td:last-child {
+    font-family: monospace;
+}
+
+.debug-event-log {
+    max-height: 150px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.8em;
+}
