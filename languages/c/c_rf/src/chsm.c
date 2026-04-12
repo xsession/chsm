@@ -5,9 +5,9 @@
  *      Author: jszeman
  */
 #include <assert.h>
+#include <stddef.h>
 #include <cevent.h>
 #include <chsm.h>
-#include <stdlib.h>
 
 
 const cevent_tst chsm_init_event_st = {.sig=C_SIG_INIT, .gc_info={0}};
@@ -41,7 +41,7 @@ void chsm_init(chsm_tst *self)
 
 void chsm_defer(chsm_tst *self, const cevent_tst *e_pst)
 {
-    self->defer_q_st.put(&self->defer_q_st, (cevent_tst *)e_pst);
+    CQUEUE_PUT(&self->defer_q_st, (cevent_tst *)e_pst);
 }
 
 void chsm_recall(chsm_tst *self, const cevent_tst *e_pst)
@@ -50,9 +50,9 @@ void chsm_recall(chsm_tst *self, const cevent_tst *e_pst)
 
     (void)e_pst;
 
-    while((ev_pst = self->defer_q_st.get_right(&self->defer_q_st)))
+    while((ev_pst = CQUEUE_GET_RIGHT(&self->defer_q_st)))
     {
-        self->event_q_st.put_left(&self->event_q_st, (cevent_tst *)ev_pst);
+        CQUEUE_PUT_LEFT(&self->event_q_st, (cevent_tst *)ev_pst);
     }
 }
 

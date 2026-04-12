@@ -3,8 +3,14 @@
 
 #include "crf.h"
 #include "sys_if.h"
+{% if cookiecutter.comm_periph == "i2c" %}
 #include "i2c_driver_if.h"
 #include "i2c_master.h"
+{% elif cookiecutter.comm_periph == "spi" %}
+#include "spi_master.h"
+{% elif cookiecutter.comm_periph == "can" %}
+#include "canopen.h"
+{% endif %}
 #include "signal_classes_modules.h"
 
 /*

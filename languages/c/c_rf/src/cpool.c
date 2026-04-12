@@ -7,16 +7,14 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "crf.h"
-#include <stdio.h>
+#include "cpool.h"
 #include "atomic_ops.h"
 
 #define CPOOL_TERMINATOR 0xffff
 
-static void *cpool_new(cpool_tst *self)
+void *cpool_new(cpool_tst *self)
 {
     uint16_t head;
 
@@ -46,7 +44,7 @@ static void *cpool_new(cpool_tst *self)
     return NULL;
 }
 
-static bool cpool_gc(cpool_tst *self, const cevent_tst *e_pst)
+bool cpool_gc(cpool_tst *self, const cevent_tst *e_pst)
 {
     assert(NULL != self);
     assert(NULL != e_pst);
@@ -80,8 +78,10 @@ void cpool_init(cpool_tst *self, uint8_t *buff, uint16_t event_size, uint16_t ev
     self->esize = event_size;
     self->ecnt = event_count;
 
+#ifndef CHSM_CFG_LITE
     self->new = cpool_new;
     self->gc = cpool_gc;
+#endif
 
     memset(self->pool, 0, (size_t)(self->esize * self->ecnt));
 

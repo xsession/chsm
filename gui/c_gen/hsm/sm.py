@@ -93,6 +93,7 @@ class StateMachine:
         ast.nodes.append(Blank())
 
         ast.nodes.append(Include(self.machine_h))
+        ast.nodes.append(f'#include "chsm_cfg.h"')
 
         for i in self.templates['h_include_list']:
             ast.nodes.append(Include(i))
@@ -107,10 +108,12 @@ class StateMachine:
 
         ast.nodes.append(Blank())
         ast.nodes.append(Blank())
+        ast.nodes.append(f'#ifndef CHSM_CFG_NO_DEBUG')
         ast.nodes.append(f'void {self.prefix}_debug_log_func(uint8_t *trans_name, const char *state_func);')
         ast.nodes.append(Blank())
 
         ast.nodes.append(f'extern char {self.prefix}_debug_state_ac[20];')
+        ast.nodes.append(f'#endif /* CHSM_CFG_NO_DEBUG */')
 
         for g in sorted(guards):
             ast.nodes.append(Blank())
@@ -428,7 +431,21 @@ class StateMachine:
 
     def build_debug_func(self, landing_state = None):
         printf_str = f'printf("{self.prefix}_%s --%s-->\\n", state_func, trans_name);'
-        return f'\nvoid {self.prefix}_debug_log_func(uint8_t *trans_name, const char *state_func) \n{{\n\t#ifdef CHSM_BUILD_TESTS \n\t\t{printf_str} \n\t#else \n\t\tmemset({self.prefix}_debug_state_ac, 0, 20); \n\t\tstrncpy({self.prefix}_debug_state_ac, state_func, 19); \n\t\t{self.prefix}_debug_state_ac[19] = \'\\0\'; \n\t#endif \n}}  '
+        return f'''
+#ifndef CHSM_CFG_NO_DEBUG
+char {self.prefix}_debug_state_ac[20];
+
+void {self.prefix}_debug_log_func(uint8_t *trans_name, const char *state_func) 
+{{
+\t#ifdef CHSM_BUILD_TESTS 
+\t\t{printf_str} 
+\t#else 
+\t\tmemset({self.prefix}_debug_state_ac, 0, 20); 
+\t\tstrncpy({self.prefix}_debug_state_ac, state_func, 19); 
+\t\t{self.prefix}_debug_state_ac[19] = '\\0'; 
+\t#endif 
+}}
+#endif /* CHSM_CFG_NO_DEBUG */'''
 
     def build_case_from_signal(self, signal):
         name = signal['name']
@@ -438,7 +455,7 @@ class StateMachine:
         else:
             name = f'{self.templates["signal_prefix"]}{name}'
 
-        c = Case(name,debug=f'{self.prefix}_debug_log_func("{name}", __FUNCTION__);')
+        c = Case(name,debug=f'#ifndef CHSM_CFG_NO_DEBUG\n            {self.prefix}_debug_log_func("{name}", __FUNCTION__);\n            #endif')
 
         for guard in signal['guards'].values():
             nodes = self.guard_to_ast(guard)
@@ -482,8 +499,6 @@ class StateMachine:
     def build_ast(self, states):
         ast = Ast()
         ast.nodes.append(Blank())
-        ast.nodes.append(f"char {self.prefix}_debug_state_ac[20];")
-        ast.nodes.append(Blank())
 
         for s_id, s in states.items():
             if s['type'] != 'normal':
@@ -504,7 +519,8 @@ class StateMachine:
         ast.nodes.insert(0, Blank())
         ast.nodes.insert(0, Include(self.funcs_h))
         ast.nodes.insert(0, Include(self.machine_h))
-        ast.nodes.insert(0, f'#include <string.h>\n')
+        ast.nodes.insert(0, f'#ifndef CHSM_CFG_NO_DEBUG\n#include <string.h>\n#endif')
+        ast.nodes.insert(0, f'#include "chsm_cfg.h"')
         for i in self.templates['c_include_list']:
             ast.nodes.insert(0, Include(i))
 

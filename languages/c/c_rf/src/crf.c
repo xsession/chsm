@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #include "cevent.h"
 #include "cpool.h"
@@ -7,11 +8,10 @@
 #include "chsm.h"
 #include "crf.h"
 #include <assert.h>
-#include <stdio.h>
 
 #define CRF_POOL_CNT_MAX 4
 
-static void* new_event(crf_tst *self, uint32_t size, signal_t sig)
+void* crf_new_event(crf_tst *self, uint32_t size, signal_t sig)
 {
     if (NULL == self->pool_ast) return NULL;
 
@@ -23,7 +23,7 @@ static void* new_event(crf_tst *self, uint32_t size, signal_t sig)
 
         if (pool->esize >= size)
         {
-            cevent_tst* e = pool->new(pool);
+            cevent_tst* e = CPOOL_NEW(pool);
             if (NULL != e)
             {
                 e->gc_info = (gc_info_tst){.pool_id = i+1, .ref_cnt = 0};
@@ -36,13 +36,13 @@ static void* new_event(crf_tst *self, uint32_t size, signal_t sig)
     return NULL;
 }
 
-static void gc(crf_tst *self, const cevent_tst* e_pst)
+void crf_gc(crf_tst *self, const cevent_tst* e_pst)
 {
     if (NULL == self->pool_ast) return;
 
     if (0 == e_pst->gc_info.pool_id) return; // Constant (not dinamycally allocated) event.
 
-    self->pool_ast[e_pst->gc_info.pool_id - 1].gc(self->pool_ast+(e_pst->gc_info.pool_id - 1), e_pst);
+    CPOOL_GC(self->pool_ast+(e_pst->gc_info.pool_id - 1), e_pst);
 
     return;
 }
@@ -51,19 +51,19 @@ static void gc(crf_tst *self, const cevent_tst* e_pst)
  * TODO: implement publish/subscribe method as a fallback, when the application
  * does'n provide a send function for a state macine
  */
-static void publish(crf_tst *self, const cevent_tst* e)
+void crf_publish(crf_tst *self, const cevent_tst* e)
 {
     (void)self;
     (void)e;
 }
 
-static void post(crf_tst *self, cevent_tst* e, cqueue_tst *q)
+void crf_post(crf_tst *self, cevent_tst* e, cqueue_tst *q)
 {
     (void)self;
-    q->put(q, e);
+    CQUEUE_PUT(q, e);
 }
 
-static bool step(crf_tst *self)
+bool crf_step(crf_tst *self)
 {
     cevent_tst *e_pst = NULL;
     chsm_tst **hsm_ppst;
@@ -74,7 +74,7 @@ static bool step(crf_tst *self)
     {
         for(hsm_pst = *hsm_ppst; hsm_pst; hsm_pst = hsm_pst->next)
         {     
-            e_pst = (cevent_tst *)hsm_pst->event_q_st.get(&hsm_pst->event_q_st);
+            e_pst = (cevent_tst *)CQUEUE_GET(&hsm_pst->event_q_st);
             if (e_pst)
             {
                 event_found_b = true;
@@ -83,7 +83,7 @@ static bool step(crf_tst *self)
 
                 if (0 == e_pst->gc_info.ref_cnt)
                 {
-                    gc(self, e_pst);
+                    crf_gc(self, e_pst);
                 }
             }
         }
@@ -96,11 +96,13 @@ bool crf_init(crf_tst *self , chsm_tst **chsm_ap, cpool_tst *pool_ast, uint16_t 
 {
     if (NULL == self) return false;
 
-    self->new_event = new_event;
-    self->publish = publish;
-    self->post = post;
-    self->step = step;
-    self->gc = gc;
+#ifndef CHSM_CFG_LITE
+    self->new_event = crf_new_event;
+    self->publish = crf_publish;
+    self->post = crf_post;
+    self->step = crf_step;
+    self->gc = crf_gc;
+#endif
 
     if (NULL == chsm_ap) return false;
 

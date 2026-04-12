@@ -6,12 +6,17 @@
  */
 
 #include <stdint.h>
-#include <stdlib.h>
+#include <stddef.h>
 #include <assert.h>
 #include <cevent.h>
 #include <cqueue.h>
 #include "atomic_ops.h"
 
+#ifdef CHSM_CFG_NO_FAULT_CNT
+    #define CQUEUE_FAULT_INC(self) ((void)0)
+#else
+    #define CQUEUE_FAULT_INC(self) ((self)->fault_cnt++)
+#endif
 
 /* Thread safety analysis:
  *
@@ -39,7 +44,7 @@
  * Same as 1.
  */
 
-static int32_t cqueue_put(cqueue_tst *self, const cevent_tst *e)
+int32_t cqueue_put(cqueue_tst *self, const cevent_tst *e)
 {
     uint16_t head;
 
@@ -57,7 +62,7 @@ static int32_t cqueue_put(cqueue_tst *self, const cevent_tst *e)
         self->head = head;
         // 4.
 
-        self->fault_cnt++;
+        CQUEUE_FAULT_INC(self);
 
         return -1;
     }
@@ -70,7 +75,7 @@ static int32_t cqueue_put(cqueue_tst *self, const cevent_tst *e)
     return 0;
 }
 
-static int32_t cqueue_put_left(cqueue_tst *self, const cevent_tst *e_pst)
+int32_t cqueue_put_left(cqueue_tst *self, const cevent_tst *e_pst)
 {
     assert(NULL != self);
 
@@ -78,7 +83,7 @@ static int32_t cqueue_put_left(cqueue_tst *self, const cevent_tst *e_pst)
 
     if ((uint16_t)(self->head - self->tail) >= self->max)
     {
-        self->fault_cnt++;
+        CQUEUE_FAULT_INC(self);
 
         return -1;
     }
@@ -92,7 +97,7 @@ static int32_t cqueue_put_left(cqueue_tst *self, const cevent_tst *e_pst)
     return 0;
 }
 
-static const cevent_tst *cqueue_get(cqueue_tst *self)
+const cevent_tst *cqueue_get(cqueue_tst *self)
 {
     const cevent_tst *e;
 
@@ -112,7 +117,7 @@ static const cevent_tst *cqueue_get(cqueue_tst *self)
     return e;
 }
 
-static const cevent_tst *cqueue_get_right(cqueue_tst *self)
+const cevent_tst *cqueue_get_right(cqueue_tst *self)
 {
     const cevent_tst *e;
 
@@ -143,18 +148,15 @@ int32_t cqueue_init(cqueue_tst *self, const cevent_tst **events, uint16_t max_ev
     self->tail = 0;
     self->mask = max_event_count-1;
 
+#ifndef CHSM_CFG_NO_FAULT_CNT
     self->fault_cnt = 0;
+#endif
 
+#ifndef CHSM_CFG_LITE
     self->put = cqueue_put;
     self->put_left = cqueue_put_left;
     self->get = cqueue_get;
     self->get_right = cqueue_get_right;
-
-#if 0 // just to test orthogonality
-    self->put_left = cqueue_put;
-    self->put = cqueue_put_left;
-    self->get_right = cqueue_get;
-    self->get = cqueue_get_right;
 #endif
 
     return 0;

@@ -1,5 +1,5 @@
 
-export class New_module{
+class New_module{
     constructor(){
         // New module
         this.name = document.getElementById("module_name");
@@ -33,6 +33,21 @@ export class New_module{
         window.close();
     }
 
+    validate()
+    {
+        if (!this.name.value || !this.name.value.trim()) {
+            alert("Module name is required.");
+            this.name.focus();
+            return false;
+        }
+        if (!this.module_location.value || !this.module_location.value.trim()) {
+            alert("Module location is required. Use Browse to select a directory.");
+            this.module_location.focus();
+            return false;
+        }
+        return true;
+    }
+
     state_select(event)
     {
         console.log("Event received!");
@@ -43,6 +58,9 @@ export class New_module{
                 this.cancel_project_window();
                 break;
             case "GENERATE":
+                if (!this.validate()) break;
+                this.generate_btn.textContent = "Generating...";
+                this.generate_btn.style.backgroundColor = "";
                 eel.generate_module(this.name.value, 
                                     this.version.value, 
                                     this.description.value, 
@@ -66,7 +84,9 @@ export class New_module{
     }
 }
 
-window.nm = new New_module();
+window.addEventListener('DOMContentLoaded', function() {
+    window.nm = new New_module();
+});
 
 eel.expose(set_choosen_path_to_input_text);
 function set_choosen_path_to_input_text(path)
@@ -83,6 +103,15 @@ eel.expose(successful_generate)
 function successful_generate()
 {
     nm.generate_btn.style.backgroundColor = "green";
-
+    nm.generate_btn.textContent = "Generate";
     console.log("Successfully generated!");
+}
+
+eel.expose(failed_generate)
+function failed_generate(error_msg)
+{
+    nm.generate_btn.style.backgroundColor = "red";
+    nm.generate_btn.textContent = "Generate";
+    alert("Generation failed: " + error_msg);
+    console.error("Generation failed:", error_msg);
 }

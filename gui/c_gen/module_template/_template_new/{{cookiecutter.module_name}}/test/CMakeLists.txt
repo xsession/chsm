@@ -9,7 +9,9 @@ add_module_test(
         tinc
     LINK 
         unity
+        {% if cookiecutter.comm_periph == "i2c" %}
         i2c_drv_mock
+        {% endif %}
         {{cookiecutter.module_name}}
     DEFINES
         NDEBUG 
