@@ -1,0 +1,510 @@
+/* ══════════════════════════════════════════════════════════════════
+   CHSM React — Main Stylesheet
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Default theme (CSS custom properties) ─────────────────────── */
+:root {
+  --nc-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --nc-font-mono: Consolas, monaco, 'Ubuntu Mono', 'Liberation Mono', 'Courier New', Courier, monospace;
+
+  /* drawing */
+  --state-body-color: rgb(0, 0, 0);
+  --state-border-color: rgb(0, 191, 255);
+  --state-border-highlight-color: rgb(23, 197, 66);
+  --state-border-deleting-color: rgb(255, 0, 0);
+  --state-separator-color: rgb(128, 128, 128);
+  --state-resize-mark-color: rgb(128, 128, 128);
+  --state-title-color: rgb(0, 0, 0);
+  --state-text-color: rgb(0, 0, 0);
+  --state-drag-handle-color: rgb(211, 102, 1);
+  --state-resize-handle-color: rgb(255, 255, 255);
+  --transition-line-color: rgb(70, 130, 180);
+  --transition-arrow-color: rgb(70, 130, 180);
+  --transition-text-color: rgb(0, 0, 0);
+  --transition-handle-color: rgb(0, 191, 255);
+  --transition-handle-deleting-color: rgb(255, 0, 0);
+  --transition-handle-highlight-edit-color: rgb(23, 197, 66);
+  --function-color: rgb(0, 0, 0);
+  --function-hover-color: rgb(0, 0, 255);
+
+  /* debug */
+  --debug-active-state-color: rgb(255, 140, 0);
+
+  /* sidebar / ui */
+  --html-bg: rgb(255, 255, 255);
+  --text-color: rgb(30, 30, 30);
+  --sidebar-handle-border-left-color: rgb(221, 221, 221);
+  --sidebar-handle-hover-border-left-color: rgb(170, 170, 170);
+  --sidebar-handle-text-bg-color: rgb(170, 170, 170);
+  --sidebar-handle-text-color: rgb(20, 20, 126);
+  --sidebar-handle-text-hover-color: rgb(153, 153, 153);
+  --button-bg-color: rgb(70, 130, 180);
+  --button-text-color: rgb(255, 255, 255);
+  --button-hover-bg-color: rgb(44, 118, 179);
+  --button-hover-text-color: rgb(255, 255, 255);
+  --button-border-color: rgb(221, 221, 221);
+  --details-border-color: rgb(8, 0, 0);
+  --details-text-color: var(--text-color);
+  --details-fieldset-border-color: rgb(200, 200, 200);
+  --input-text-bg-color: rgb(245, 245, 245);
+  --input-text-color: var(--text-color);
+  --input-textarea-bg-color: rgb(245, 245, 245);
+  --input-textarea-color: var(--text-color);
+  --input-select-bg-color: rgb(245, 245, 245);
+  --input-select-color: var(--text-color);
+  --title-text-color: var(--text-color);
+  --row-title-text-color: var(--text-color);
+}
+
+/* ── Solarized Dark ────────────────────────────────────────────── */
+[data-theme="solarized_dark"] {
+  --base00: #657b83; --base01: #586e75; --base02: #073642; --base03: #002b36;
+  --base0: #839496; --base1: #93a1a1; --base2: #eee8d5; --base3: #fdf6e3;
+  --yellow: #b58900; --orange: #cb4b16; --red: #dc322f; --magenta: #d33682;
+  --violet: #6c71c4; --blue: #268bd2; --cyan: #2aa198; --green: #859900;
+
+  --html-bg: var(--base03);
+  --text-color: var(--base1);
+
+  --state-body-color: var(--base01);
+  --state-separator-color: var(--base01);
+  --state-text-color: var(--text-color);
+  --state-title-color: var(--text-color);
+  --state-border-color: var(--blue);
+  --state-border-highlight-color: var(--green);
+  --state-border-deleting-color: var(--red);
+  --state-drag-handle-color: var(--yellow);
+  --state-resize-handle-color: var(--base01);
+  --state-resize-mark-color: var(--base00);
+  --transition-handle-color: var(--blue);
+  --transition-handle-deleting-color: var(--red);
+  --transition-handle-highlight-edit-color: var(--green);
+  --function-color: var(--text-color);
+  --function-hover-color: var(--blue);
+  --transition-line-color: var(--blue);
+  --transition-arrow-color: var(--blue);
+  --transition-text-color: var(--text-color);
+  --debug-active-state-color: var(--orange);
+
+  --sidebar-handle-border-left-color: var(--base02);
+  --sidebar-handle-hover-border-left-color: var(--base02);
+  --sidebar-handle-text-bg-color: var(--base00);
+  --sidebar-handle-text-color: var(--text-color);
+  --sidebar-handle-text-hover-color: var(--base01);
+  --button-bg-color: var(--base02);
+  --button-text-color: var(--base00);
+  --button-hover-bg-color: var(--cyan);
+  --button-hover-text-color: var(--base02);
+  --button-border-color: var(--base0);
+  --details-border-color: var(--base02);
+  --details-text-color: var(--text-color);
+  --details-fieldset-border-color: var(--base02);
+  --input-text-bg-color: var(--base02);
+  --input-text-color: var(--text-color);
+  --input-textarea-bg-color: var(--base02);
+  --input-textarea-color: var(--text-color);
+  --input-select-bg-color: var(--base02);
+  --input-select-color: var(--text-color);
+  --title-text-color: var(--text-color);
+  --row-title-text-color: var(--text-color);
+}
+
+/* ── Solarized Light ───────────────────────────────────────────── */
+[data-theme="solarized_light"] {
+  --base00: #657b83; --base01: #586e75; --base02: #073642; --base03: #002b36;
+  --base0: #839496; --base1: #93a1a1; --base2: #eee8d5; --base3: #fdf6e3;
+  --yellow: #b58900; --orange: #cb4b16; --red: #dc322f; --magenta: #d33682;
+  --violet: #6c71c4; --blue: #268bd2; --cyan: #2aa198; --green: #859900;
+
+  --html-bg: var(--base3);
+  --text-color: var(--base01);
+
+  --state-body-color: var(--base1);
+  --state-separator-color: var(--base1);
+  --state-text-color: var(--text-color);
+  --state-title-color: var(--text-color);
+  --state-border-color: var(--blue);
+  --state-border-highlight-color: var(--green);
+  --state-border-deleting-color: var(--red);
+  --state-drag-handle-color: var(--yellow);
+  --state-resize-handle-color: var(--base1);
+  --state-resize-mark-color: var(--base0);
+  --transition-handle-color: var(--blue);
+  --transition-handle-deleting-color: var(--red);
+  --transition-handle-highlight-edit-color: var(--green);
+  --function-color: var(--text-color);
+  --function-hover-color: var(--blue);
+  --transition-line-color: var(--blue);
+  --transition-arrow-color: var(--blue);
+  --transition-text-color: var(--text-color);
+  --debug-active-state-color: var(--orange);
+
+  --sidebar-handle-border-left-color: var(--base2);
+  --sidebar-handle-hover-border-left-color: var(--base2);
+  --sidebar-handle-text-bg-color: var(--base0);
+  --sidebar-handle-text-color: var(--text-color);
+  --sidebar-handle-text-hover-color: var(--base1);
+  --button-bg-color: var(--base2);
+  --button-text-color: var(--base0);
+  --button-hover-bg-color: var(--cyan);
+  --button-hover-text-color: var(--base2);
+  --button-border-color: var(--base0);
+  --details-border-color: var(--base2);
+  --details-text-color: var(--text-color);
+  --details-fieldset-border-color: var(--base2);
+  --input-text-bg-color: var(--base2);
+  --input-text-color: var(--text-color);
+  --input-textarea-bg-color: var(--base2);
+  --input-textarea-color: var(--text-color);
+  --input-select-bg-color: var(--base2);
+  --input-select-color: var(--text-color);
+  --title-text-color: var(--text-color);
+  --row-title-text-color: var(--text-color);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Layout
+   ══════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  font-family: var(--nc-font-sans);
+  background-color: var(--html-bg);
+  color: var(--text-color);
+}
+
+.app-wrapper {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: row;
+}
+
+/* ── Canvas area ───────────────────────────────────────────────── */
+.canvas-area {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.canvas-area svg {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* ── Status bar ────────────────────────────────────────────────── */
+.status-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  display: flex; gap: 2em; padding: 4px 10px;
+  font: 0.8em var(--nc-font-mono);
+  background: rgba(0,0,0,.06);
+  color: var(--text-color);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Sidebar
+   ══════════════════════════════════════════════════════════════════ */
+.sidebar {
+  flex: 0 0 260px;
+  padding: 0.4em;
+  overflow-y: auto;
+  border-left: 1px solid var(--sidebar-handle-border-left-color);
+  font: 0.9em var(--nc-font-sans);
+}
+
+.sidebar.collapsed { flex: 0 0 0; padding: 0; overflow: hidden; }
+
+.sidebar-handle {
+  flex: 0 0 12px;
+  border-left: 1px solid var(--sidebar-handle-border-left-color);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; user-select: none;
+}
+.sidebar-handle:hover {
+  border-left-color: var(--sidebar-handle-hover-border-left-color);
+}
+.sidebar-handle span {
+  writing-mode: vertical-rl;
+  border-radius: 0 4px 4px 0;
+  padding: 6px 2px;
+  background: var(--sidebar-handle-text-bg-color);
+  color: var(--sidebar-handle-text-color);
+  font: 1em var(--nc-font-sans);
+}
+.sidebar-handle span:hover {
+  background: var(--sidebar-handle-text-hover-color);
+}
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+.sidebar button, .btn {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none; border-radius: 4px;
+  padding: 0.35em 0.8em; margin-bottom: 0.4em;
+  cursor: pointer; font: 0.9em var(--nc-font-sans);
+}
+.sidebar button:hover, .btn:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
+}
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.6em; }
+
+/* ── Details / collapsible sections ────────────────────────────── */
+.sidebar details {
+  border: 1px solid var(--details-border-color);
+  border-radius: 4px;
+  padding: 0.4em;
+  margin-bottom: 0.5em;
+  color: var(--details-text-color);
+}
+.sidebar details summary {
+  cursor: pointer; font-weight: 600;
+}
+.sidebar fieldset {
+  border: 1px solid var(--details-fieldset-border-color);
+  border-radius: 4px; padding: 0.4em;
+  margin-top: 0.3em;
+}
+
+/* ── Inputs ────────────────────────────────────────────────────── */
+.sidebar input[type="text"],
+.sidebar input[type="number"],
+.sidebar input[type="url"],
+.sidebar input {
+  background-color: var(--input-text-bg-color);
+  color: var(--input-text-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 3px; padding: 3px 5px;
+  font: 0.9em var(--nc-font-sans);
+  width: 100%;
+}
+.sidebar textarea {
+  background-color: var(--input-textarea-bg-color);
+  color: var(--input-textarea-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 3px; padding: 3px 5px;
+  font: 0.9em var(--nc-font-sans);
+  width: 100%; resize: vertical;
+}
+.sidebar select {
+  background-color: var(--input-select-bg-color);
+  color: var(--input-select-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 3px; padding: 3px 5px;
+}
+
+.sidebar label { display: block; margin-bottom: 2px; font-weight: 500; }
+
+/* ── Property editor ───────────────────────────────────────────── */
+.prop-editor { margin-bottom: 0.5em; }
+.prop-editor label { margin-top: 0.3em; }
+.prop-editor textarea { height: 14em; }
+
+/* ── Help table ────────────────────────────────────────────────── */
+.help-table { border-collapse: collapse; font-size: 0.85em; width: 100%; }
+.help-table th, .help-table td {
+  text-align: left; padding: 2px 8px;
+  border-bottom: 1px solid var(--button-border-color);
+}
+.help-table th { font-weight: 600; }
+
+/* ══════════════════════════════════════════════════════════════════
+   SVG Drawing — States
+   ══════════════════════════════════════════════════════════════════ */
+.state-body {
+  stroke: var(--state-body-color);
+  stroke-width: 0.2;
+  fill: none;
+  rx: 0.5px;
+}
+
+.state-border {
+  stroke: var(--state-border-color);
+  stroke-width: 0.8;
+  fill: none; rx: 0.5px;
+  opacity: 0;
+}
+.state-border:hover { opacity: 0.4; }
+
+.state-selected .state-border {
+  stroke: var(--state-border-highlight-color);
+  opacity: 0.4;
+}
+
+.state-active .state-border {
+  stroke: var(--debug-active-state-color);
+  stroke-width: 1.0;
+  opacity: 0.7;
+}
+
+.state-separator {
+  stroke: var(--state-separator-color);
+  stroke-width: 0.1;
+  shape-rendering: crispEdges;
+}
+
+.state-title {
+  font: bold 0.08em arial, helvetica, sans-serif;
+  fill: var(--state-title-color);
+}
+
+.state-text {
+  font: normal 0.08em arial, helvetica, sans-serif;
+  fill: var(--state-text-color);
+}
+
+.state-drag-handle {
+  fill: var(--state-drag-handle-color);
+  opacity: 0.1; stroke: none;
+  rx: 0.5px; cursor: move;
+}
+
+.state-resize-handle {
+  fill: var(--state-resize-handle-color);
+  opacity: 0; stroke: none;
+  cursor: nwse-resize;
+}
+.state-resize-handle:hover { opacity: 0.3; }
+
+.state-resize-mark {
+  stroke: var(--state-resize-mark-color);
+  stroke-width: 0.1;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SVG Drawing — Transitions
+   ══════════════════════════════════════════════════════════════════ */
+.transition-line {
+  fill: none;
+  stroke: var(--transition-line-color);
+  stroke-width: 0.2;
+}
+
+.transition-arrow, .arrow-fill {
+  fill: var(--transition-arrow-color);
+  stroke: none;
+}
+
+.transition-label {
+  font: normal 0.07em arial, helvetica, sans-serif;
+  fill: var(--transition-text-color);
+  cursor: pointer;
+}
+.transition-label:hover { cursor: grab; }
+
+.transition-handle {
+  stroke: var(--transition-handle-color);
+  stroke-width: 0.8;
+  fill: none; rx: 0.5px;
+  opacity: 0; cursor: grab;
+}
+.transition-handle:hover { opacity: 0.4; }
+
+/* transition preview while drawing */
+.transition-preview {
+  fill: none;
+  stroke: var(--transition-line-color);
+  stroke-width: 0.15;
+  stroke-dasharray: 0.3 0.2;
+  opacity: 0.6;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Debug Panel
+   ══════════════════════════════════════════════════════════════════ */
+.debug-panel { margin-top: 0.5em; }
+
+.debug-controls {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 0.4em;
+}
+.debug-controls input[type="number"] { width: 60px; }
+
+.debug-status {
+  padding: 2px 8px; border-radius: 3px;
+  font-size: 0.85em; margin-bottom: 0.4em;
+}
+.debug-status-on { background: rgba(0,200,0,.15); color: #2a7a2a; }
+.debug-status-listening { background: rgba(200,200,0,.15); color: #7a7a0a; }
+.debug-status-off { background: rgba(150,150,150,.1); }
+
+.debug-panel h5 {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0.5em 0 0.2em;
+  font-size: 0.9em;
+}
+
+.debug-clear-btn {
+  font-size: 0.75em; padding: 1px 6px;
+}
+
+.debug-list {
+  list-style: none; padding: 0; margin: 0;
+  font-size: 0.85em; max-height: 10em; overflow-y: auto;
+}
+.debug-list li { padding: 1px 0; }
+.debug-empty { color: #999; }
+
+.debug-var-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.85em; margin-bottom: 0.3em;
+}
+.debug-var-table th, .debug-var-table td {
+  text-align: left; padding: 1px 6px;
+  border-bottom: 1px solid var(--button-border-color);
+}
+
+.debug-event-log { max-height: 14em; }
+.debug-event-type {
+  font-weight: 600; margin-right: 6px;
+  color: var(--transition-line-color);
+}
+.debug-event-name { margin-right: 6px; }
+.debug-event-data { font-family: var(--nc-font-mono); font-size: 0.9em; }
+
+/* ══════════════════════════════════════════════════════════════════
+   Modal (New Module Dialog)
+   ══════════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.modal-dialog {
+  background: var(--html-bg);
+  color: var(--text-color);
+  border-radius: 8px; padding: 1.2em;
+  max-width: 520px; width: 90%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
+}
+.modal-dialog h3 { margin-bottom: 0.6em; }
+
+.form-table { width: 100%; border-collapse: collapse; }
+.form-table td { padding: 3px 4px; vertical-align: top; }
+.form-table label { white-space: nowrap; }
+.form-table input, .form-table textarea, .form-table select { width: 100%; }
+
+.form-error {
+  background: rgba(220,50,50,.12); color: #c00;
+  padding: 4px 8px; border-radius: 4px;
+  margin: 0.5em 0; font-size: 0.9em;
+}
+
+.modal-buttons {
+  display: flex; gap: 8px; margin-top: 0.8em;
+  justify-content: flex-end;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Inline editing (foreignObject)
+   ══════════════════════════════════════════════════════════════════ */
+.inline-edit-input, .inline-edit-textarea {
+  border: 1px solid var(--state-border-color);
+  background: var(--html-bg);
+  color: var(--text-color);
+  font-family: arial, helvetica, sans-serif;
+  outline: none;
+}

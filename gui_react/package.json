@@ -1,0 +1,46 @@
+{
+  "name": "chsm-desktop",
+  "version": "1.0.0",
+  "description": "CHSM — Hierarchical State Machine editor (Electron desktop app)",
+  "main": "electron/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:backend": "pyinstaller --noconfirm backend/chsm_backend.spec",
+    "build:electron": "electron-builder --win portable",
+    "dist": "npm run build:frontend && npm run build:backend && npm run build:electron"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.0"
+  },
+  "build": {
+    "appId": "com.chsm.desktop",
+    "productName": "CHSM",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "dist_backend/",
+        "to": "backend",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "electron/icon.png"
+    },
+    "portable": {
+      "artifactName": "CHSM-${version}-portable.exe"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}

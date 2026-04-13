@@ -9,3 +9,6 @@ build-mingw-test/
 build-mingw/
 
 .vscode/settings.json
+
+docs/sphinx/_build/
+docs/typst/*.pdf
