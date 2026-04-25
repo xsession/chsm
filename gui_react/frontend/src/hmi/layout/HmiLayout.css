@@ -1,0 +1,372 @@
+/* ─── HMI Layout Component Styles ───────────────────────────────────────────
+ * Covers: Level1Overview, Level2Area, Level3Detail
+ * All color values reference ISA-101 tokens from tokens.css.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Shared resets ──────────────────────────────────────────────────────── */
+.hmi-l1,
+.hmi-l2,
+.hmi-l3 {
+  display       : flex;
+  flex-direction: column;
+  gap           : var(--hmi-space-4);
+  padding       : var(--hmi-space-4);
+  min-height    : 100%;
+  background    : var(--hmi-bg-0);
+  color         : var(--hmi-text-primary);
+  font-family   : var(--hmi-font-ui);
+  font-size     : var(--hmi-font-size-md);
+}
+
+/* ── Navigation buttons ─────────────────────────────────────────────────── */
+.hmi-nav-btn {
+  display        : inline-flex;
+  align-items    : center;
+  gap            : var(--hmi-space-2);
+  padding        : var(--hmi-space-2) var(--hmi-space-4);
+  background     : var(--hmi-bg-2);
+  color          : var(--hmi-text-primary);
+  border         : 1px solid var(--hmi-border-normal);
+  border-radius  : var(--hmi-radius-sm);
+  font-family    : var(--hmi-font-ui);
+  font-size      : var(--hmi-font-size-sm);
+  cursor         : pointer;
+  transition     : background var(--hmi-transition-fast), border-color var(--hmi-transition-fast);
+}
+.hmi-nav-btn:hover  { background: var(--hmi-bg-hover); border-color: var(--hmi-border-strong); }
+.hmi-nav-btn--back  { color: var(--hmi-text-secondary); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * LEVEL 1 — Overview
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+/* KPI card grid */
+.hmi-kpi-grid {
+  display              : grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap                  : var(--hmi-space-3);
+}
+
+.hmi-kpi-card {
+  display        : flex;
+  flex-direction : column;
+  gap            : var(--hmi-space-1);
+  padding        : var(--hmi-space-3) var(--hmi-space-4);
+  background     : var(--hmi-card-bg);
+  border         : 1px solid var(--hmi-card-border);
+  border-radius  : var(--hmi-radius-md);
+  transition     : border-color var(--hmi-transition-fast);
+}
+
+/* Severity overrides — ISA-101 functional colors */
+.hmi-kpi-card--critical {
+  background  : var(--hmi-alarm-critical-bg);
+  border-color: var(--hmi-alarm-critical-border);
+}
+.hmi-kpi-card--warning {
+  background  : var(--hmi-alarm-warning-bg);
+  border-color: var(--hmi-alarm-warning-border);
+}
+.hmi-kpi-card--info {
+  background  : var(--hmi-alarm-info-bg);
+  border-color: var(--hmi-alarm-info-border);
+}
+
+.hmi-kpi-card__label {
+  font-size   : var(--hmi-font-size-xs);
+  color       : var(--hmi-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.hmi-kpi-card__value {
+  font-size  : var(--hmi-font-size-kpi);
+  font-family: var(--hmi-font-mono);
+  font-weight: 600;
+  line-height: 1.1;
+}
+.hmi-kpi-card__unit  { font-size: var(--hmi-font-size-sm); color: var(--hmi-text-secondary); font-weight: 400; }
+.hmi-kpi-card__badge { font-size: var(--hmi-font-size-xs); color: var(--hmi-alarm-critical-text); }
+.hmi-kpi-card--warning .hmi-kpi-card__badge  { color: var(--hmi-alarm-warning-text); }
+.hmi-kpi-card--info    .hmi-kpi-card__badge  { color: var(--hmi-alarm-info-text); }
+.hmi-kpi-card__trend   { font-size: var(--hmi-font-size-sm); color: var(--hmi-text-secondary); }
+
+/* Alarm banner */
+.hmi-alarm-banner {
+  display      : flex;
+  flex-direction: row;
+  align-items  : flex-start;
+  gap          : var(--hmi-space-4);
+  padding      : var(--hmi-space-3) var(--hmi-space-4);
+  background   : var(--hmi-alarm-critical-bg);
+  border       : 1px solid var(--hmi-alarm-critical-border);
+  border-radius: var(--hmi-radius-sm);
+}
+
+.hmi-alarm-banner__count {
+  font-size     : var(--hmi-font-size-sm);
+  font-weight   : 700;
+  color         : var(--hmi-alarm-critical-text);
+  white-space   : nowrap;
+  padding-top   : 2px;
+}
+
+.hmi-alarm-banner__list {
+  list-style: none;
+  margin    : 0;
+  padding   : 0;
+  display   : flex;
+  flex-direction: column;
+  gap       : var(--hmi-space-1);
+}
+
+.hmi-alarm-banner__item {
+  display    : flex;
+  align-items: baseline;
+  gap        : var(--hmi-space-2);
+  font-size  : var(--hmi-font-size-sm);
+}
+.hmi-alarm-banner__item--critical { color: var(--hmi-alarm-critical-text); }
+.hmi-alarm-banner__item--warning  { color: var(--hmi-alarm-warning-text);  }
+.hmi-alarm-banner__item--info     { color: var(--hmi-alarm-info-text);     }
+
+.hmi-alarm-banner__shape { font-size: 9px; }
+.hmi-alarm-banner__tag   { font-family: var(--hmi-font-mono); font-size: var(--hmi-font-size-xs); }
+.hmi-alarm-banner__msg   { color: var(--hmi-text-secondary); }
+
+.hmi-l1__nav {
+  display: flex;
+  gap    : var(--hmi-space-3);
+  flex-wrap: wrap;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * LEVEL 2 — Area / Equipment
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+.hmi-l2__header {
+  display    : flex;
+  align-items: center;
+  gap        : var(--hmi-space-4);
+}
+
+.hmi-l2__title {
+  font-size  : var(--hmi-font-size-lg);
+  font-weight: 600;
+  margin     : 0;
+  flex       : 1;
+}
+
+.hmi-l2__alarm-count {
+  font-size  : var(--hmi-font-size-sm);
+  font-weight: 700;
+  padding    : var(--hmi-space-1) var(--hmi-space-3);
+  border-radius: var(--hmi-radius-sm);
+}
+.hmi-l2__alarm-count--critical {
+  background: var(--hmi-alarm-critical-bg);
+  color     : var(--hmi-alarm-critical-text);
+  border    : 1px solid var(--hmi-alarm-critical-border);
+}
+
+.hmi-equip-grid {
+  display              : grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap                  : var(--hmi-space-3);
+}
+
+.hmi-equip-card {
+  display        : flex;
+  flex-direction : column;
+  align-items    : flex-start;
+  gap            : var(--hmi-space-1);
+  padding        : var(--hmi-space-3) var(--hmi-space-4);
+  background     : var(--hmi-card-bg);
+  border         : 1px solid var(--hmi-card-border);
+  border-radius  : var(--hmi-radius-md);
+  cursor         : pointer;
+  text-align     : left;
+  color          : var(--hmi-text-primary);
+  font-family    : var(--hmi-font-ui);
+  transition     : background var(--hmi-transition-fast), border-color var(--hmi-transition-fast);
+}
+.hmi-equip-card:hover                 { background: var(--hmi-bg-hover); }
+.hmi-equip-card--running              { border-left: 3px solid var(--hmi-status-normal); }
+.hmi-equip-card--fault                { border-left: 3px solid var(--hmi-alarm-critical-badge); background: var(--hmi-alarm-critical-bg); }
+.hmi-equip-card--maintenance          { border-left: 3px solid var(--hmi-alarm-warning-badge);  background: var(--hmi-alarm-warning-bg);  }
+.hmi-equip-card--stopped              { border-left: 3px solid var(--hmi-border-strong); }
+
+.hmi-equip-card__icon   { font-size: var(--hmi-font-size-lg); }
+.hmi-equip-card__label  { font-size: var(--hmi-font-size-sm); font-weight: 500; }
+.hmi-equip-card__status { font-size: var(--hmi-font-size-xs); color: var(--hmi-text-secondary); letter-spacing: 0.05em; }
+.hmi-equip-card__value  { font-family: var(--hmi-font-mono); font-size: var(--hmi-font-size-md); }
+.hmi-equip-card__unit   { color: var(--hmi-text-secondary); font-size: var(--hmi-font-size-xs); }
+
+.hmi-l2__empty { color: var(--hmi-text-disabled); font-size: var(--hmi-font-size-sm); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * LEVEL 3 — Waveform Detail
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+.hmi-l3__toolbar {
+  display    : flex;
+  align-items: center;
+  flex-wrap  : wrap;
+  gap        : var(--hmi-space-3);
+  padding    : var(--hmi-space-2) var(--hmi-space-3);
+  background : var(--hmi-toolbar-bg);
+  border-bottom: 1px solid var(--hmi-border-subtle);
+  border-radius: var(--hmi-radius-sm) var(--hmi-radius-sm) 0 0;
+}
+
+.hmi-l3__title {
+  font-size  : var(--hmi-font-size-md);
+  font-weight: 600;
+  margin     : 0;
+  flex       : 1;
+}
+
+/* Stream status */
+.hmi-l3__stream-status {
+  display    : flex;
+  align-items: center;
+  gap        : var(--hmi-space-2);
+  font-size  : var(--hmi-font-size-xs);
+  font-family: var(--hmi-font-mono);
+  color      : var(--hmi-text-secondary);
+}
+.hmi-status-dot {
+  width        : 8px;
+  height       : 8px;
+  border-radius: 50%;
+  flex-shrink  : 0;
+}
+.hmi-status-dot--ok    { background: var(--hmi-status-normal); }
+.hmi-status-dot--fault { background: var(--hmi-alarm-critical-badge); }
+
+.hmi-l3__stream-label { font-weight: 600; }
+.hmi-l3__sample-rate  { color: var(--hmi-text-disabled); }
+
+/* Time-window selector */
+.hmi-time-sel {
+  display: flex;
+  border : 1px solid var(--hmi-border-normal);
+  border-radius: var(--hmi-radius-sm);
+  overflow: hidden;
+}
+
+.hmi-time-btn {
+  padding    : var(--hmi-space-1) var(--hmi-space-3);
+  background : var(--hmi-bg-2);
+  border     : none;
+  border-right: 1px solid var(--hmi-border-subtle);
+  color      : var(--hmi-text-secondary);
+  font-family: var(--hmi-font-mono);
+  font-size  : var(--hmi-font-size-xs);
+  cursor     : pointer;
+  transition : background var(--hmi-transition-fast), color var(--hmi-transition-fast);
+}
+.hmi-time-btn:last-child  { border-right: none; }
+.hmi-time-btn:hover       { background: var(--hmi-bg-hover); color: var(--hmi-text-primary); }
+.hmi-time-btn--active     { background: var(--hmi-bg-3); color: var(--hmi-alarm-info-text); }
+
+/* Alarm badge (toolbar) */
+.hmi-alarm-badge {
+  padding      : var(--hmi-space-1) var(--hmi-space-3);
+  border-radius: var(--hmi-radius-sm);
+  font-size    : var(--hmi-font-size-xs);
+  font-weight  : 700;
+  cursor       : pointer;
+  border       : 1px solid transparent;
+  transition   : opacity var(--hmi-transition-fast);
+}
+.hmi-alarm-badge--critical {
+  background  : var(--hmi-alarm-critical-bg);
+  border-color: var(--hmi-alarm-critical-border);
+  color       : var(--hmi-alarm-critical-text);
+}
+.hmi-alarm-badge:hover { opacity: 0.8; }
+
+/* Expandable alarm panel */
+.hmi-alarm-panel {
+  display        : flex;
+  flex-direction : column;
+  background     : var(--hmi-alarm-critical-bg);
+  border         : 1px solid var(--hmi-alarm-critical-border);
+  border-radius  : var(--hmi-radius-sm);
+  overflow       : hidden;
+}
+
+.hmi-alarm-row {
+  display      : flex;
+  align-items  : center;
+  gap          : var(--hmi-space-3);
+  padding      : var(--hmi-space-2) var(--hmi-space-4);
+  font-size    : var(--hmi-font-size-sm);
+  border-bottom: 1px solid var(--hmi-border-subtle);
+}
+.hmi-alarm-row:last-child  { border-bottom: none; }
+.hmi-alarm-row--critical   { border-left: 3px solid var(--hmi-alarm-critical-badge); }
+.hmi-alarm-row--warning    { border-left: 3px solid var(--hmi-alarm-warning-badge); }
+.hmi-alarm-row--info       { border-left: 3px solid var(--hmi-alarm-info-badge); }
+
+.hmi-alarm-row__shape { font-size: 9px; flex-shrink: 0; }
+.hmi-alarm-row__tag   { font-family: var(--hmi-font-mono); font-size: var(--hmi-font-size-xs); color: var(--hmi-text-primary); white-space: nowrap; }
+.hmi-alarm-row__msg   { flex: 1; color: var(--hmi-text-secondary); }
+.hmi-alarm-row__ack {
+  padding      : 2px var(--hmi-space-2);
+  font-size    : var(--hmi-font-size-xs);
+  font-family  : var(--hmi-font-mono);
+  background   : var(--hmi-bg-2);
+  border       : 1px solid var(--hmi-border-normal);
+  border-radius: var(--hmi-radius-sm);
+  color        : var(--hmi-text-secondary);
+  cursor       : pointer;
+  flex-shrink  : 0;
+}
+.hmi-alarm-row__ack:hover { background: var(--hmi-bg-hover); color: var(--hmi-text-primary); }
+
+/* Waveform channel rows */
+.hmi-l3__charts {
+  display       : flex;
+  flex-direction: column;
+  gap           : var(--hmi-space-3);
+}
+
+.hmi-l3__chart-row {
+  display       : flex;
+  flex-direction: column;
+  gap           : var(--hmi-space-1);
+  background    : var(--hmi-card-bg);
+  border        : 1px solid var(--hmi-card-border);
+  border-radius : var(--hmi-radius-md);
+  overflow      : hidden;
+}
+
+.hmi-l3__chart-label {
+  display    : flex;
+  align-items: center;
+  gap        : var(--hmi-space-2);
+  padding    : var(--hmi-space-2) var(--hmi-space-3);
+  font-size  : var(--hmi-font-size-xs);
+  font-family: var(--hmi-font-mono);
+  color      : var(--hmi-text-secondary);
+  background : var(--hmi-chart-toolbar);
+  border-bottom: 1px solid var(--hmi-border-subtle);
+}
+
+.hmi-trace-swatch {
+  width        : 12px;
+  height       : 3px;
+  border-radius: 2px;
+  flex-shrink  : 0;
+}
+
+.hmi-l3__tag-name   { color: var(--hmi-text-primary); font-weight: 500; }
+.hmi-text-secondary { color: var(--hmi-text-secondary); }
+
+.hmi-l3__no-data {
+  padding  : var(--hmi-space-8);
+  color    : var(--hmi-text-disabled);
+  font-size: var(--hmi-font-size-sm);
+  text-align: center;
+}

@@ -1,0 +1,108 @@
+/* ─── ISA-101 HMI Design Tokens ─────────────────────────────────────────────
+ *
+ * Based on ANSI/ISA-101.01-2015 "Human Machine Interfaces for Process
+ * Automation Systems" and the ASM Consortium "Abnormal Situation Management"
+ * guidelines.
+ *
+ * VISUAL QUIET PRINCIPLE
+ *   All normal operating states are rendered in neutral grey values.
+ *   Saturated / vibrant colors are STRICTLY RESERVED for functional alarm
+ *   and advisory states only (ISA-101 §5.4).
+ *
+ * COLOR ACCESSIBILITY
+ *   Colors are never used as the sole status indicator.  Every alarm state
+ *   is paired with a redundant shape or text label so the interface remains
+ *   meaningful for users with color-vision deficiencies.
+ *
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Background layers (dark, neutral — ISA-101 "visual quiet") ── */
+  --hmi-bg-0:           #111214;
+  --hmi-bg-1:           #1a1c20;
+  --hmi-bg-2:           #22252b;
+  --hmi-bg-3:           #2b2f38;
+  --hmi-bg-hover:       #31353f;
+
+  /* ── Text ──────────────────────────────────────────────────────── */
+  --hmi-text-primary:   #e4e6ea;
+  --hmi-text-secondary: #9da3b0;
+  --hmi-text-disabled:  #545a68;
+  --hmi-text-inverse:   #0f1012;
+
+  /* ── Borders ───────────────────────────────────────────────────── */
+  --hmi-border-subtle:  #2f3340;
+  --hmi-border-normal:  #3d4352;
+  --hmi-border-strong:  #5a6178;
+
+  /* ══════════════════════════════════════════════════════════════════
+   * FUNCTIONAL COLORS  (ISA-101 §5.4)
+   * ══════════════════════════════════════════════════════════════════ */
+
+  /* CRITICAL TRIP / FAULT ─ Red (shape: ◆) */
+  --hmi-alarm-critical-bg:     #3d0505;
+  --hmi-alarm-critical-border: #c0392b;
+  --hmi-alarm-critical-text:   #ff6b6b;
+  --hmi-alarm-critical-badge:  #e74c3c;
+
+  /* ADVISORY WARNING ─ Amber (shape: ▲) */
+  --hmi-alarm-warning-bg:      #2d1f00;
+  --hmi-alarm-warning-border:  #d68910;
+  --hmi-alarm-warning-text:    #f5a623;
+  --hmi-alarm-warning-badge:   #f39c12;
+
+  /* CONTEXTUAL INFORMATION ─ Blue (shape: ●) */
+  --hmi-alarm-info-bg:         #062040;
+  --hmi-alarm-info-border:     #2980b9;
+  --hmi-alarm-info-text:       #5dade2;
+  --hmi-alarm-info-badge:      #3498db;
+
+  /* NORMAL RUNNING ─ Green */
+  --hmi-status-normal:         #27ae60;
+  --hmi-status-normal-dim:     #1a5c35;
+
+  /* ── Waveform trace palette ─────────────────────────────────────── */
+  --hmi-trace-0:  #5b9cf6;
+  --hmi-trace-1:  #8b8fad;
+  --hmi-trace-2:  #6bb28e;
+  --hmi-trace-3:  #b8956a;
+  --hmi-trace-4:  #a88ad8;
+
+  /* ── Typography ────────────────────────────────────────────────── */
+  --hmi-font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  --hmi-font-ui:   "Inter", "Segoe UI", system-ui, sans-serif;
+
+  --hmi-font-size-xs:  11px;
+  --hmi-font-size-sm:  12px;
+  --hmi-font-size-md:  14px;
+  --hmi-font-size-lg:  16px;
+  --hmi-font-size-kpi: 28px;
+
+  /* ── Spacing (4 px base grid) ───────────────────────────────────── */
+  --hmi-space-1:  4px;
+  --hmi-space-2:  8px;
+  --hmi-space-3:  12px;
+  --hmi-space-4:  16px;
+  --hmi-space-6:  24px;
+  --hmi-space-8:  32px;
+
+  /* ── Radii & transitions ─────────────────────────────────────────── */
+  --hmi-radius-sm: 3px;
+  --hmi-radius-md: 6px;
+  --hmi-transition-fast: 80ms  ease;
+  --hmi-transition-std:  160ms ease;
+
+  /* ── Chart surface ──────────────────────────────────────────────── */
+  --hmi-chart-bg:        #0d0f12;
+  --hmi-chart-grid:      #1e2229;
+  --hmi-chart-axis-text: #6b7280;
+  --hmi-chart-toolbar:   #16191f;
+
+  /* ── Assembled component tokens ─────────────────────────────────── */
+  --hmi-card-bg:      var(--hmi-bg-1);
+  --hmi-card-border:  var(--hmi-border-normal);
+  --hmi-sidebar-bg:   var(--hmi-bg-1);
+  --hmi-toolbar-bg:   var(--hmi-bg-2);
+  --hmi-input-bg:     var(--hmi-bg-3);
+  --hmi-input-border: var(--hmi-border-normal);
+}

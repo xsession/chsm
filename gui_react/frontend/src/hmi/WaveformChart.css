@@ -1,0 +1,38 @@
+/* ─── WaveformChart component styles ────────────────────────────────────────
+ * Scoped to .hmi-waveform-chart and .hmi-uplot.
+ * ISA-101 chart surface uses dedicated chart tokens from tokens.css.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.hmi-waveform-chart {
+  display      : block;
+  width        : 100%;
+  background   : var(--hmi-chart-bg);
+  border-radius: var(--hmi-radius-sm);
+  overflow     : hidden;
+}
+
+/* uplot injects an <svg> for the legend — override its colors */
+.hmi-uplot .u-legend {
+  font-family   : var(--hmi-font-mono);
+  font-size     : var(--hmi-font-size-xs);
+  color         : var(--hmi-text-secondary);
+  background    : var(--hmi-chart-toolbar);
+  padding       : var(--hmi-space-2) var(--hmi-space-3);
+  border-bottom : 1px solid var(--hmi-border-subtle);
+}
+
+.hmi-uplot .u-legend .u-marker {
+  border-radius: 0;  /* square swatch — easier to read at small size */
+}
+
+/* Resize handle */
+.hmi-uplot .u-select {
+  background: rgba(91, 156, 246, 0.07);
+  border    : 1px solid rgba(91, 156, 246, 0.35);
+}
+
+/* Cursor crosshair */
+.hmi-uplot .u-cursor-x,
+.hmi-uplot .u-cursor-y {
+  border-color: rgba(228, 230, 234, 0.3);
+}
